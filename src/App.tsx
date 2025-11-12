@@ -16,7 +16,7 @@ export default function App() {
       errorElement: <h1 className="text-red-500 p-8">404 - Page Not Found</h1>,
       children: [
         { index: true, element: <Home /> },
-        // { index: true, element: <HomBooking /> },
+        // { index: true, element: <HomBooking /> },  
 
         { index: true, element: <Home /> },
 
