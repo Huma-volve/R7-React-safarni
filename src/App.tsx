@@ -5,22 +5,30 @@ import {
 import Home from "./page/home/Home";
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
-import GetStarted from "./page/GetStart/GetStarted";
+
+import GetStarted from "./page/GetStarted/GetStarted";
+import Login from "./page/Login/Login";
+import SignUp from "./page/Signup/SignUp";
+import ChangePassword from "./page/ChangePassword/ChangePassword";
+import ForgetPassword from "./page/ForgetPassword/ForgetPassword";
+import OTP from "./page/OTP/OTP";
+import Done from "./page/Done/Done";
+
+
 export default function App() {
 
 
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "",
       element: <MainLayout />,
       errorElement: <h1 className="text-red-500 p-8">404 - Page Not Found</h1>,
       children: [
-        { index: true, element: <Home /> },
-        // { index: true, element: <HomBooking /> },  
+        { path: "home", element: <Home /> },
+        // { path: "home", element: <Home /> },
+        // { path: "home", element: <Home /> },
+        // { path: "home", element: <Home /> },
 
-        { index: true, element: <Home /> },
-
-        { index: true, element: <Home /> },
 
       ],
     },
@@ -29,7 +37,14 @@ export default function App() {
       element: <AuthLayout />,
       errorElement: <h1 className="text-red-500 p-8">404 - Page Not Found</h1>,
       children: [
-        { path: "/getstaterd", element: <GetStarted /> },
+        { path: "", index: true, element: <GetStarted /> },
+        { path: "login", element: <Login /> },
+        { path: "signup", element: <SignUp /> },
+        { path: "forget-password", element: <ForgetPassword /> },
+        { path: "change-password", element: <ChangePassword /> },
+        { path: "OTP", element: <OTP /> },
+        { path: "Done", element: <Done /> },
+
       ],
     }
   ]);
