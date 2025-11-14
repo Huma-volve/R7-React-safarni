@@ -62,7 +62,7 @@ export default function Home() {
      const navigate = useNavigate();
     return (
         <div className="min-h-screen bg-[--color-gray-300] px-10 py-8 font-[--font-poppins]">
-            <div className="flex justify-between gap-9">
+            {/* <div className="flex justify-between gap-9">
                 <img src={backIcon} className="cursor-pointer" />
                 <form className=" w-full ">
                     <div className="relative ">
@@ -77,7 +77,7 @@ export default function Home() {
                     </div>
 
                 </form>
-            </div>
+            </div> */}
             {/* Brands Section */}
             <Typography variant="h6" className="mb-4 font-bold text-[--color-dark-blue]">
                 Brands
