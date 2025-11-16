@@ -1,4 +1,4 @@
-import image from "../../assets/getStarted.png"
+import image from "../../assets/signin.png"
 import { User, Mail, Lock, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom"
 

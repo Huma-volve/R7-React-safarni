@@ -2,7 +2,6 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Home from "./page/home/Home";
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
 
@@ -14,8 +13,13 @@ import ForgetPassword from "./page/ForgetPassword/ForgetPassword";
 import OTP from "./page/OTP/OTP";
 import Done from "./page/Done/Done";
 
+import Home from "./page/home/Home";
+
 
 import Profile from "./page/Profile/Profile";
+
+import Info from "./page/info/info";
+import AccountSecurity from "./page/AccountSecurity/AccountSecurity";
 
 
 
@@ -30,7 +34,9 @@ export default function App() {
       children: [
         { path: "home", element: <Home /> },
         { path: "profile", element: <Profile /> },
-        // { path: "home", element: <Home /> },
+        { path: "personal-information", element: <Info /> },
+
+        { path: "account-security", element: <AccountSecurity /> },
         // { path: "home", element: <Home /> },
 
 

@@ -1,6 +1,7 @@
 import { Search, SlidersHorizontal } from "lucide-react";
 import profile from "../assets/profile.png"
 import Logo from "./logo"
+import { Link } from "react-router-dom";
 function Navbar() {
   return (
     <header className="w-full bg-white ">
@@ -23,11 +24,14 @@ function Navbar() {
         <div className="flex items-center gap-5">
           <Search className="w-5 h-5 text-gray-700 cursor-pointer hover:text-[#1E429F]" />
           <SlidersHorizontal className="w-5 h-5 text-gray-700 cursor-pointer hover:text-[#1E429F]" />
-          <img
-            src={profile}
-            alt="User"
-            className="w-9 h-9 rounded-full object-cover cursor-pointer"
-          />
+          <Link to={"/profile"}>
+            <img
+              src={profile}
+              alt="User"
+              className="w-9 h-9 rounded-full object-cover cursor-pointer"
+            />
+          </Link>
+
         </div>
       </nav>
     </header>
