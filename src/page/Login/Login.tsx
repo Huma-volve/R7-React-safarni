@@ -4,14 +4,14 @@ import { Link } from "react-router-dom"
 export default function Login() {
     return (
         <>
-            <div className=" bg-[#F4F4F4] h-[772px] flex justify-center items-center">
-                <img src={image} className=" object-cover" alt="" />
+            <div className=" bg-[#F4F4F4] h-[772px] w-[608px] flex justify-center items-center  rounded-4xl">
+                <img src={image} alt="" />
             </div>
             <div className="sm:w-1/2 ">
                 {/* Title */}
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold  mb-2">Welcome Again</h1>
-                    <p className="text-gray-400 text-[21px]">
+                    <h1 className="text-3xl font-medium text-gray-900  mb-2 capitalize">Welcome Again</h1>
+                    <p className="text-gray-500 text-[21px]">
                         welcome back! please fill your Data
                     </p>
                 </div>
@@ -19,7 +19,7 @@ export default function Login() {
                 <form className="w-full flex flex-col">
                     {/* Email */}
                     <div>
-                        <label className="block text-sm text-gray-300 mb-2">Email</label>
+                        <label className="block text-sm text-gray-800 mb-2">Email</label>
                         <div className="flex items-center border mb-4 border-gray-500 rounded-md px-3 py-2 bg-white">
                             <Mail size={18} className="text-gray-500 mr-2" />
                             <input
@@ -32,7 +32,7 @@ export default function Login() {
 
                     {/* Password */}
                     <div>
-                        <label className="block text-sm text-gray-300 mb-2">Password</label>
+                        <label className="block text-sm text-gray-800 mb-2">Password</label>
                         <div className="flex items-center border border-gray-500 rounded-md px-3 py-2 bg-white">
                             <Lock size={18} className="text-gray-500 mr-2" />
                             <input
@@ -59,9 +59,9 @@ export default function Login() {
 
                 {/* OR Divider */}
                 <div className="flex items-center justify-center gap-3 w-full  my-6">
-                    <hr className="flex-1 border-gray-600" />
-                    <span className="text-gray-400 text-sm">Or</span>
-                    <hr className="flex-1 border-gray-600" />
+                    <hr className="flex-1 border-gray-800" />
+                    <span className="text-gray-800 text-sm">Or</span>
+                    <hr className="flex-1 border-gray-800" />
                 </div>
 
                 {/* Social Buttons */}
@@ -75,9 +75,9 @@ export default function Login() {
                 </div> */}
 
                 {/* Sign Up link */}
-                <p className="mt-8 text-gray-400 text-sm text-center">
+                <p className="mt-8 text-gray-900 font-normal text-md text-center">
                     Don't have an account?{" "}
-                    <Link to="/signup" className="text-blue-600 font-semibold hover:underline">
+                    <Link to="/signup" className="text-main-color font-semibold hover:underline">
                         Sign Up
                     </Link>
                 </p>

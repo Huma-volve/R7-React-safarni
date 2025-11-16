@@ -15,6 +15,10 @@ import OTP from "./page/OTP/OTP";
 import Done from "./page/Done/Done";
 
 
+import Profile from "./page/Profile/Profile";
+
+
+
 export default function App() {
 
 
@@ -25,7 +29,7 @@ export default function App() {
       errorElement: <h1 className="text-red-500 p-8">404 - Page Not Found</h1>,
       children: [
         { path: "home", element: <Home /> },
-        // { path: "home", element: <Home /> },
+        { path: "profile", element: <Profile /> },
         // { path: "home", element: <Home /> },
         // { path: "home", element: <Home /> },
 

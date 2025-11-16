@@ -5,14 +5,14 @@ import { Link } from "react-router-dom"
 export default function GetStarted() {
     return (
         <>
-            <div className=" bg-[#F4F4F4] h-[772px] flex justify-center items-center">
-                <img src={image} className=" object-cover" alt="" />
+            <div className=" bg-[#F4F4F4] h-[772px] w-[608px] flex justify-center items-center  rounded-4xl">
+                <img src={image} alt="" />
             </div>
             <div className="sm:w-1/2 ">
                 {/* Title */}
                 <div className="text-center mb-8 ">
-                    <h1 className="text-2xl font-bold text-heading-color mb-2">Welcome Again</h1>
-                    <p className="text-gray-400 text-sm">
+                    <h1 className="text-3xl font-medium text-gray-900 mb-2 capitalize">Welcome Again</h1>
+                    <p className="text-gray-500 text-sm">
                         welcome back! please Fill Your data
                     </p>
                 </div>
@@ -21,7 +21,7 @@ export default function GetStarted() {
                 <form className="w-full flex flex-col gap-5">
                     {/* Name */}
                     <div>
-                        <label className="block text-sm text-gray-300 mb-2">Name</label>
+                        <label className="block text-sm text-gray-800 mb-2">Name</label>
                         <div className="flex items-center border border-gray-500 rounded-md px-3 py-2 bg-white">
                             <User size={18} className="text-gray-500 mr-2" />
                             <input
@@ -34,7 +34,7 @@ export default function GetStarted() {
 
                     {/* Email */}
                     <div>
-                        <label className="block text-sm text-gray-300 mb-2">Email</label>
+                        <label className="block text-sm text-gray-800 mb-2">Email</label>
                         <div className="flex items-center border border-gray-500 rounded-md px-3 py-2 bg-white">
                             <Mail size={18} className="text-gray-500 mr-2" />
                             <input
@@ -47,7 +47,7 @@ export default function GetStarted() {
 
                     {/* Password */}
                     <div>
-                        <label className="block text-sm text-gray-300 mb-2">Password</label>
+                        <label className="block text-sm text-gray-800 mb-2">Password</label>
                         <div className="flex items-center border border-gray-500 rounded-md px-3 py-2 bg-white">
                             <Lock size={18} className="text-gray-500 mr-2" />
                             <input
@@ -59,7 +59,7 @@ export default function GetStarted() {
                     </div>
 
                     {/* Password Rules */}
-                    <div className="text-sm text-gray-400 flex flex-col gap-2 mt-1">
+                    <div className="text-sm text-gray-500 flex flex-col gap-2 mt-1">
                         <div className="flex items-center gap-2">
                             <CheckCircle2 size={16} className="text-heading-color" />
                             <span>Must Be At Least 8 Characters</span>
@@ -97,7 +97,7 @@ export default function GetStarted() {
                 </div> */}
 
                 {/* Sign In link */}
-                <p className="mt-8 text-gray-400 text-sm">
+                <p className="mt-8 text-gray-900 font-normal text-md text-center">
                     Already have an account?{" "}
                     <Link to="/login" className="text-main-color font-semibold hover:underline">
                         Login

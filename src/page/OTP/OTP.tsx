@@ -1,4 +1,4 @@
-import image from "../../assets/getStarted.png"
+import image from "../../assets/login.png"
 import { useState, useRef, useEffect } from "react";
 
 export default function OTP() {
@@ -44,15 +44,15 @@ export default function OTP() {
     };
     return (
         <>
-            <div className=" bg-[#F4F4F4] h-[772px] flex justify-center items-center">
+            <div className=" bg-[#F4F4F4] h-[772px] w-[608px] flex justify-center items-center  rounded-4xl">
                 <img src={image} alt="" />
             </div>
             <div className="sm:w-1/2 ">
                 {/* Main Content */}
                 {/* icon */}
-                <div className="mb-6">
+                <div className="mb-6 flex justify-center">
                     <svg
-                        className="w-10 h-10 text-white/80"
+                        className="w-10 h-10 text-gray-400"
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2"
@@ -63,21 +63,25 @@ export default function OTP() {
                     </svg>
                 </div>
 
-                <h1 className="text-3xl font-semibold mb-2">Verify Code</h1>
+                <div className="text-center mb-8">
+                    <h1 className="text-3xl font-medium text-gray-900  mb-4">Verify Code</h1>
 
-                <p className="text-gray-400 text-center">
-                    Please enter the code we just sent to email
-                </p>
+                    <p className="text-gray-500 text-[21px]">
+                        Please enter the code we just sent to email
+                    </p>
 
-                <p className="text-blue-300 text-lg mb-4">kneedue@untitledui.com</p>
+                    <p className="text-gray-900 text-lg mb-4">kneedue@untitledui.com</p>
+                </div>
+
+
 
                 {/* timer */}
-                <div className="text-2xl font-semibold mb-6 text-white/80">
+                <div className="text-2xl font-semibold mb-6 text-gray-800 text-center">
                     00:{timer < 10 ? `0${timer}` : timer}
                 </div>
 
                 {/* OTP Inputs */}
-                <div className="flex gap-4 mb-6">
+                <div className="flex gap-4 mb-4 justify-center">
                     {otp.map((digit, index) => (
                         <input
                             key={index}
@@ -93,23 +97,23 @@ export default function OTP() {
                 </div>
 
                 {/* resend link */}
-                <p className="text-gray-400 mb-6">
+                <p className=" text-gray-900 font-normal text-md text-center">
                     OTP not receive?{" "}
                     <button
                         onClick={resend}
                         disabled={timer !== 0}
-                        className={`${timer === 0 ? "text-blue-400 underline" : "text-gray-600"
-                            }`}
+                        className="text-main-color font-semibold hover:underline cursor-pointer"
+
                     >
                         send again
                     </button>
                 </p>
 
                 {/* verify button */}
-                <button className="bg-blue-600 w-full py-4 rounded-2xl text-xl font-semibold mt-4">
+                <button className="bg-main-color cursor-pointer text-white w-full py-4 rounded-2xl text-xl font-semibold mt-4">
                     Verify
                 </button>
-            </div>
+            </div >
 
         </>
 
