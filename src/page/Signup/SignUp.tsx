@@ -1,16 +1,17 @@
 import image from "../../assets/getStarted.png"
 import { User, Mail, Lock, CheckCircle2 } from "lucide-react";
+import { Link } from "react-router-dom"
 
 export default function GetStarted() {
     return (
         <>
-            <div className=" bg-[#F4F4F4]">
-                <img src={image} className="h-[772px] object-cover" alt="" />
+            <div className=" bg-[#F4F4F4] h-[772px] flex justify-center items-center">
+                <img src={image} className=" object-cover" alt="" />
             </div>
             <div className="sm:w-1/2 ">
                 {/* Title */}
                 <div className="text-center mb-8 ">
-                    <h1 className="text-2xl font-bold text-blue-600 mb-2">Welcome Again</h1>
+                    <h1 className="text-2xl font-bold text-heading-color mb-2">Welcome Again</h1>
                     <p className="text-gray-400 text-sm">
                         welcome back! please Fill Your data
                     </p>
@@ -60,11 +61,11 @@ export default function GetStarted() {
                     {/* Password Rules */}
                     <div className="text-sm text-gray-400 flex flex-col gap-2 mt-1">
                         <div className="flex items-center gap-2">
-                            <CheckCircle2 size={16} className="text-blue-600" />
+                            <CheckCircle2 size={16} className="text-heading-color" />
                             <span>Must Be At Least 8 Characters</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <CheckCircle2 size={16} className="text-blue-600" />
+                            <CheckCircle2 size={16} className="text-heading-color" />
                             <span>Must Contain One Special Character</span>
                         </div>
                     </div>
@@ -72,7 +73,7 @@ export default function GetStarted() {
                     {/* Sign Up Button */}
                     <button
                         type="submit"
-                        className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition"
+                        className="w-full bg-main-color hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition"
                     >
                         Sign Up
                     </button>
@@ -87,10 +88,10 @@ export default function GetStarted() {
 
                 {/* Social Buttons */}
                 {/* <div className="flex gap-4 w-full max-w-md justify-center">
-                    <button className="flex justify-center items-center border border-blue-700 p-3 rounded-lg w-1/2 hover:bg-blue-700 transition">
+                    <button className="flex justify-center items-center border border-main-color p-3 rounded-lg w-1/2 hover:bg-main-color transition">
                         <img src="/google.svg" alt="Google" className="w-5 h-5" />
                     </button>
-                    <button className="flex justify-center items-center border border-blue-700 p-3 rounded-lg w-1/2 hover:bg-blue-700 transition">
+                    <button className="flex justify-center items-center border border-main-color p-3 rounded-lg w-1/2 hover:bg-main-color transition">
                         <img src="/facebook.svg" alt="Facebook" className="w-5 h-5" />
                     </button>
                 </div> */}
@@ -98,9 +99,9 @@ export default function GetStarted() {
                 {/* Sign In link */}
                 <p className="mt-8 text-gray-400 text-sm">
                     Already have an account?{" "}
-                    <a href="#" className="text-blue-600 font-semibold hover:underline">
-                        Sign In
-                    </a>
+                    <Link to="/login" className="text-main-color font-semibold hover:underline">
+                        Login
+                    </Link>
                 </p>
             </div>
 

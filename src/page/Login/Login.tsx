@@ -4,8 +4,8 @@ import { Link } from "react-router-dom"
 export default function Login() {
     return (
         <>
-            <div className="bg-[#F4F4F4]">
-                <img src={image} className="h-[772px] object-cover" alt="" />
+            <div className=" bg-[#F4F4F4] h-[772px] flex justify-center items-center">
+                <img src={image} className=" object-cover" alt="" />
             </div>
             <div className="sm:w-1/2 ">
                 {/* Title */}
@@ -42,16 +42,16 @@ export default function Login() {
                             />
                         </div>
                         <div className="text-right mt-2">
-                            <a href="#" className="text-sm text-gray-400 hover:text-blue-500">
+                            <Link to="/forget-password" className="text-sm text-gray-800 hover:text-gray-800">
                                 Forgot Password?
-                            </a>
+                            </Link>
                         </div>
                     </div>
 
                     {/* Login Button */}
                     <button
                         type="submit"
-                        className="cursor-pointer w-full mt-6 bg-[#1E429F] hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition"
+                        className="cursor-pointer w-full mt-6 bg-main-color hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition"
                     >
                         Log In
                     </button>
@@ -66,10 +66,10 @@ export default function Login() {
 
                 {/* Social Buttons */}
                 {/* <div className="flex gap-4 w-full max-w-md justify-center ">
-                    <button className="flex justify-center items-center cursor-pointer border border-[#1E429F] p-3 rounded-lg w-1/2 hover:bg-[#1E429F] transition">
+                    <button className="flex justify-center items-center cursor-pointer border border-main-color p-3 rounded-lg w-1/2 hover:bg-main-color transition">
                         <img src="/google.svg" alt="Google" className="w-5 h-5" />
                     </button>
-                    <button className="flex justify-center items-center cursor-pointer border border-[#1E429F] p-3 rounded-lg w-1/2 hover:bg-[#1E429F] transition">
+                    <button className="flex justify-center items-center cursor-pointer border border-main-color p-3 rounded-lg w-1/2 hover:bg-main-color transition">
                         <img src="/facebook.svg" alt="Facebook" className="w-5 h-5" />
                     </button>
                 </div> */}
