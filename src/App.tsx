@@ -1,4 +1,7 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import Home from "./page/home/Home";
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
@@ -11,14 +14,12 @@ import ChangePassword from "./page/ChangePassword/ChangePassword";
 import ForgetPassword from "./page/ForgetPassword/ForgetPassword";
 import OTP from "./page/OTP/OTP";
 import Done from "./page/Done/Done";
-import Destination from "./page/destination/destination";
-import PaymentPage from "./payment/PaymentPage";
-import SuccfullyPay from "./payment/SuccfullyPay";
-import FlightBooking from "./page/flightBooking/flightBooking";
+
+
 export default function App() {
   const router = createBrowserRouter([
     {
-      path: "",
+      path: "/",
       element: <MainLayout />,
       errorElement: <h1 className="text-red-500 p-8">404 - Page Not Found</h1>,
       children: [
@@ -26,10 +27,12 @@ export default function App() {
         // { path: "home", element: <Home /> },
         // { path: "home", element: <Home /> },
         // { path: "home", element: <Home /> },
+
+
       ],
     },
     {
-      path: "",
+      path: "/",
       element: <AuthLayout />,
       errorElement: <h1 className="text-red-500 p-8">404 - Page Not Found</h1>,
       children: [
