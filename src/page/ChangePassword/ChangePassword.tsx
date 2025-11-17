@@ -1,6 +1,6 @@
 import { CheckCircle2, Lock } from "lucide-react";
 import image from "../../assets/forgetpassword.png"
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 
@@ -8,10 +8,10 @@ export default function ChangePassword() {
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");
 
-    const validations = {
-        length: password.length >= 8,
-        special: /[!@#$%^&*(),.?":{}|<>]/.test(password),
-    };
+    // const validations = {
+    //     length: password.length >= 8,
+    //     special: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+    // };
     return (
         <>
             <div className=" bg-[#F4F4F4] h-[772px] w-[608px] flex justify-center items-center  rounded-4xl">

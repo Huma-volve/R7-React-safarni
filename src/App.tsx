@@ -20,7 +20,7 @@ import Profile from "./page/Profile/Profile";
 import Info from "./page/info/info";
 import AccountSecurity from "./page/AccountSecurity/AccountSecurity";
 import MyBooking from "./page/MyBooking/MyBooking";
-import Maps from "./page/maps/maps";
+import Maps from "./page/maps/Maps";
 
 
 

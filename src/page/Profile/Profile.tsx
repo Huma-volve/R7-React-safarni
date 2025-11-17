@@ -6,6 +6,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { Link } from "react-router-dom";
+import type { ReactNode } from "react";
+
 
 export default function Profile() {
     return (
@@ -87,10 +89,16 @@ export default function Profile() {
     );
 }
 
+
+type MenuItemProps = {
+    icon: ReactNode;
+    title: string;
+    to?: string;
+};
 /* Reusable Item Component */
-function MenuItem({ icon, title, to }) {
+function MenuItem({ icon, title, to }: MenuItemProps) {
     return (
-        <Link to={to} className="flex items-center justify-between bg-white py-4 px-5 rounded-[20px] cursor-pointer">
+        <Link to={to ?? "#"} className="flex items-center justify-between bg-white py-4 px-5 rounded-[20px] cursor-pointer">
             <div className="flex items-center gap-3">
                 {icon}
                 <p className="text-gray-800 text-lg font-medium">{title}</p>

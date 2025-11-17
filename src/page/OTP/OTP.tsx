@@ -3,8 +3,8 @@ import { useState, useRef, useEffect } from "react";
 
 export default function OTP() {
 
-    const [otp, setOtp] = useState(["", "", "", ""]);
-    const inputsRef = useRef([]);
+    const [otp, setOtp] = useState<string[]>(["", "", "", ""]);
+    const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
     const [timer, setTimer] = useState(30);
 
     // countdown
@@ -14,7 +14,7 @@ export default function OTP() {
         return () => clearInterval(interval);
     }, [timer]);
 
-    const handleChange = (value, index) => {
+    const handleChange = (value: string, index: number) => {
         if (/^[0-9]$/.test(value)) {
             const newOtp = [...otp];
             newOtp[index] = value;
@@ -22,7 +22,7 @@ export default function OTP() {
 
             // auto focus next
             if (index < 3) {
-                inputsRef.current[index + 1].focus();
+                inputsRef.current[index + 1]?.focus();
             }
         } else if (value === "") {
             // allow deleting
@@ -32,9 +32,9 @@ export default function OTP() {
         }
     };
 
-    const handleKeyDown = (e, index) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
         if (e.key === "Backspace" && !otp[index] && index > 0) {
-            inputsRef.current[index - 1].focus();
+            inputsRef.current[index + 1]?.focus();
         }
     };
 
@@ -85,9 +85,11 @@ export default function OTP() {
                     {otp.map((digit, index) => (
                         <input
                             key={index}
-                            ref={(el) => (inputsRef.current[index] = el)}
+                            ref={(el) => {
+                                inputsRef.current[index] = el;
+                            }}
                             type="text"
-                            maxLength="1"
+                            maxLength={1}
                             value={digit}
                             onChange={(e) => handleChange(e.target.value, index)}
                             onKeyDown={(e) => handleKeyDown(e, index)}

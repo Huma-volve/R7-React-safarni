@@ -52,7 +52,13 @@ export default function AccountSecurity() {
     );
 }
 
-function CardItem({ title, desc, titleClass }) {
+type CardItemProps = {
+    title: string;
+    desc: string;
+    titleClass?: string;
+};
+
+function CardItem({ title, desc, titleClass = "" }: CardItemProps) {
     return (
         <div className="bg-white text-[#111928] rounded-xl p-5 shadow-[0_2px_8px_0px_#838BB41F]  flex justify-between items-center">
             <div>
