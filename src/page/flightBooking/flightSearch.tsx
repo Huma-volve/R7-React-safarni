@@ -12,7 +12,7 @@ import {
 import { PlaneIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 export default function FlightSelector() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const flights = [
     {
       id: 1,
