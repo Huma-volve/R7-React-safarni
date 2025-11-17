@@ -1,5 +1,5 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import { AddCircleOutline } from "@mui/icons-material";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import MasterCard from "./masterCard";
 
 export default function PaymentPage() {
   const [content, setContent] = useState("");
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <Container>
       {/* return to home */}
@@ -49,9 +49,8 @@ export default function PaymentPage() {
           </Typography>
           <Stack direction="row" spacing={2}>
             <div
-              className={`rounded-full w-[146px] pr-[20px] pl-[20px] flex items-center gap-2 cursor-pointer ${
-                content === "PayPal" ? "bg-[#EBF5FF] " : "bg-gray-100 "
-              }`}
+              className={`rounded-full w-[146px] pr-[20px] pl-[20px] flex items-center gap-2 cursor-pointer ${content === "PayPal" ? "bg-[#EBF5FF] " : "bg-gray-100 "
+                }`}
               onClick={() => setContent("PayPal")}
             >
               <img
@@ -70,10 +69,9 @@ export default function PaymentPage() {
               </Typography>
             </div>
             <div
-              className={` rounded-full w-[207px] p-[5px]  flex items-center gap-2 justify-center cursor-pointer ${
-                content === "MasterCard"
-                  ? "bg-[#EBF5FF] " : "bg-gray-100 "
-              }`}
+              className={` rounded-full w-[207px] p-[5px]  flex items-center gap-2 justify-center cursor-pointer ${content === "MasterCard"
+                ? "bg-[#EBF5FF] " : "bg-gray-100 "
+                }`}
               onClick={() => setContent("MasterCard")}
             >
               <img
@@ -92,10 +90,9 @@ export default function PaymentPage() {
               </Typography>
             </div>
             <div
-              className={` rounded-full w-[128px] flex items-center gap-2 justify-center cursor-pointer ${
-                content === "Visa"
-                  ? "bg-[#EBF5FF] " : "bg-gray-100 "
-              }`}
+              className={` rounded-full w-[128px] flex items-center gap-2 justify-center cursor-pointer ${content === "Visa"
+                ? "bg-[#EBF5FF] " : "bg-gray-100 "
+                }`}
               onClick={() => setContent("Visa")}
             >
               <img
