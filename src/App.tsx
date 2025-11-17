@@ -30,7 +30,7 @@ export default function App() {
 
   const router = createBrowserRouter([
     {
-      path: "",
+      path: "/",
       element: <MainLayout />,
       errorElement: <h1 className="text-red-500 p-8">404 - Page Not Found</h1>,
       children: [
@@ -47,7 +47,7 @@ export default function App() {
       ],
     },
     {
-      path: "",
+      path: "/",
       element: <AuthLayout />,
       errorElement: <h1 className="text-red-500 p-8">404 - Page Not Found</h1>,
       children: [
