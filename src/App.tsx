@@ -37,11 +37,9 @@ export default function App() {
         { path: "home", element: <Home /> },
         { path: "profile", element: <Profile /> },
         { path: "personal-information", element: <Info /> },
-
         { path: "account-security", element: <AccountSecurity /> },
         { path: "my-booking", element: <MyBooking /> },
         { path: "maps", element: <Maps /> },
-
         { path: "search", element: <SearchPage /> },
 
       ],
