@@ -51,7 +51,7 @@ export default function Profile() {
                     />
 
                     <MenuItem
-                        to={"/account-security"}
+                        to={"/my-booking"}
 
                         icon={<CalendarMonthIcon sx={{ fontSize: 26, color: "#111" }} />}
                         title="My Booking"

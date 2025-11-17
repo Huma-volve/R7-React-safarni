@@ -17,9 +17,11 @@ import Home from "./page/home/Home";
 
 
 import Profile from "./page/Profile/Profile";
-
 import Info from "./page/info/info";
 import AccountSecurity from "./page/AccountSecurity/AccountSecurity";
+import MyBooking from "./page/MyBooking/MyBooking";
+import Maps from "./page/maps/maps";
+
 
 
 
@@ -37,7 +39,9 @@ export default function App() {
         { path: "personal-information", element: <Info /> },
 
         { path: "account-security", element: <AccountSecurity /> },
-        // { path: "home", element: <Home /> },
+        { path: "my-booking", element: <MyBooking /> },
+        { path: "maps", element: <Maps /> },
+
 
 
       ],
