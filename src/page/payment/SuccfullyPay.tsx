@@ -3,7 +3,7 @@ import { Stack, Box, Container, Typography, Button } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import { Link, useNavigate } from "react-router-dom";
 export default function SuccfullyPay() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <Container>
       <Box
