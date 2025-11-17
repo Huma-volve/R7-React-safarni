@@ -5,8 +5,7 @@ import {
 import Home from "./page/home/Home";
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
-import FlightSelector from "./page/flightBooking/flightSearch";
-import { Routes, Route, Link } from "react-router-dom";
+// import FlightSelector from "./page/flightBooking/flightSearch";
 import GetStarted from "./page/GetStarted/GetStarted";
 import Login from "./page/Login/Login";
 import SignUp from "./page/Signup/SignUp";
@@ -15,7 +14,6 @@ import ForgetPassword from "./page/ForgetPassword/ForgetPassword";
 import OTP from "./page/OTP/OTP";
 import Done from "./page/Done/Done";
 
-import Home from "./page/home/Home";
 
 
 import Profile from "./page/Profile/Profile";
@@ -67,12 +65,6 @@ export default function App() {
     <div className="p-6">
       <RouterProvider router={router} />
     </div>
-    // <Routes>
-    //   <Route path="/asc" element={<Destination />} />
-    //   <Route path="/paymentpage" element={<PaymentPage />} />
-    //   <Route path="/succfullyPay" element={<SuccfullyPay />} />
-    //   <Route path="/" element={<FlightSelector />} />
-    //   <Route path="/FlightBooking" element={<FlightBooking />} />
-    // </Routes>
+
   );
 }
