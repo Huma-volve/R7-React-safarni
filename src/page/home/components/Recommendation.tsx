@@ -1,5 +1,10 @@
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import image1 from "../../../assets/recommend1.jpg"
+import image2 from "../../../assets/recommend2.jpg"
+import image3 from "../../../assets/recommend3.jpg"
+import image4 from "../../../assets/recommend4.jpg"
+
 
 export default function Recommendation() {
     const places = [
@@ -7,25 +12,25 @@ export default function Recommendation() {
             title: "The Pyramids",
             city: "Giza",
             rating: 4.8,
-            img: "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
+            img: image1,
         },
         {
             title: "The Citadel of Saladin",
             city: "Cairo",
             rating: 4.8,
-            img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Qaitbay_Citadel.jpg/640px-Qaitbay_Citadel.jpg",
+            img: image2,
         },
         {
             title: "Karnak Temple",
             city: "Luxor",
             rating: 4.3,
-            img: "https://cdn.britannica.com/83/94583-050-7FF80A42/Great-Hypostyle-Hall-Karnak-Egypt.jpg",
+            img: image3,
         },
         {
             title: "Library of Alexandria",
             city: "Alexandria",
             rating: 4.8,
-            img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Bibliotheca_Alexandrina.jpg/640px-Bibliotheca_Alexandrina.jpg",
+            img: image4,
         },
     ];
 
