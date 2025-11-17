@@ -31,6 +31,7 @@ export default function Categories() {
                                 src={item.img}
                                 alt={item.title}
                                 className="w-full h-full object-cover"
+
                             />
                         </div>
 

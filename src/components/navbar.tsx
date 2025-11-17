@@ -45,8 +45,13 @@ function Navbar() {
 
         {/* Right Icons */}
         <div className="flex items-center gap-5">
-          <Search className="w-5 h-5 text-gray-700 cursor-pointer hover:text-main-color" />
-          <SlidersHorizontal className="w-5 h-5 text-gray-700 cursor-pointer hover:text-main-color" />
+          <Link to={"/search"}>
+            <Search className="w-5 h-5 text-gray-700 cursor-pointer hover:text-main-color" />
+          </Link>
+          <Link to={"/filter"}>
+            <SlidersHorizontal className="w-5 h-5 text-gray-700 cursor-pointer hover:text-main-color" />
+          </Link>
+
           <Link to={"/profile"}>
             <img
               src={profile}

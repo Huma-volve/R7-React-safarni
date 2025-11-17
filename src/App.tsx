@@ -21,6 +21,8 @@ import Info from "./page/info/info";
 import AccountSecurity from "./page/AccountSecurity/AccountSecurity";
 import MyBooking from "./page/MyBooking/MyBooking";
 import Maps from "./page/maps/Maps";
+import SearchPage from "./page/search/SearchPage";
+
 
 
 
@@ -42,7 +44,7 @@ export default function App() {
         { path: "my-booking", element: <MyBooking /> },
         { path: "maps", element: <Maps /> },
 
-
+        { path: "search", element: <SearchPage /> },
 
       ],
     },
