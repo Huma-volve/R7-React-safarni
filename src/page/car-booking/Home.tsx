@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, Button} from "@mui/material";
+import { Card, CardContent, Typography, Button } from "@mui/material";
 // import searchIcon from "/assets/search-normal.png";
 // import backIcon from "/assets/Back.png";
 import { useNavigate } from "react-router-dom";
@@ -19,47 +19,47 @@ const cars: {
     transmission: string;
     seats: number;
     fuel: string;
-    id: string;
+    id: number;
 }[] = [
-    {
-        name: "S 500 Sedan",
-        transmission: "Automatic",
-        seats: 5,
-        id: "1",
-        fuel: "Diesel",
-        image: "https://www.mbusa.com/content/dam/mb-nafta/us/myco/my23/s/sedan/class-page/2023-S-SEDAN-CLASS-HIGHLIGHT-02-DR.jpg",
-    },
-    {
-        name: "GLA 250 SUV",
-        transmission: "Automatic",
-        seats: 7,
-        id: "2",
-        fuel: "Diesel",
-        image: "https://www.mbusa.com/content/dam/mb-nafta/us/myco/my23/gla/suv/class-page/2023-GLA-SUV-CLASS-HIGHLIGHT-02-DR.jpg",
-    },
-    {
-        name: "Volvo XC40",
-        transmission: "Automatic",
-        seats: 5,
-        id: "3",
-        fuel: "Petrol",
-        image: "https://www.volvocars.com/images/v/-/media/project/contentplatform/data/media/my23/xc40-hybrid/gallery/xc40h-gallery-1-16x9.jpg",
-    },
-    {
-        name: "Mazda CX-30",
-        transmission: "Automatic",
-        seats: 5,
-        id: "4",
-        fuel: "Diesel",
-        image: "https://www.mazdausa.com/siteassets/vehicles/2024/cx-30/gallery/hero/2024-cx-30-gallery-hero-1.jpg",
-    },
-];
+        {
+            name: "S 500 Sedan",
+            transmission: "Automatic",
+            seats: 5,
+            id: 1,
+            fuel: "Diesel",
+            image: "https://www.mbusa.com/content/dam/mb-nafta/us/myco/my23/s/sedan/class-page/2023-S-SEDAN-CLASS-HIGHLIGHT-02-DR.jpg",
+        },
+        {
+            name: "GLA 250 SUV",
+            transmission: "Automatic",
+            seats: 7,
+            id: 2,
+            fuel: "Diesel",
+            image: "https://www.mbusa.com/content/dam/mb-nafta/us/myco/my23/gla/suv/class-page/2023-GLA-SUV-CLASS-HIGHLIGHT-02-DR.jpg",
+        },
+        {
+            name: "Volvo XC40",
+            transmission: "Automatic",
+            seats: 5,
+            id: 3,
+            fuel: "Petrol",
+            image: "https://www.volvocars.com/images/v/-/media/project/contentplatform/data/media/my23/xc40-hybrid/gallery/xc40h-gallery-1-16x9.jpg",
+        },
+        {
+            name: "Mazda CX-30",
+            transmission: "Automatic",
+            seats: 5,
+            id: 4,
+            fuel: "Diesel",
+            image: "https://www.mazdausa.com/siteassets/vehicles/2024/cx-30/gallery/hero/2024-cx-30-gallery-hero-1.jpg",
+        },
+    ];
 
 
 
 
 export default function Home() {
-     const navigate = useNavigate();
+    const navigate = useNavigate();
     return (
         <div className="min-h-screen bg-[--color-gray-300] px-10 py-8 font-[--font-poppins]">
             {/* <div className="flex justify-between gap-9">
@@ -73,7 +73,7 @@ export default function Home() {
                         </div>
                         <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg
                bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600
-         dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
+            dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
                     </div>
 
                 </form>
@@ -124,8 +124,8 @@ export default function Home() {
                             </div>
                             <div className="flex gap-2 mt-4">
                                 <Button
-                                onClick={()=>navigate("/map")}
-                                className="w-1/2"
+                                    onClick={() => navigate("/map")}
+                                    className="w-1/2"
                                     variant="contained"
                                     size="small"
                                     sx={{
@@ -137,7 +137,7 @@ export default function Home() {
                                     Rent Now
                                 </Button>
                                 <Button
-                                onClick={()=>navigate(`/pickUp/${car.id}`)}
+                                    onClick={() => navigate(`/car-booking/pickUp/${car.id}`)}
                                     variant="outlined"
                                     size="small"
                                     className="w-1/2"
