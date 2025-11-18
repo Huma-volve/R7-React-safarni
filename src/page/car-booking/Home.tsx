@@ -1,8 +1,9 @@
 import { Card, CardContent, Typography, Button } from "@mui/material";
-// import searchIcon from "/assets/search-normal.png";
-// import backIcon from "/assets/Back.png";
 import { useNavigate } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
+import type { ChangeEvent } from "react";
 import iris from "/assets/iris 1.png";
+import Back from "../../components/back";
 const brands = [
     { name: "Mercedes", count: 32, logo: "https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Logo.svg" },
     { name: "Geely", count: 22, logo: "https://upload.wikimedia.org/wikipedia/en/2/28/Geely_Auto_logo.svg" },
@@ -55,49 +56,81 @@ const cars: {
         },
     ];
 
+interface SearchInputProps {
+    value?: string;
+    onChange?: (value: string) => void;
+}
 
 
-
-export default function Home() {
+export default function Home({ value, onChange }: SearchInputProps) {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        onChange?.(e.target.value);
+    };
     const navigate = useNavigate();
     return (
-        <div className="min-h-screen bg-[--color-gray-300] px-10 py-8 font-[--font-poppins]">
-            {/* <div className="flex justify-between gap-9">
-                <img src={backIcon} className="cursor-pointer" />
-                <form className=" w-full ">
-                    <div className="relative ">
-                        <div className="absolute h-full inset-y-0 start-0 flex items-center ps-3 pointer-events-none ">
-                            <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                            </svg>
-                        </div>
-                        <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg
-               bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600
-            dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
-                    </div>
+        <div className="min-h-screen bg-[--color-gray-300] px-10 pb-8 font-[--font-poppins]">
+            <div className="flex gap-3 align-center justify-center items-center">
+                <div className="relative -top-2.5">
+                    <Back />
+                </div>
+                <div className="w-full">
+                    <div className="border-[0.5px] mt-8
+                    border-[#9CA3AF] bg-white rounded-2xl
+                    flex items-center px-5 py-2">
+                        <SearchIcon sx={{ color: "#9CA3AF", fontSize: 28 }} />
 
-                </form>
-            </div> */}
-            {/* Brands Section */}
-            <Typography variant="h6" className="mb-4 font-bold text-[--color-dark-blue]">
+                        <input
+                            type="text"
+                            placeholder="Search"
+                            className="ml-3 w-full outline-none text-gray-700 placeholder-[#9CA3AF] text-lg"
+
+                            value={value}
+                            onChange={handleChange}
+                        />
+                    </div>
+                </div>
+            </div>
+            <Typography variant="h6" className="py-4 font-bold text-[--color-dark-blue]">
                 Brands
             </Typography>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-4 mb-10">
+            <div
+                className="
+    mb-10
+    flex gap-4 overflow-x-auto px-1
+    sm:grid sm:grid-cols-3 md:grid-cols-7
+    sm:overflow-visible
+  "
+            >
                 {brands.map((brand) => (
                     <Card
                         key={brand.name}
-                        className="flex flex-col items-center justify-center py-4 shadow-sm hover:shadow-md transition bg-[--color-white]"
+                        className="
+        min-w-[150px] sm:min-w-0
+        flex flex-col items-center justify-center 
+        py-6 px-4
+        rounded-2xl border border-gray-200
+        bg-white
+        shadow-sm hover:shadow-md 
+        transition-all duration-200
+      "
                     >
-                        <img src={brand.logo} alt={brand.name} className="h-10 mb-2" />
-                        <Typography variant="body1" className="font-medium text-[--color-dark-blue]">
+                        <img
+                            src={brand.logo}
+                            alt={brand.name}
+                            className="h-10 w-auto mb-2 object-contain"
+                        />
+
+                        <Typography variant="body1" className="font-semibold text-gray-800">
                             {brand.name}
                         </Typography>
-                        <Typography variant="body2" className="text-[--color-blue-600]">
+
+                        <Typography variant="body2" className="text-blue-600 font-medium">
                             +{brand.count}
                         </Typography>
                     </Card>
                 ))}
             </div>
+
 
             {/* Popular Cars Section */}
             <Typography variant="h6" className="mb-4 font-semibold text-dark-blue">
@@ -107,22 +140,32 @@ export default function Home() {
                 {cars.map((car) => (
                     <Card
                         key={car.name}
-                        className="flex flex-col items-center p-4 border-0 hover:shadow-lg transition bg-white"
+                        className="flex flex-col p-4 border-0 hover:shadow-lg transition bg-white w-full"
                     >
-                        <div className="flex justify-between w-full items-center">
-                            <Typography variant="h6" className="font-semibold text-dark-blue">
+                        <div className="flex flex-row justify-between items-center w-full gap-3">
+                            <Typography variant="h6" className="font-semibold text-dark-blue sm:text-">
                                 {car.name}
                             </Typography>
-                            <img src={iris} alt={car.name} className="w-40 h-28 object-cover rounded-lg mr-4" />
-                        </div>
-                        <CardContent className="flex flex-col justify-between grow">
 
-                            <div className="flex text-gray-500  text-sm mt-1 space-x-40">
+                            <img
+                                src={iris}
+                                alt={car.name}
+                                className="w-40 h-28 object-cover rounded-lg"
+                            />
+                        </div>
+
+
+                        <CardContent className="flex flex-col justify-between grow w-full">
+
+
+                            <div className="flex flex-wrap items-center text-gray-500 text-sm mt-2 gap-3">
                                 <span>{car.transmission}</span>
                                 <span>| {car.seats} seats</span>
                                 <span>| {car.fuel}</span>
                             </div>
-                            <div className="flex gap-2 mt-4">
+
+
+                            <div className="flex gap-2 mt-4 w-full">
                                 <Button
                                     onClick={() => navigate("/map")}
                                     className="w-1/2"
@@ -136,6 +179,7 @@ export default function Home() {
                                 >
                                     Rent Now
                                 </Button>
+
                                 <Button
                                     onClick={() => navigate(`/car-booking/pickUp/${car.id}`)}
                                     variant="outlined"
@@ -156,6 +200,7 @@ export default function Home() {
                             </div>
                         </CardContent>
                     </Card>
+
                 ))}
             </div>
         </div>
