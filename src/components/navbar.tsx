@@ -6,7 +6,6 @@ import { useLocation } from 'react-router-dom';
 
 function Navbar() {
   const path = useLocation()
-  console.log(path.pathname)
   return (
     <header className="w-full bg-white ">
       <nav className=" flex items-center justify-between py-4 px-6 h-24">
@@ -48,7 +47,7 @@ function Navbar() {
           <Link to={"/search"}>
             <Search className="w-5 h-5 text-gray-700 cursor-pointer hover:text-main-color" />
           </Link>
-          <Link to={"/filter"}>
+          <Link to={"/filters-panel"}>
             <SlidersHorizontal className="w-5 h-5 text-gray-700 cursor-pointer hover:text-main-color" />
           </Link>
 
