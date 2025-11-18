@@ -3,6 +3,7 @@
 @import "tailwindcss";
 
 @theme {
+  --color-main-color: #1E429F;
   --color-dark-blue: oklch(0.09 0.03 240);
   --color-gray-700: oklch(0.42 0.01 230);
   --color-blue-900: oklch(0.22 0.15 243);

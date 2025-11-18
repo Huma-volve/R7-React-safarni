@@ -5,7 +5,7 @@ import {
 import Home from "./page/home/Home";
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
-
+import FlightSelector from "./page/flightBooking/flightSearch";
 import GetStarted from "./page/GetStarted/GetStarted";
 import Login from "./page/Login/Login";
 import SignUp from "./page/Signup/SignUp";
@@ -13,6 +13,17 @@ import ChangePassword from "./page/ChangePassword/ChangePassword";
 import ForgetPassword from "./page/ForgetPassword/ForgetPassword";
 import OTP from "./page/OTP/OTP";
 import Done from "./page/Done/Done";
+
+
+
+import Profile from "./page/Profile/Profile";
+import Info from "./page/info/info";
+import AccountSecurity from "./page/AccountSecurity/AccountSecurity";
+import MyBooking from "./page/MyBooking/MyBooking";
+import Maps from "./page/maps/Maps";
+import SearchPage from "./page/search/SearchPage";
+import Results from "./page/results/Results";
+import FiltersPanel from "./page/filter/Filter";
 
 import About from "./page/about/About";
 import CarMain from "./page/car-booking/Home";
@@ -22,54 +33,56 @@ import CarLayout from "./layouts/CarLayout";
 import HotelLayout from "./layouts/HotelLayout";
 import HotelsPage from "./page/hotels/HotelsPage";
 
+
+
+
+
+
   const router = createBrowserRouter([
     {
-    path: "/",                     // root
-    element: <MainLayout />,     
-    errorElement: <h1 className="text-red-500 p-8">404 - Page Not Found</h1>,
-    children: [
-      { index: true, element: <Home /> },  // path: "/" (index route)
-      { path: "about", element: <About /> },
-        { path: "car-booking", element: <CarMain />},
+      path: "/",
+      element: <MainLayout />,
+      errorElement: <h1 className="text-red-500 p-8">404 - Page Not Found</h1>,
+      children: [
+        { path: "home", element: <Home /> },
+        { path: "profile", element: <Profile /> },
+        { path: "personal-information", element: <Info /> },
+        { path: "account-security", element: <AccountSecurity /> },
+        { path: "my-booking", element: <MyBooking /> },
+        { path: "maps", element: <Maps /> },
+        { path: "search", element: <SearchPage /> },
+        { path: "flight-selector", element: <FlightSelector /> },
+        { path: "results", element: <Results /> },
+        { path: "filters-panel", element: <FiltersPanel /> },
+{ path: "car-booking", element: <CarMain />},
       { path: "car-booking/pickUp/:id", element: <PickUpPage /> },
       { path: "map", element: <Map /> },
-    ],
-  },
-  {
-    path: "/auth",                 
-    element: <AuthLayout />,
-    children: [
-      { index: true, element: <GetStarted /> }, // /auth
-      { path: "login", element: <Login /> },    // /auth/login
-      { path: "signup", element: <SignUp /> },
-      { path: "forget-password", element: <ForgetPassword /> },
-      { path: "change-password", element: <ChangePassword /> },
-      { path: "OTP", element: <OTP /> },
-      { path: "Done", element: <Done /> },
-    ],
-  },
-  {
-    path:"/car",
-    element:<CarLayout/>,
-    children:[
-    
 
-    ]
-  },{
-    path:"/hotel",
-    element:<HotelLayout/>,
-    children:[
-            { index: true, element: <HotelsPage /> }, 
 
-    ]
-  }
+
+      ],
+    },
+    {
+      path: "/",
+      element: <AuthLayout />,
+      errorElement: <h1 className="text-red-500 p-8">404 - Page Not Found</h1>,
+      children: [
+        { path: "", index: true, element: <GetStarted /> },
+        { path: "login", element: <Login /> },
+        { path: "signup", element: <SignUp /> },
+        { path: "forget-password", element: <ForgetPassword /> },
+        { path: "change-password", element: <ChangePassword /> },
+        { path: "OTP", element: <OTP /> },
+        { path: "Done", element: <Done /> },
+      ],
+    },
+  ]);
   
-]);
-
 export default function App() {
   return (
     <div className="p-6">
       <RouterProvider router={router} />
     </div>
+
   );
 }
