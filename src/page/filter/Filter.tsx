@@ -158,16 +158,16 @@ export default function FiltersPanel() {
             <div>
                 <h2 className="text-lg font-semibold text-gray-800">Rating Multi Select</h2>
 
-                <div className="flex gap-4 mt-4 flex-wrap">
+                <div className="flex gap-4 mt-4 flex-wrap justify-between">
                     {ratings.map((r) => (
                         <button
                             key={r}
                             onClick={() => setSelectedRating(r)}
                             className={`
-                w-20 h-20 flex flex-col items-center justify-center rounded-full border text-lg
+                w-[123px] h-[73px] flex  items-center px-4 py-2 justify-center rounded-[120px] border  text-2xl
                 ${selectedRating === r
-                                    ? "bg-blue-600 text-white border-blue-600"
-                                    : "bg-blue-50 text-gray-800 border-gray-300"}
+                                    ? "bg-blue-600 text-white border-[#C3DDFD]"
+                                    : " text-[#6B7280] border-gray-300"}
               `}
                         >
                             <StarIcon />
