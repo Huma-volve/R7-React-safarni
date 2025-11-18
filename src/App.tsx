@@ -5,7 +5,7 @@ import {
 import Home from "./page/home/Home";
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
-// import FlightSelector from "./page/flightBooking/flightSearch";
+import FlightSelector from "./page/flightBooking/flightSearch";
 import GetStarted from "./page/GetStarted/GetStarted";
 import Login from "./page/Login/Login";
 import SignUp from "./page/Signup/SignUp";
@@ -22,6 +22,8 @@ import AccountSecurity from "./page/AccountSecurity/AccountSecurity";
 import MyBooking from "./page/MyBooking/MyBooking";
 import Maps from "./page/maps/Maps";
 import SearchPage from "./page/search/SearchPage";
+import Results from "./page/results/Results";
+import FiltersPanel from "./page/filter/Filter";
 
 
 
@@ -41,6 +43,12 @@ export default function App() {
         { path: "my-booking", element: <MyBooking /> },
         { path: "maps", element: <Maps /> },
         { path: "search", element: <SearchPage /> },
+        { path: "flight-selector", element: <FlightSelector /> },
+        { path: "results", element: <Results /> },
+        { path: "filters-panel", element: <FiltersPanel /> },
+
+
+
 
       ],
     },
