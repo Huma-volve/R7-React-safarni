@@ -178,15 +178,15 @@ export default function FiltersPanel() {
             </div>
 
             {/* Bottom Buttons */}
-            <div className="flex justify-between mt-6">
+            <div className="flex justify-between mt-6 max-sm:flex-col">
                 <button
                     onClick={clearAll}
-                    className="px-6 py-3 border border-gray-500 rounded-lg w-1/3 text-gray-700"
+                    className="px-6 py-3 border max-md:mb-4 border-gray-500 rounded-lg md:w-1/3 text-gray-700"
                 >
                     Clear All
                 </button>
 
-                <button className="px-6 py-3 bg-blue-600 text-white rounded-lg w-1/3">
+                <button className="px-6 py-3  bg-blue-600 text-white rounded-lg md:w-1/3">
                     56 Tours Found
                 </button>
             </div>

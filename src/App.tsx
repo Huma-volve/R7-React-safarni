@@ -45,10 +45,7 @@ const router = createBrowserRouter([
       { path: "car-booking", element: <CarMain /> },
       { path: "car-booking/pickUp/:id", element: <PickUpPage /> },
       { path: "map", element: <Map /> },
-      { path: "hotels", element: <HotelsPage /> },
-      
-
-
+      { path: "hotels", element: <HotelsPage /> }
 
     ],
   },
