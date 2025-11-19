@@ -1,3 +1,6 @@
+* {
+  transition-duration: 0.5s !important;
+}
 .flight-card::before {
   content: "";
   position: absolute;
@@ -7,7 +10,6 @@
   left: 100px;
   width: 20px;
   height: 20px;
-  background-color: #fff;
   border-radius: 50%;
   border-left: #fff solid 1px;
 }

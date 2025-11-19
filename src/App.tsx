@@ -1,12 +1,8 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
 import Home from "./page/home/Home";
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
-import FlightSelector from "./page/flightBooking/flightSearch";
-import { Routes, Route, Link } from "react-router-dom";
+import FlightSelector from "./page/flightBooking/FlightSelector";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import GetStarted from "./page/GetStarted/GetStarted";
 import Login from "./page/Login/Login";
 import SignUp from "./page/Signup/SignUp";
@@ -14,8 +10,20 @@ import ChangePassword from "./page/ChangePassword/ChangePassword";
 import ForgetPassword from "./page/ForgetPassword/ForgetPassword";
 import OTP from "./page/OTP/OTP";
 import Done from "./page/Done/Done";
-
-
+import SeatSelector from "./page/flightBooking/chooseSeat";
+import Internal from "./page/internal.tsx/internal";
+import Favorite from "./page/favorite/favorite";
+import Compare from "./page/compare/compare";
+import Destination from "./page/destination/destination";
+import PaymentPage from "./payment/PaymentPage";
+import SuccfullyPay from "./payment/SuccfullyPay";
+import FlightBooking from "./page/flightBooking/flightBooking";
+import BoardingPass from "./page/flightBooking/bardindPass";
+import Profile from "./page/Profile/Profile";
+import Info from "./page/info/info";
+import AccountSecurity from "./page/AccountSecurity/AccountSecurity";
+import MyBooking from "./page/MyBooking/MyBooking";
+import Maps from "./page/maps/Maps";
 export default function App() {
   const router = createBrowserRouter([
     {
@@ -24,11 +32,31 @@ export default function App() {
       errorElement: <h1 className="text-red-500 p-8">404 - Page Not Found</h1>,
       children: [
         { path: "home", element: <Home /> },
-        // { path: "home", element: <Home /> },
-        // { path: "home", element: <Home /> },
-        // { path: "home", element: <Home /> },
-
-
+        { path: "profile", element: <Profile /> },
+        { path: "personal-information", element: <Info /> },
+        { path: "account-security", element: <AccountSecurity /> },
+        { path: "my-booking", element: <MyBooking /> },
+        { path: "maps", element: <Maps /> },
+        // { path: "search", element: <SearchPage /> },
+        { path: "flight-selector", element: <FlightSelector /> },
+        // { path: "results", element: <Results /> },
+        // { path: "filters-panel", element: <FiltersPanel /> },
+        { path: "destination", element: <Destination /> },
+        { path: "paymentpage", element: <PaymentPage /> },
+        { path: "paymentpage/succfullypay", element: <SuccfullyPay /> },
+        { path: "compare", element: <Compare /> },
+        { path: "flightbooking", element: <FlightBooking /> },
+        { path: "internal", element: <Internal /> },
+        { path: "favorite", element: <Favorite /> },
+        { path: "flightbooking/flightselector", element: <FlightSelector /> },
+        {
+          path: "flightbooking/flightselector/seatselector",
+          element: <SeatSelector />,
+        },
+        {
+          path: "flightbooking/flightselector/seatselector/boardingpass",
+          element: <BoardingPass />,
+        },
       ],
     },
     {
@@ -50,12 +78,5 @@ export default function App() {
     <div className="p-6">
       <RouterProvider router={router} />
     </div>
-    // <Routes>
-    //   <Route path="/asc" element={<Destination />} />
-    //   <Route path="/paymentpage" element={<PaymentPage />} />
-    //   <Route path="/succfullyPay" element={<SuccfullyPay />} />
-    //   <Route path="/" element={<FlightSelector />} />
-    //   <Route path="/FlightBooking" element={<FlightBooking />} />
-    // </Routes>
   );
 }

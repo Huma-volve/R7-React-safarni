@@ -1,232 +1,296 @@
-// // SeatSelector.tsx
+import React, { useState } from "react";
+import {
+  Box,
+  Typography,
+  Button,
+  Container,
+  Divider,
+  Stack,
+} from "@mui/material";
+import Back from "../../components/back";
+import { useNavigate } from "react-router-dom";
+type SeatStatus = "available" | "selected" | "unavailable";
+type SeatsMap = Record<number, SeatStatus>;
 
-// import React, { useState } from "react";
-// import {
-//   Box,
-//   Typography,
-//   Button,
-//   Paper,
-//   Container,
-//   Stack,
-// } from "@mui/material";
-// import {Grid} from "@mui/material";
-// type SeatStatus = "available" | "selected" | "unavailable";
-// type SeatsMap = Record<number, SeatStatus>;
+export default function SeatSelector() {
+  const [selectedSeat, setSelectedSeat] = useState<number | null>(6);
+  const navigate = useNavigate();
 
-// const SeatSelector = () => {
-//   const [selectedSeat, setSelectedSeat] = useState<number | null>(null);
+  const handleContinue = () => {
+    if (selectedSeat === null) {
+      alert("Please select a seat before continuing.");
+      return;
+    }
+    navigate("/flightbooking/flightselector/seatselector/boardingpass");
+  };
+  const [seats, setSeats] = useState<SeatsMap>(() => {
+    const map: SeatsMap = {};
+    for (let i = 1; i <= 30; i++) map[i] = "unavailable";
 
-//   const [seats, setSeats] = useState<SeatsMap>({
-//     1: "available",
-//     2: "available",
-//     3: "unavailable",
-//     4: "available",
-//     5: "available",
-//     6: "selected",
-//     7: "available",
-//     8: "available",
-//     9: "available",
-//     10: "available",
-//     11: "available",
-//     12: "available",
-//     13: "available",
-//     14: "available",
-//     15: "available",
-//     16: "available",
-//     17: "available",
-//     18: "available",
-//     19: "available",
-//     20: "available",
-//     21: "available",
-//     22: "available",
-//     23: "available",
-//     24: "available",
-//     25: "available",
-//     26: "available",
-//     27: "available",
-//     28: "available",
-//     29: "available",
-//     30: "available",
-//   });
+    map[4] = "available";
+    map[8] = "available";
+    map[9] = "available";
+    map[10] = "available";
+    map[16] = "available";
+    map[17] = "available";
+    map[20] = "available";
+    map[24] = "available";
+    map[26] = "available";
+    map[29] = "available";
+    map[28] = "available";
+    map[6] = "selected";
+    return map;
+  });
 
-//   const handleSelectSeat = (seatNumber: number) => {
-//     if (seats[seatNumber] === "unavailable") return;
+  const ticketPrice = 150;
+  const totalPrice = selectedSeat ? ticketPrice : 0;
 
-//     if (selectedSeat !== null && selectedSeat !== seatNumber) {
-//       setSeats((prev) => ({
-//         ...prev,
-//         [selectedSeat]: "available",
-//       }));
-//     }
+  const handleSelectSeat = (seatNumber: number) => {
+    if (seats[seatNumber] === "unavailable") return;
 
-//     setSeats((prev) => ({
-//       ...prev,
-//       [seatNumber]: "selected",
-//     }));
+    setSeats((prev) => {
+      const updated = { ...prev };
 
-//     setSelectedSeat(seatNumber);
-//   };
+      Object.keys(updated).forEach((k) => {
+        if (updated[+k] === "selected") updated[+k] = "available";
+      });
 
-//   const ticketPrice = 150.0;
-//   const totalPrice = selectedSeat ? ticketPrice : 0;
+      updated[seatNumber] = "selected";
+      return updated;
+    });
 
-//   return (
-//     <Container maxWidth="lg" sx={{ py: 6 }}>
-//       <Box sx={{ display: "flex", gap: 4, alignItems: "flex-start" }}>
-//         {/* صورة الطائرة (جانب أيسر) */}
-//         <Paper
-//           elevation={0}
-//           sx={{
-//             width: 300,
-//             height: 400,
-//             borderRadius: 3,
-//             bgcolor: "grey.50",
-//             display: "flex",
-//             justifyContent: "center",
-//             alignItems: "center",
-//             overflow: "hidden",
-//           }}
-//         >
-//           <Typography variant="h6" color="text.secondary" align="center">
-//             🛩️ Airplane Layout
-//           </Typography>
-//           {/* يمكنك استبدال هذا بـ <img src="..." alt="Airplane" /> لاحقًا */}
-//         </Paper>
+    setSelectedSeat(seatNumber);
+  };
 
-//         {/* مخطط المقاعد (جانب أيمن) */}
-//         <Box sx={{ flex: 1 }}>
-//           <Typography variant="h5" fontWeight="bold" mb={2}>
-//             Choose seat
-//           </Typography>
+  const renderSeatButton = (num: number) => {
+    const status = seats[num];
+    const isUnavailable = status === "unavailable";
+    const isSelected = status === "selected";
 
-//           {/* مفتاح الألوان */}
-//           <Stack direction="row" spacing={3} mb={3}>
-//             {[
-//               { label: "Available", color: "primary.main" },
-//               { label: "Selected", color: "success.main" },
-//               { label: "Un available", color: "grey.300" },
-//             ].map((item) => (
-//               <Box
-//                 key={item.label}
-//                 sx={{ display: "flex", alignItems: "center", gap: 1 }}
-//               >
-//                 <Box
-//                   sx={{
-//                     width: 12,
-//                     height: 12,
-//                     borderRadius: "50%",
-//                     bgcolor: item.color,
-//                   }}
-//                 />
-//                 <Typography variant="caption">{item.label}</Typography>
-//               </Box>
-//             ))}
-//           </Stack>
+    return (
+      <Button
+        key={num}
+        onClick={() => handleSelectSeat(num)}
+        disabled={isUnavailable}
+        sx={{
+          width: { xs: "38px", md: "50px" },
+          height: { xs: "38px", md: "50px" },
+          fontSize: { xs: "12px", md: "18px" },
+          fontWeight: 400,
+          bgcolor: isUnavailable
+            ? "grey.100"
+            : isSelected
+            ? "#03D947"
+            : "#1E429F",
+          color: isUnavailable ? "black" : isSelected ? "black" : "white",
+          borderRadius: 1.5,
+          textTransform: "none",
 
-//           {/* شبكة المقاعد */}
-//           <Grid container spacing={1} sx={{ mb: 3 }}>
-//             {Array.from({ length: 30 }, (_, i) => i + 1).map((seatNumber) => {
-//               const status = seats[seatNumber];
-//               let bgcolor = "grey.200";
-//               let color = "text.secondary";
+          minWidth: "auto",
+        }}
+      >
+        {num}
+      </Button>
+    );
+  };
 
-//               if (status === "available") {
-//                 bgcolor = "primary.main";
-//                 color = "white";
-//               } else if (status === "selected") {
-//                 bgcolor = "success.main";
-//                 color = "white";
-//               }
+  return (
+    <Container>
+      <Back />
+      <Stack
+        sx={{
+          flexDirection: { xs: "column", md: "row" },
+          gap: { xs: "0px", md: "105px" },
+        }}
+      >
+        {/* image */}
+        <Box sx={{ width: "50%", display: { xs: "none", md: "block" } }}>
+          <img
+            src="/assets/flightBooking/Rectangle 20 (2).png"
+            alt="Airplane"
+            className="w-[608px]"
+          />
+        </Box>
 
-//               return (
-//                 <Grid xs={4} sm={2} key={seatNumber}>
-//                   <Button
-//                     onClick={() => handleSelectSeat(seatNumber)}
-//                     disabled={status === "unavailable"}
-//                     sx={{
-//                       width: "100%",
-//                       height: 50,
-//                       bgcolor,
-//                       color,
-//                       textTransform: "none",
-//                       fontSize: "0.875rem",
-//                       fontWeight: "medium",
-//                       borderRadius: 1,
-//                       "&:hover": {
-//                         bgcolor:
-//                           status === "available"
-//                             ? "primary.dark"
-//                             : status === "selected"
-//                             ? "success.dark"
-//                             : "grey.300",
-//                       },
-//                       "&:disabled": {
-//                         bgcolor: "grey.200",
-//                         color: "text.secondary",
-//                         cursor: "not-allowed",
-//                       },
-//                     }}
-//                   >
-//                     {seatNumber}
-//                   </Button>
-//                 </Grid>
-//               );
-//             })}
-//           </Grid>
+        {/* right content */}
+        <Stack
+          spacing={4}
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+            width: { xs: "100%", md: "50%" },
+          }}
+        >
+          <Typography sx={{ fontSize: "26px", fontWeight: 500 }} mb={2}>
+            Choose seat
+          </Typography>
 
-//           {/* ملخص السعر */}
-//           <Box
-//             sx={{
-//               p: 3,
-//               bgcolor: "grey.50",
-//               borderRadius: 2,
-//               mb: 3,
-//             }}
-//           >
-//             <Stack spacing={1}>
-//               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-//                 <Typography variant="body2">Ticket price</Typography>
-//                 <Typography variant="body2">
-//                   ${ticketPrice.toFixed(2)}
-//                 </Typography>
-//               </Box>
-//               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-//                 <Typography variant="body2">Total Price</Typography>
-//                 <Typography variant="body2" color="primary" fontWeight="bold">
-//                   ${totalPrice.toFixed(2)}
-//                 </Typography>
-//               </Box>
-//               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-//                 <Typography variant="body2">Your Seat</Typography>
-//                 <Typography variant="body2">{selectedSeat ?? "-"}</Typography>
-//               </Box>
-//             </Stack>
-//           </Box>
+          {/* legend */}
+          <Stack direction="row" spacing={3} mb={4}>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Box
+                sx={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: "50%",
+                  bgcolor: "primary.main",
+                }}
+              />
+              <Typography
+                sx={{ fontSize: { xs: "14px", md: "20px" }, fontWeight: 400 }}
+              >
+                Available
+              </Typography>
+            </Stack>
 
-//           {/* زر الاستمرار */}
-//           <Button
-//             fullWidth
-//             variant="contained"
-//             size="large"
-//             disabled={!selectedSeat}
-//             onClick={() => {
-//               if (selectedSeat) {
-//                 alert(`Proceeding with seat ${selectedSeat}`);
-//                 // هنا تروح على الصفحة الجاية
-//               }
-//             }}
-//             sx={{
-//               py: 1.5,
-//               fontWeight: "bold",
-//               fontSize: "1rem",
-//             }}
-//           >
-//             Continue
-//           </Button>
-//         </Box>
-//       </Box>
-//     </Container>
-//   );
-// };
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Box
+                sx={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: "50%",
+                  bgcolor: "success.main",
+                }}
+              />
+              <Typography
+                sx={{ fontSize: { xs: "14px", md: "20px" }, fontWeight: 400 }}
+              >
+                Selected
+              </Typography>
+            </Stack>
 
-// export default SeatSelector;
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Box
+                sx={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: "50%",
+                  bgcolor: "grey.300",
+                }}
+              />
+              <Typography
+                sx={{ fontSize: { xs: "14px", md: "20px" }, fontWeight: 400 }}
+              >
+                Un available
+              </Typography>
+            </Stack>
+          </Stack>
+
+          {/* seats layout */}
+          {/* seats layout - ROW-BY-ROW layout with proper spacing */}
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              gap: 3,
+            }}
+          >
+            {[...Array(6)].map((_, rowIndex) => {
+              const rowStart = rowIndex * 5 + 1;
+              const leftSeats = [rowStart, rowStart + 1]; // 2 seats on left
+              const rightSeats = [rowStart + 2, rowStart + 3, rowStart + 4]; // 3 seats on right
+
+              return (
+                <Stack
+                  key={rowIndex}
+                  direction="row"
+                  spacing={3} // 👈 هذا يتحكم في المسافة بين الجانبين (اليسار واليمين)
+                  alignItems="center"
+                  justifyContent="space-between"
+                  sx={{ width: "100%" }}
+                >
+                  {/* Left side: 2 seats */}
+                  <Stack direction="row" spacing={2}>
+                    {" "}
+                    {/* 👈 المسافة بين المقاعد داخل الطرف */}
+                    {leftSeats.map((num) => renderSeatButton(num))}
+                  </Stack>
+
+                  {/* Right side: 3 seats */}
+                  <Stack direction="row" spacing={2}>
+                    {" "}
+                    {/* 👈 نفس المسافة هنا */}
+                    {rightSeats.map((num) => renderSeatButton(num))}
+                  </Stack>
+                </Stack>
+              );
+            })}
+          </Box>
+
+          {/* SUMMARY */}
+          <Divider className="my-6" />
+          <Box sx={{ width: "100%" }}>
+            <Stack
+              direction={"row"}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>
+                Ticket price
+              </Typography>
+              <Typography
+                sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}
+              >
+                ${ticketPrice.toFixed(2)}
+              </Typography>
+            </Stack>
+            <Stack
+              direction={"row"}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>
+                Total Price
+              </Typography>
+              <Typography
+                sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}
+              >
+                ${totalPrice.toFixed(2)}
+              </Typography>
+            </Stack>
+            <Stack
+              direction={"row"}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>
+                your Seat
+              </Typography>
+
+              <Typography
+                sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}
+              >
+                {selectedSeat ?? "-"}
+              </Typography>
+            </Stack>
+          </Box>
+          <Button
+            variant="contained"
+            fullWidth
+            onClick={handleContinue}
+            sx={{
+              backgroundColor: "#1E429F",
+              fontSize: "20px",
+              fontWeight: "600",
+              padding: "8px 16px",
+              marginTop: "20px",
+              textTransform: "none",
+            }}
+          >
+            Continue
+          </Button>
+        </Stack>
+      </Stack>
+    </Container>
+  );
+}

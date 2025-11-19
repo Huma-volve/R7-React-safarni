@@ -1,25 +1,22 @@
 import { Stack, Box, Container, Typography, Button } from "@mui/material";
 //import { Link } from "react-router-dom";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 export default function SuccfullyPay() {
-  let navigate = useNavigate();
   return (
     <Container>
-      <Box
-        sx={{ paddingTop: "20px", paddingBottom: "20px" }}
-        onClick={() => navigate(-1)}
-      >
+      <Link to="/" className="pt-[20px] pb-[20px] ">
         <div className="bg-gray-100 rounded-full w-[40px] h-[40px] p-2 flex items-center justify-center">
           <NavigateBeforeIcon className="text-[24px]" />
         </div>
-      </Box>
+      </Link>
       <Stack
         sx={{
           flexDirection: { xs: "column", md: "row" },
           gap: { xs: "0px", md: "105px" },
           justifyContent: "center",
           alignItems: "center",
+          marginTop:"20px"
         }}
       >
         {/**Left Side */}
@@ -68,6 +65,7 @@ export default function SuccfullyPay() {
                 padding: "8px 16px",
                 marginTop: "20px",
                 textTransform: "none",
+                color: "white",
               }}
             >
               Back To Home

@@ -1,34 +1,26 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import { AddCircleOutline } from "@mui/icons-material";
 import { useState } from "react";
 import PayPal from "./paypal";
 import MasterCard from "./masterCard";
+import Back from "../components/back";
 
 export default function PaymentPage() {
   const [content, setContent] = useState("");
-  let navigate = useNavigate();
   return (
     <Container>
       {/* return to home */}
-      <Box
-        sx={{ paddingTop: "20px", paddingBottom: "20px" }}
-        onClick={() => navigate(-1)}
-      >
-        <div className="bg-gray-100 rounded-full w-[40px] h-[40px] p-2 flex items-center justify-center">
-          <NavigateBeforeIcon className="text-[24px]" />
-        </div>
-      </Box>
+      <Back />
       <Stack
         sx={{
           flexDirection: { xs: "column", md: "row" },
           gap: { xs: "0px", md: "105px" },
+          justifyContent:{xs:"center",md:"space-between"},
         }}
       >
         {/**Left Side */}
-        <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-          <img src="/assets/destination/paymentPage/Rectangle 20.png" alt="" />
+        <Box sx={{ width: { xs: "100%", md: "50%" }, height: {xs:"220px",md:"auto"} }}>
+          <img src="/assets/destination/paymentPage/Rectangle 20.png" alt="" className="xs:w-[343px] md:w-full h-full m-[auto]"/>
         </Box>
         {/**Right Side */}
         <Box sx={{ width: { xs: "100%", md: "50%" }, position: "relative" }}>
@@ -47,9 +39,9 @@ export default function PaymentPage() {
           >
             Add You Payment Methed
           </Typography>
-          <Stack direction="row" spacing={2}>
+          <Stack direction="row" spacing={2} sx={{overflow:"auto",marginBottom:"20px"}}>
             <div
-              className={`rounded-full w-[146px] pr-[20px] pl-[20px] flex items-center gap-2 cursor-pointer ${
+              className={`rounded-full xs:w-[125px] md:w-[146px] pt-[16px] pb-[16px] pr-[24px] pl-[24px] flex items-center justify-center gap-2 cursor-pointer ${
                 content === "PayPal" ? "bg-[#EBF5FF] " : "bg-gray-100 "
               }`}
               onClick={() => setContent("PayPal")}
@@ -62,7 +54,7 @@ export default function PaymentPage() {
               <Typography
                 sx={{
                   color: "#4B5563",
-                  fontSize: { sx: "20px", md: "24px" },
+                  fontSize: { sx: "14px", md: "24px" },
                   fontWeight: "500",
                 }}
               >
@@ -70,9 +62,8 @@ export default function PaymentPage() {
               </Typography>
             </div>
             <div
-              className={` rounded-full w-[207px] p-[5px]  flex items-center gap-2 justify-center cursor-pointer ${
-                content === "MasterCard"
-                  ? "bg-[#EBF5FF] " : "bg-gray-100 "
+              className={` rounded-full xs:w-[168px] md:w-[207px] pt-[16px] pb-[16px] pr-[24px] pl-[24px] flex items-center gap-[8px] justify-center cursor-pointer ${
+                content === "MasterCard" ? "bg-[#EBF5FF] " : "bg-gray-100 "
               }`}
               onClick={() => setContent("MasterCard")}
             >
@@ -84,7 +75,7 @@ export default function PaymentPage() {
               <Typography
                 sx={{
                   color: "#4B5563",
-                  fontSize: { sx: "20px", md: "24px" },
+                  fontSize: { sx: "14px", md: "24px" },
                   fontWeight: "500",
                 }}
               >
@@ -92,9 +83,8 @@ export default function PaymentPage() {
               </Typography>
             </div>
             <div
-              className={` rounded-full w-[128px] flex items-center gap-2 justify-center cursor-pointer ${
-                content === "Visa"
-                  ? "bg-[#EBF5FF] " : "bg-gray-100 "
+              className={` rounded-full xs:w-[117px] md:w-[128px] pt-[16px] pb-[16px] pr-[24px] pl-[24px] flex items-center gap-[8px] justify-center cursor-pointer ${
+                content === "Visa" ? "bg-[#EBF5FF] " : "bg-gray-100 "
               }`}
               onClick={() => setContent("Visa")}
             >
@@ -106,7 +96,7 @@ export default function PaymentPage() {
               <Typography
                 sx={{
                   color: "#4B5563",
-                  fontSize: { sx: "20px", md: "24px" },
+                  fontSize: { sx: "14px", md: "24px" },
                   fontWeight: "500",
                 }}
               >
