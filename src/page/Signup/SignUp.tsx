@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 export default function GetStarted() {
     return (
         <>
-            <div className=" bg-[#F4F4F4] h-[772px] w-[608px] flex justify-center items-center  rounded-4xl">
+            <div className=" bg-[#F4F4F4] sm:h-[772px] sm:w-[608px] flex justify-center items-center  rounded-4xl">
                 <img src={image} alt="" />
             </div>
             <div className="sm:w-1/2 ">
