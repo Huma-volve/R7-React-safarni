@@ -7,11 +7,13 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { Link } from "react-router-dom";
 import type { ReactNode } from "react";
+import Back from "../../components/back";
 
 
 export default function Profile() {
     return (
         <div className="w-full min-h-screen text-[#111928]  pb-10">
+            <Back />
 
             {/* Top Profile Section */}
             <div className="p-px rounded-xl bg-linear-to-b from-[#3F52B4] to-[#B22459]">
