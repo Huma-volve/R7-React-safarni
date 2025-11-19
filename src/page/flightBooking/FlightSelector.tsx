@@ -49,7 +49,7 @@ export default function FlightSelector() {
     },
   ];
 
-  const handleCardClick = (flightId: number) => {
+  const handleCardClick = () => {
     // يمكن إرسال flightId كـ state إذا حابب تعرف أي رحلة اختار المستخدم
     navigate("/flightbooking/flightselector/seatselector");
   };
@@ -121,7 +121,7 @@ export default function FlightSelector() {
                   boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
                 },
               }}
-              onClick={() => handleCardClick(flight.id)}
+              onClick={() => handleCardClick()}
             >
               <CardContent>
                 <Stack
@@ -257,7 +257,7 @@ export default function FlightSelector() {
                   boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
                 },
               }}
-              onClick={() => handleCardClick(flight.id)}
+              onClick={() => handleCardClick()}
             >
               <CardContent>
                 <Stack

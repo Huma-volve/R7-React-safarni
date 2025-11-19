@@ -196,7 +196,7 @@ export default function FlightBooking() {
                 <Autocomplete
                   options={["1 Passenger", "2 Passengers", "3 Passengers"]}
                   defaultValue="1 Passenger"
-                  onChange={(e, value) =>
+                  onChange={(_, value) =>
                     handleChange("passengers", value || "1 Passenger")
                   }
                   renderInput={(params) => (
