@@ -6,7 +6,7 @@ export default function Back() {
   return (
     <Box sx={{ paddingTop: "20px", paddingBottom: "20px" }}>
       <div
-        className="bg-gray-100 rounded-full w-[40px] h-[40px] p-2 flex items-center justify-center"
+        className="bg-gray-100 rounded-full w-[40px] h-[40px] p-2 flex items-center justify-center cursor-pointer"
         onClick={() => navigate(-1)}
       >
         <NavigateBeforeIcon className="text-[24px]" />
