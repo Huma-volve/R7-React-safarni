@@ -1,21 +1,12 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
-<<<<<<< HEAD:src/page/payment/PaymentPage.tsx
-import { useNavigate } from "react-router-dom";
-import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
-=======
->>>>>>> keroles:src/payment/PaymentPage.tsx
 import { AddCircleOutline } from "@mui/icons-material";
 import { useState } from "react";
 import PayPal from "./paypal";
 import MasterCard from "./masterCard";
-import Back from "../components/back";
+import Back from "../../components/back";
 
 export default function PaymentPage() {
   const [content, setContent] = useState("");
-<<<<<<< HEAD:src/page/payment/PaymentPage.tsx
-  const navigate = useNavigate();
-=======
->>>>>>> keroles:src/payment/PaymentPage.tsx
   return (
     <Container>
       {/* return to home */}
@@ -50,14 +41,9 @@ export default function PaymentPage() {
           </Typography>
           <Stack direction="row" spacing={2} sx={{overflow:"auto",marginBottom:"20px"}}>
             <div
-<<<<<<< HEAD:src/page/payment/PaymentPage.tsx
-              className={`rounded-full w-[146px] pr-[20px] pl-[20px] flex items-center gap-2 cursor-pointer ${content === "PayPal" ? "bg-[#EBF5FF] " : "bg-gray-100 "
-                }`}
-=======
               className={`rounded-full xs:w-[125px] md:w-[146px] pt-[16px] pb-[16px] pr-[24px] pl-[24px] flex items-center justify-center gap-2 cursor-pointer ${
                 content === "PayPal" ? "bg-[#EBF5FF] " : "bg-gray-100 "
               }`}
->>>>>>> keroles:src/payment/PaymentPage.tsx
               onClick={() => setContent("PayPal")}
             >
               <img
@@ -76,15 +62,9 @@ export default function PaymentPage() {
               </Typography>
             </div>
             <div
-<<<<<<< HEAD:src/page/payment/PaymentPage.tsx
-              className={` rounded-full w-[207px] p-[5px]  flex items-center gap-2 justify-center cursor-pointer ${content === "MasterCard"
-                ? "bg-[#EBF5FF] " : "bg-gray-100 "
-                }`}
-=======
               className={` rounded-full xs:w-[168px] md:w-[207px] pt-[16px] pb-[16px] pr-[24px] pl-[24px] flex items-center gap-[8px] justify-center cursor-pointer ${
                 content === "MasterCard" ? "bg-[#EBF5FF] " : "bg-gray-100 "
               }`}
->>>>>>> keroles:src/payment/PaymentPage.tsx
               onClick={() => setContent("MasterCard")}
             >
               <img
@@ -103,15 +83,9 @@ export default function PaymentPage() {
               </Typography>
             </div>
             <div
-<<<<<<< HEAD:src/page/payment/PaymentPage.tsx
-              className={` rounded-full w-[128px] flex items-center gap-2 justify-center cursor-pointer ${content === "Visa"
-                ? "bg-[#EBF5FF] " : "bg-gray-100 "
-                }`}
-=======
               className={` rounded-full xs:w-[117px] md:w-[128px] pt-[16px] pb-[16px] pr-[24px] pl-[24px] flex items-center gap-[8px] justify-center cursor-pointer ${
                 content === "Visa" ? "bg-[#EBF5FF] " : "bg-gray-100 "
               }`}
->>>>>>> keroles:src/payment/PaymentPage.tsx
               onClick={() => setContent("Visa")}
             >
               <img

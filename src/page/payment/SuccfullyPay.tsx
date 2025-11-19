@@ -3,10 +3,6 @@ import { Stack, Box, Container, Typography, Button } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import { Link } from "react-router-dom";
 export default function SuccfullyPay() {
-<<<<<<< HEAD:src/page/payment/SuccfullyPay.tsx
-  const navigate = useNavigate();
-=======
->>>>>>> keroles:src/payment/SuccfullyPay.tsx
   return (
     <Container>
       <Link to="/" className="pt-[20px] pb-[20px] ">
