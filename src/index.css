@@ -3,7 +3,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-main-color: #1E429F;
+  --color-main-color: #1e429f;
   --color-dark-blue: oklch(0.09 0.03 240);
   --color-gray-700: oklch(0.42 0.01 230);
   --color-blue-900: oklch(0.22 0.15 243);
@@ -14,8 +14,6 @@
   --color-blue-500: oklch(0.55 0.33 240);
   --font-poppins: "Poppins", sans-serif;
 }
-
-
 
 @media (min-width: 426px) {
   .container {
@@ -30,8 +28,6 @@
     max-width: 100%;
   }
 }
-
-
 
 /* 
 
@@ -48,4 +44,10 @@
 
 body {
   font-family: var(--font-poppins);
+}
+.css-12ua31o-MuiStack-root > :not(style) ~ :not(style) {
+  margin-left: 0px !important;
+}
+.css-1h9mz9o-MuiStack-root > :not(style):not(style) {
+  margin-top: -7px !important;
 }

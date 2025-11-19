@@ -2,12 +2,13 @@ import { Box } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import { useNavigate } from "react-router-dom";
 export default function Back() {
-  const navigate = useNavigate();
+  let navigate = useNavigate();
   return (
-    <Box
-      onClick={() => navigate(-1)}
-    >
-      <div className="bg-gray-100 rounded-full w-10 h-10 mt-12  flex items-center justify-center">
+    <Box sx={{ paddingTop: "20px", paddingBottom: "20px" }}>
+      <div
+        className="bg-gray-100 rounded-full w-[40px] h-[40px] p-2 flex items-center justify-center"
+        onClick={() => navigate(-1)}
+      >
         <NavigateBeforeIcon className="text-[24px]" />
       </div>
     </Box>

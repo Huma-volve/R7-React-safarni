@@ -1,7 +1,3 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
 import Home from "./page/home/Home";
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
@@ -25,7 +21,7 @@ import CarMain from "./page/car-booking/Home";
 import PickUpPage from "./page/car-booking/PickUp";
 import Map from "./page/car-booking/Map";
 import HotelsPage from "./page/hotels/HotelsPage";
-
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const router = createBrowserRouter([
   {
     path: "/",
