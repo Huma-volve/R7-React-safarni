@@ -170,7 +170,7 @@ export default function Destination() {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    height="140"
+                    height="140px"
                     image="/assets/destination/cardNewActivity/Depth 7, Frame 0.png"
                     alt="green iguana"
                   />
