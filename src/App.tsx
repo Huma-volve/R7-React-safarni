@@ -27,6 +27,7 @@ import Maps from "./page/maps/Maps";
 import SearchPage from "./page/search/SearchPage";
 import Results from "./page/results/Results";
 import FiltersPanel from "./page/filter/Filter";
+import HotelDec from "./page/hotels/HotelDec";
 export default function App() {
   const router = createBrowserRouter([
     {
@@ -52,6 +53,7 @@ export default function App() {
         { path: "internal", element: <Internal /> },
         { path: "favorite", element: <Favorite /> },
         { path: "flightbooking/flightselector", element: <FlightSelector /> },
+        { path: "hoteldec", element: <HotelDec /> },
         {
           path: "flightbooking/flightselector/seatselector",
           element: <SeatSelector />,
