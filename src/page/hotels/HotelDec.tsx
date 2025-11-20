@@ -106,7 +106,7 @@ export default function HotelDec() {
   // slice الصور الحالية للعرض (page-wise)
   const start = page * itemsPerPage;
   const visible = imgs.slice(start, start + itemsPerPage);
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_:any, newValue: number) => {
     setValue(newValue);
   };
   return (
@@ -122,7 +122,7 @@ export default function HotelDec() {
           <img
             src="/assets/hotel/b3a9e2ff9d8f7ff6d0d2d5a978121b2be110abda (1).jpg"
             alt=""
-            className="xs:w-full md:w-[608px] h-full m-[auto] rounded-xl"
+            className="xs:w-full md:w-[608px] h-full m-auto rounded-xl"
           />
           <Stack
             direction="row"
