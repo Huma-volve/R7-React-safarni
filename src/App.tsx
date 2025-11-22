@@ -28,6 +28,7 @@ import SearchPage from "./page/search/SearchPage";
 import Results from "./page/results/Results";
 import FiltersPanel from "./page/filter/Filter";
 import HotelDec from "./page/hotels/HotelDec";
+import AddCard from "./page/payment/addCard";
 export default function App() {
   const router = createBrowserRouter([
     {
@@ -54,6 +55,7 @@ export default function App() {
         { path: "favorite", element: <Favorite /> },
         { path: "flightbooking/flightselector", element: <FlightSelector /> },
         { path: "hoteldec", element: <HotelDec /> },
+        { path: "addcard", element: <AddCard /> },
         {
           path: "flightbooking/flightselector/seatselector",
           element: <SeatSelector />,
