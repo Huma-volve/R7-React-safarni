@@ -137,7 +137,7 @@ export default function SeatSelector() {
                 }}
               />
               <Typography
-                sx={{ fontSize: { xs: "14px", md: "20px" }, fontWeight: 400 }}
+                sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}
               >
                 Available
               </Typography>
@@ -153,7 +153,7 @@ export default function SeatSelector() {
                 }}
               />
               <Typography
-                sx={{ fontSize: { xs: "14px", md: "20px" }, fontWeight: 400 }}
+                sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}
               >
                 Selected
               </Typography>
@@ -169,7 +169,7 @@ export default function SeatSelector() {
                 }}
               />
               <Typography
-                sx={{ fontSize: { xs: "14px", md: "20px" }, fontWeight: 400 }}
+                sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}
               >
                 Un available
               </Typography>
