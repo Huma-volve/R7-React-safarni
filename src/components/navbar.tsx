@@ -23,7 +23,7 @@ function Navbar() {
   const path = useLocation()
   return (
     <>
-      <div className="md:hidden fixed p-4 z-50 bottom-0 left-0 w-full bg-white shadow-lg rounded-t-3xl flex justify-around items-center py-4z-50">
+      <div className="md:hidden fixed p-4  bottom-0 left-0 w-full bg-white shadow-lg rounded-t-3xl flex justify-around items-center py-4 z-50">
         {items.map((item) => {
           const isActive = active === item.id;
 
@@ -39,7 +39,7 @@ function Navbar() {
                 flex items-center justify-center w-14 h-14 rounded-full
                 transition-all duration-300
                 ${isActive
-                    ? "bg-gradient-to-b from-blue-400 to-blue-600 text-white"
+                    ? "bg-linear-to-b from-blue-400 to-blue-600 text-white"
                     : "text-gray-500"
                   }
               `}
