@@ -4,7 +4,7 @@ import { useState } from "react";
 import PayPal from "./paypal";
 import MasterCard from "./masterCard";
 import Back from "../../components/back";
-
+import { Link } from "react-router-dom";
 export default function PaymentPage() {
   const [content, setContent] = useState("");
   return (
@@ -15,12 +15,21 @@ export default function PaymentPage() {
         sx={{
           flexDirection: { xs: "column", md: "row" },
           gap: { xs: "0px", md: "105px" },
-          justifyContent:{xs:"center",md:"space-between"},
+          justifyContent: { xs: "center", md: "space-between" },
         }}
       >
         {/**Left Side */}
-        <Box sx={{ width: { xs: "100%", md: "50%" }, height: {xs:"220px",md:"auto"} }}>
-          <img src="/assets/destination/paymentPage/Rectangle 20.png" alt="" className="xs:w-[343px] md:w-full h-full m-[auto]"/>
+        <Box
+          sx={{
+            width: { xs: "100%", md: "50%" },
+            height: { xs: "220px", md: "auto" },
+          }}
+        >
+          <img
+            src="/assets/destination/paymentPage/Rectangle 20.png"
+            alt=""
+            className="xs:w-[343px] md:w-full h-full m-[auto] "
+          />
         </Box>
         {/**Right Side */}
         <Box sx={{ width: { xs: "100%", md: "50%" }, position: "relative" }}>
@@ -39,7 +48,11 @@ export default function PaymentPage() {
           >
             Add You Payment Methed
           </Typography>
-          <Stack direction="row" spacing={2} sx={{overflow:"auto",marginBottom:"20px"}}>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ overflow: "auto", marginBottom: "20px" }}
+          >
             <div
               className={`rounded-full xs:w-[125px] md:w-[146px] pt-[16px] pb-[16px] pr-[24px] pl-[24px] flex items-center justify-center gap-2 cursor-pointer ${
                 content === "PayPal" ? "bg-[#EBF5FF] " : "bg-gray-100 "
@@ -114,10 +127,13 @@ export default function PaymentPage() {
                 width: "100%",
               }}
             >
-              <Button sx={{ color: "black", textTransform: "none" }}>
-                <Typography sx={{ marginRight: "10px" }}>Add Card</Typography>
-                <AddCircleOutline />
-              </Button>
+              <Link to="/addcard" className="flex justify-center ">
+                <Button sx={{ color: "black", textTransform: "none" }}>
+                  <Typography sx={{ marginRight: "10px" }}>Add Card</Typography>
+                  <AddCircleOutline />
+                </Button>
+              </Link>
+
               <Button
                 variant="contained"
                 sx={{ width: "100%" }}
