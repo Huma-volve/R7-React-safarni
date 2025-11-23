@@ -14,22 +14,21 @@ function Navbar() {
   const [active, setActive] = useState("home");
 
   const items = [
-    { id: "home", label: "Home", icon: <HomeIcon /> },
-    { id: "favorite", label: "Favorite", icon: <FavoriteBorderIcon /> },
-    { id: "compare", label: "Compare", icon: <BalanceIcon /> },
-    { id: "maps", label: "Maps", icon: <MapIcon /> },
+    { id: "home", label: "Home", to: "home", icon: <HomeIcon /> },
+    { id: "favorite", label: "Favorite", to: "favorite", icon: <FavoriteBorderIcon /> },
+    { id: "compare", label: "Compare", to: "compare", icon: <BalanceIcon /> },
+    { id: "maps", label: "Maps", to: "maps", icon: <MapIcon /> },
   ];
 
   const path = useLocation()
   return (
     <>
-
-      <div className="md:hidden fixed bottom-0 left-0 w-full bg-white shadow-lg rounded-t-3xl flex justify-around items-center py-4z-50">
+      <div className="md:hidden fixed p-4 z-50 bottom-0 left-0 w-full bg-white shadow-lg rounded-t-3xl flex justify-around items-center py-4z-50">
         {items.map((item) => {
           const isActive = active === item.id;
 
           return (
-            <button
+            <Link to={item.to}
               key={item.id}
               onClick={() => setActive(item.id)}
               className="flex flex-col items-center gap-1 text-sm"
@@ -61,7 +60,7 @@ function Navbar() {
               >
                 {item.label}
               </span>
-            </button>
+            </Link>
           );
         })}
       </div>
