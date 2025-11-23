@@ -59,7 +59,7 @@ export default function FlightSelector() {
       <Back />
       <Stack
         direction={"row"}
-        spacing={2}
+        spacing={3}
         sx={{ marginBottom: "30px", justifyContent: "space-between" }}
       >
         <Stack
@@ -72,7 +72,7 @@ export default function FlightSelector() {
             fontWeight: "400",
             justifyContent: "center",
             alignItems: "center",
-            boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.115)",
+            boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.115)",
             borderRadius: "10px",
           }}
         >
@@ -89,7 +89,7 @@ export default function FlightSelector() {
             fontWeight: "400",
             justifyContent: "center",
             alignItems: "center",
-            boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.115)",
+            boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.115)",
             borderRadius: "10px",
           }}
         >
@@ -104,6 +104,7 @@ export default function FlightSelector() {
           justifyContent: { xs: "center", md: "space-between" },
           flexDirection: { xs: "column", md: "row" },
           alignItems: "center",
+          gap: "10px",
         }}
       >
         <Box sx={{ width: { xs: "100%", md: "608px" } }}>
@@ -111,7 +112,7 @@ export default function FlightSelector() {
             <Card
               key={flight.id}
               sx={{
-                boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.11115)",
+                boxShadow: "0px 2px 8px 0px rgba(0, 0, 0, 0.11115)",
                 borderRadius: "30px",
                 padding: "20px",
                 position: "relative",
@@ -119,6 +120,32 @@ export default function FlightSelector() {
                 cursor: "pointer",
                 "&:hover": {
                   boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+                },
+                "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  top: "50%",
+                  right: "-16px",
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "50%",
+                  backgroundColor: "#fff",
+                  transform: "translateY(-50%) rotate(92deg)",
+                  boxShadow: "0px 2px 8px 0px rgba(0, 0, 0, 0.11115) inset",
+                  zIndex: 10,
+                },
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  top: "50%",
+                  left: "-16px",
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "50%",
+                  backgroundColor: "#fff",
+                  transform: "translateY(-50%) rotate(-88deg)",
+                  boxShadow: "0px 2px 8px 0px rgba(0, 0, 0, 0.11115) inset",
+                  zIndex: 10,
                 },
               }}
               onClick={() => handleCardClick()}
@@ -249,7 +276,7 @@ export default function FlightSelector() {
             <Card
               key={flight.id + "return"}
               sx={{
-                boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.11115)",
+                boxShadow: "0px 2px 8px 0px rgba(0, 0, 0, 0.11115)",
                 borderRadius: "30px",
                 padding: "20px",
                 position: "relative",
@@ -257,6 +284,32 @@ export default function FlightSelector() {
                 cursor: "pointer",
                 "&:hover": {
                   boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+                },
+                "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  top: "50%",
+                  right: "-16px",
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "50%",
+                  backgroundColor: "#fff",
+                  transform: "translateY(-50%) rotate(92deg)",
+                  boxShadow: "0px 2px 8px 0px rgba(0, 0, 0, 0.11115) inset",
+                  zIndex: 10,
+                },
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  top: "50%",
+                  left: "-16px",
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "50%",
+                  backgroundColor: "#fff",
+                  transform: "translateY(-50%) rotate(-88deg)",
+                  boxShadow: "0px 2px 8px 0px rgba(0, 0, 0, 0.11115) inset",
+                  zIndex: 10,
                 },
               }}
               onClick={() => handleCardClick()}
