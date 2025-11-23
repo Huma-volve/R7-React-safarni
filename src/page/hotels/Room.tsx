@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import {
   Box,
   Button,
@@ -23,11 +24,9 @@ import {
 } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import { useNavigate } from "react-router-dom";
 
-/**
- * صورة المصدر -- استخدم المسار المحلي الذي رفعته
- * (سيتم تحويله ل URL في البيئة التي تعمل عليها)
- */
 const IMAGE_SRC = "/mnt/data/23ac8f87-7eda-4610-857e-bb79f183a38e.png";
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -59,6 +58,7 @@ function a11yProps(index: number) {
 }
 
 export default function HotelDec() {
+  //   const { hotelId, roomId } = useParams();
   const [value, setValue] = useState(0);
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.down("sm")); // phones
@@ -68,12 +68,10 @@ export default function HotelDec() {
 
   const [showMore, setShowMore] = useState(false);
 
-  // نحدد النص اللي هيظهر قبل الضغط
-  const previewText = fullText.slice(0, 100); // أول 100 حرف مثلا
-  // عرض العناصر في صفحة واحدة يعتمد على العرض:
-  // desktop: 8 (4 cols x 2 rows), tablet: 6 (3x2), mobile: 2 (1x2 or 2x1)
+
+  const previewText = fullText.slice(0, 100);
   const itemsPerPage = isSm ? 2 : isMd ? 6 : 8;
-  let images = [
+  const images = [
     "/assets/hotel/Frame 1464204164 (4).png",
     "/assets/hotel/Frame 1464204164 (4).png",
     "/assets/hotel/Frame 1464204164 (4).png",
@@ -87,12 +85,13 @@ export default function HotelDec() {
     "/assets/hotel/Frame 1464204164 (4).png",
     "/assets/hotel/Frame 1464204164 (4).png",
   ];
-  // إذا المستخدم ما مررش images، نكرّر نفس الصورة لملء الأمثلة
+
+  
   const imgs = useMemo(
     () =>
       (images && images.length > 0
         ? images
-        : Array.from({ length: 12 }).map((_) => IMAGE_SRC)
+        : Array.from({ length: 12 }).map(() => IMAGE_SRC)
       ).map((src, idx) => ({ src, id: idx })),
     [images]
   );
@@ -102,27 +101,43 @@ export default function HotelDec() {
 
   const goPrev = () => setPage((p) => Math.max(0, p - 1));
   const goNext = () => setPage((p) => Math.min(pages - 1, p + 1));
+type ImageItem = {
+  id: number;
+  src: string;
+};
 
-  // slice الصور الحالية للعرض (page-wise)
   const start = page * itemsPerPage;
   const visible = imgs.slice(start, start + itemsPerPage);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const navigate = useNavigate();
+  const { pickId, roomId } = useParams();
+
   return (
+
     <Container sx={{ padding: "0px" }}>
+      <Box sx={{ paddingTop: "20px", paddingBottom: "20px" }}>
+        <div
+          className="bg-gray-100 rounded-full w-[40px] h-[40px] p-2 flex items-center justify-center cursor-pointer"
+          onClick={() => navigate(-1)}
+        >
+          <NavigateBeforeIcon className="text-[2se4px]" />
+        </div>
+      </Box>
       <div className="flex flex-col md:flex-row gap-0 md:gap-[55px] justify-center md:justify-between">
         <Box
           sx={{
             width: { xs: "100%", md: "608px" },
-            height: { xs: "293px", md: "702px" },
+            height: { xs: "293px", md: "602px" },
             position: "relative",
+            marginTop: { xs: "40px", md: "0px" },
           }}
         >
           <img
             src="/assets/hotel/b3a9e2ff9d8f7ff6d0d2d5a978121b2be110abda (1).jpg"
             alt=""
-            className="xs:w-full md:w-[608px] h-full m-[auto] rounded-xl"
+            className="xs:w-full md:w-[608px] h-full m-auto rounded-xl"
           />
           <Stack
             direction="row"
@@ -230,9 +245,9 @@ export default function HotelDec() {
                   sx={{
                     fontSize: { xs: "14px", md: "21px" },
                     fontWeight: "500",
-                    color: "black", // اللون العادي
+                    color: "black",
                     "&.Mui-selected": {
-                      color: "blue", // اللون عند التحديد
+                      color: "blue",
                     },
                   }}
                 />
@@ -242,9 +257,9 @@ export default function HotelDec() {
                   sx={{
                     fontSize: { xs: "14px", md: "21px" },
                     fontWeight: "500",
-                    color: "black", // اللون العادي
+                    color: "black",
                     "&.Mui-selected": {
-                      color: "blue", // اللون عند التحديد
+                      color: "blue",
                     },
                   }}
                 />
@@ -254,9 +269,9 @@ export default function HotelDec() {
                   sx={{
                     fontSize: { xs: "14px", md: "21px" },
                     fontWeight: "500",
-                    color: "black", // اللون العادي
+                    color: "black",
                     "&.Mui-selected": {
-                      color: "blue", // اللون عند التحديد
+                      color: "blue",
                     },
                   }}
                 />
@@ -446,10 +461,10 @@ export default function HotelDec() {
                     spacing={2}
                     sx={{
                       transition: "all 400ms ease",
-                      // نعرض العنصرين/الثلاثة/الثمانية بطريقة grid متناسقة:
+
                     }}
                   >
-                    {visible.map((img: any) => (
+                    {visible.map((img: ImageItem) => (
                       <Grid
                         size={{ xs: 6, sm: 4, md: 3 }}
                         key={img.id}
@@ -461,8 +476,8 @@ export default function HotelDec() {
                       >
                         <Box
                           sx={{
-                            width: "115px", // العرض ثابت
-                            height: "115px", // الارتفاع ثابت
+                            width: "115px",
+                            height: "115px",
                             borderRadius: 2,
                             overflow: "hidden",
                             boxShadow: 2,
@@ -479,9 +494,9 @@ export default function HotelDec() {
                             src={img.src}
                             alt={`thumb-${img.id}`}
                             style={{
-                              width: "115px", // نفس عرض الـ Box
-                              height: "115px", // نفس ارتفاع الـ Box
-                              objectFit: "cover", // تغطية كاملة بدون تشويه
+                              width: "115px",
+                              height: "115px",
+                              objectFit: "cover",
                               display: "block",
                             }}
                           />
@@ -511,6 +526,7 @@ export default function HotelDec() {
                     fontWeight: "500",
                     color: "#1E429F",
                   }}
+                  onClick={() => navigate(`/hotels/pickUp/${pickId}/room/${roomId}/review`)}
                 >
                   <WrapText className="mr-2" />
                   add review
@@ -568,6 +584,7 @@ export default function HotelDec() {
                       defaultValue={4.5}
                       precision={0.5}
                       size="medium"
+
                     />
                   </Typography>
                   <Typography
@@ -607,6 +624,7 @@ export default function HotelDec() {
               padding: "8px 16px",
               textTransform: "none",
             }}
+            onClick={()=>navigate(`/hotels/pickUp/${pickId}/room/${roomId}/booking`)}
           >
             Book Now
           </Button>
