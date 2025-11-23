@@ -39,7 +39,7 @@ function Navbar() {
                 flex items-center justify-center w-14 h-14 rounded-full
                 transition-all duration-300
                 ${isActive
-                    ? "bg-gradient-to-b from-blue-400 to-blue-600 text-white"
+                    ? "bg-linear-to-b from-blue-400 to-blue-600 text-white"
                     : "text-gray-500"
                   }
               `}
