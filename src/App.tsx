@@ -27,6 +27,7 @@ import Maps from "./page/maps/Maps";
 import SearchPage from "./page/search/SearchPage";
 import Results from "./page/results/Results";
 import FiltersPanel from "./page/filter/Filter";
+import AddCard from "./page/payment/addCard";
 import CarMain from "./page/car-booking/Home";
 import PickUpPage from "./page/car-booking/PickUp";
 import Map from "./page/car-booking/Map";
@@ -61,7 +62,7 @@ const router = createBrowserRouter([
       { path: "hotels/pickUp/:pickId/room/:roomId/review", element: <HotelReviewForm /> },
       { path: "hotels/pickUp/:pickId/room/:roomId/booking", element: <Booking /> },
       { path: "hotels/pickUp/:pickId/room/:roomId/count", element: <Count /> },
-
+      { path: "addcard", element: <AddCard /> },
       { path: "HotelReviewForm", element: <HotelReviewForm /> },
       { path: "filters-panel", element: <FiltersPanel /> },
       { path: "destination", element: <Destination /> },
@@ -100,3 +101,4 @@ export default function App() {
     </div>
   );
 }
+

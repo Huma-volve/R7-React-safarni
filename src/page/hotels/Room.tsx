@@ -108,7 +108,7 @@ type ImageItem = {
 
   const start = page * itemsPerPage;
   const visible = imgs.slice(start, start + itemsPerPage);
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_:any, newValue: number) => {
     setValue(newValue);
   };
   const navigate = useNavigate();

@@ -1,10 +1,9 @@
 import { Container, Box, Typography, Stack, Button } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
 export default function Count() {
     const navigate = useNavigate();
-    const { pickId, roomId } = useParams();
+    
 
     // Counters
     const [adults, setAdults] = useState(1);
@@ -201,7 +200,7 @@ export default function Count() {
                                 textTransform: "none",
                             }}
                             fullWidth
-                            onClick={() => navigate(`/hotels/pickUp/${pickId}/room/${roomId}/review`)}
+                            onClick={() => navigate("/paymentpage")}
 
                         >
                             Book Now

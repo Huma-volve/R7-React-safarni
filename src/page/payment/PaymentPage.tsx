@@ -4,7 +4,7 @@ import { useState } from "react";
 import PayPal from "./paypal";
 import MasterCard from "./masterCard";
 import Back from "../../components/back";
-
+import { Link } from "react-router-dom";
 export default function PaymentPage() {
   const [content, setContent] = useState("");
   return (
@@ -127,10 +127,13 @@ export default function PaymentPage() {
                 width: "100%",
               }}
             >
-              <Button sx={{ color: "black", textTransform: "none" }}>
-                <Typography sx={{ marginRight: "10px" }}>Add Card</Typography>
-                <AddCircleOutline />
-              </Button>
+              <Link to="/addcard" className="flex justify-center ">
+                <Button sx={{ color: "black", textTransform: "none" }}>
+                  <Typography sx={{ marginRight: "10px" }}>Add Card</Typography>
+                  <AddCircleOutline />
+                </Button>
+              </Link>
+
               <Button
                 variant="contained"
                 sx={{ width: "100%" }}

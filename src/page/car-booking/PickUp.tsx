@@ -13,7 +13,6 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-
 const images = [iris1, iris2, iris3];
 
 
@@ -23,6 +22,8 @@ const PlanCard: React.FC<{
     selected: boolean;
     onClick: () => void;
 }> = ({ title, price, selected, onClick }) => {
+
+  
     return (
         <Stack
             direction="row"
@@ -80,6 +81,7 @@ const PlanCard: React.FC<{
 };
 
 const PickUpPage: React.FC = () => {
+
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const car: Car | undefined = cars.find((c) => c.id === id);
@@ -211,6 +213,8 @@ const handlePrev = () => {
 
                         <div className="flex items-center gap-3 mt-4">
                             <Button
+                            onClick={() => {navigate("/paymentpage")}}
+
                                 variant="contained"
                                 className="w-full"
                                 sx={{ textTransform: "none", backgroundColor: "var(--color-blue-600)", "&:hover": { backgroundColor: "var(--color-blue-900)" } }}
