@@ -23,7 +23,7 @@ function Navbar() {
   const path = useLocation()
   return (
     <>
-      <div className="md:hidden fixed p-4 z-50 bottom-0 left-0 w-full bg-white shadow-lg rounded-t-3xl flex justify-around items-center py-4z-50">
+      <div className="md:hidden fixed p-4  bottom-0 left-0 w-full bg-white shadow-lg rounded-t-3xl flex justify-around items-center py-4 z-50">
         {items.map((item) => {
           const isActive = active === item.id;
 
