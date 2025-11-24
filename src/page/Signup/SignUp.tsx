@@ -1,8 +1,50 @@
 import image from "../../assets/signin.png"
 import { User, Mail, Lock, CheckCircle2 } from "lucide-react";
-import { Link } from "react-router-dom"
+import { useState } from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../store/authSlice";
+import { Link } from "react-router-dom";
 
-export default function GetStarted() {
+
+
+export default function SignUp() {
+    const dispatch = useDispatch();
+
+    const [name, setName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+
+    function getAxiosError(error: unknown) {
+        if (axios.isAxiosError(error)) return error.response?.data;
+        if (error instanceof Error) return error.message;
+        return "Unknown error";
+    }
+
+    async function handleSignup(e: React.FormEvent) {
+        e.preventDefault();
+
+        try {
+            const res = await axios.post(
+                "http://round7-safarni-team-one.huma-volve.com/api//api/v1/auth/register",
+                {
+                    name,
+                    email,
+                    password,
+                }
+            );
+
+            const token = res.data.token;
+
+            // save token
+            dispatch(loginSuccess(token));
+
+            console.log("SIGNUP SUCCESS:", res.data);
+
+        } catch (error: unknown) {
+            console.log("SIGNUP ERROR:", getAxiosError(error));
+        }
+    }
     return (
         <>
             <div className=" bg-[#F4F4F4] sm:h-[772px] sm:w-[608px] flex justify-center items-center  rounded-4xl">
@@ -25,6 +67,7 @@ export default function GetStarted() {
                         <div className="flex items-center border border-gray-500 rounded-md px-3 py-2 bg-white">
                             <User size={18} className="text-gray-500 mr-2" />
                             <input
+                                onChange={(e) => { setName(e.target.value) }}
                                 type="text"
                                 placeholder="kneeDue"
                                 className="w-full bg-transparent outline-none text-gray-800 placeholder-gray-400"
@@ -38,6 +81,8 @@ export default function GetStarted() {
                         <div className="flex items-center border border-gray-500 rounded-md px-3 py-2 bg-white">
                             <Mail size={18} className="text-gray-500 mr-2" />
                             <input
+                                onChange={(e) => { setEmail(e.target.value) }}
+
                                 type="email"
                                 placeholder="kneeDue@untitledui.com"
                                 className="w-full bg-transparent outline-none text-gray-800 placeholder-gray-400"
@@ -51,6 +96,8 @@ export default function GetStarted() {
                         <div className="flex items-center border border-gray-500 rounded-md px-3 py-2 bg-white">
                             <Lock size={18} className="text-gray-500 mr-2" />
                             <input
+                                onChange={(e) => { setPassword(e.target.value) }}
+
                                 type="password"
                                 placeholder="**********"
                                 className="w-full bg-transparent outline-none text-gray-800 placeholder-gray-400"
@@ -72,7 +119,8 @@ export default function GetStarted() {
 
                     {/* Sign Up Button */}
                     <button
-                        type="submit"
+                        onClick={handleSignup}
+                        type="button"
                         className="w-full bg-main-color hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition"
                     >
                         Sign Up
@@ -88,13 +136,13 @@ export default function GetStarted() {
 
                 {/* Social Buttons */}
                 {/* <div className="flex gap-4 w-full max-w-md justify-center">
-                    <button className="flex justify-center items-center border border-main-color p-3 rounded-lg w-1/2 hover:bg-main-color transition">
-                        <img src="/google.svg" alt="Google" className="w-5 h-5" />
-                    </button>
-                    <button className="flex justify-center items-center border border-main-color p-3 rounded-lg w-1/2 hover:bg-main-color transition">
-                        <img src="/facebook.svg" alt="Facebook" className="w-5 h-5" />
-                    </button>
-                </div> */}
+                        <button className="flex justify-center items-center border border-main-color p-3 rounded-lg w-1/2 hover:bg-main-color transition">
+                            <img src="/google.svg" alt="Google" className="w-5 h-5" />
+                        </button>
+                        <button className="flex justify-center items-center border border-main-color p-3 rounded-lg w-1/2 hover:bg-main-color transition">
+                            <img src="/facebook.svg" alt="Facebook" className="w-5 h-5" />
+                        </button>
+                    </div> */}
 
                 {/* Sign In link */}
                 <p className="mt-8 text-gray-900 font-normal text-md text-center">
