@@ -94,6 +94,7 @@ export default function PayPal() {
           fontWeight: "600",
           padding: "8px 16px",
           textTransform: "none",
+          marginBottom:{xs:"70px",md:"0px"},
         }}
       >
         Confirm Booking

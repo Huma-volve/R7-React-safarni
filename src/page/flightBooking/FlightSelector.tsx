@@ -15,7 +15,7 @@ import Back from "../../components/back";
 
 export default function FlightSelector() {
   const navigate = useNavigate();
-
+  let index = 0;
   const flights = [
     {
       id: 1,
@@ -68,7 +68,7 @@ export default function FlightSelector() {
             width: { xs: "47%", md: "595px" },
             height: { xs: "44px", md: "80px" },
             padding: "10px 16px",
-            fontSize: { xs: "11px", sm: "13px", md: "20px" },
+            fontSize: { xs: "9px", sm: "13px", md: "20px" },
             fontWeight: "400",
             justifyContent: "center",
             alignItems: "center",
@@ -76,7 +76,12 @@ export default function FlightSelector() {
             borderRadius: "10px",
           }}
         >
-          <CalendarMonthOutlinedIcon sx={{ marginRight: "10px" }} />
+          <CalendarMonthOutlinedIcon
+            sx={{
+              marginRight: "10px",
+              fontSize: { xs: "11px", sm: "13px", md: "20px" },
+            }}
+          />
           Dec 16th, 2025
         </Stack>
         <Stack
@@ -85,7 +90,7 @@ export default function FlightSelector() {
             width: { xs: "47%", md: "595px" },
             height: { xs: "44px", md: "80px" },
             padding: "10px 16px",
-            fontSize: { xs: "11px", sm: "13px", md: "20px" },
+            fontSize: { xs: "9px", sm: "13px", md: "20px" },
             fontWeight: "400",
             justifyContent: "center",
             alignItems: "center",
@@ -93,7 +98,12 @@ export default function FlightSelector() {
             borderRadius: "10px",
           }}
         >
-          <PersonOutline sx={{ marginRight: "10px" }} />
+          <PersonOutline
+            sx={{
+              marginRight: "10px",
+              fontSize: { xs: "11px", sm: "13px", md: "20px" },
+            }}
+          />
           Jan 6th, 2025
         </Stack>
       </Stack>
@@ -272,156 +282,159 @@ export default function FlightSelector() {
           />
         </div>
         <Box sx={{ width: { xs: "100%", md: "608px" }, ml: 0 }}>
-          {flights.map((flight) => (
-            <Card
-              key={flight.id + "return"}
-              sx={{
-                boxShadow: "0px 2px 8px 0px rgba(0, 0, 0, 0.11115)",
-                borderRadius: "30px",
-                padding: "20px",
-                position: "relative",
-                marginBottom: "20px",
-                cursor: "pointer",
-                "&:hover": {
-                  boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
-                },
-                "&::before": {
-                  content: '""',
-                  position: "absolute",
-                  top: "50%",
-                  right: "-16px",
-                  width: "30px",
-                  height: "30px",
-                  borderRadius: "50%",
-                  backgroundColor: "#fff",
-                  transform: "translateY(-50%) rotate(92deg)",
-                  boxShadow: "0px 2px 8px 0px rgba(0, 0, 0, 0.11115) inset",
-                  zIndex: 10,
-                },
-                "&::after": {
-                  content: '""',
-                  position: "absolute",
-                  top: "50%",
-                  left: "-16px",
-                  width: "30px",
-                  height: "30px",
-                  borderRadius: "50%",
-                  backgroundColor: "#fff",
-                  transform: "translateY(-50%) rotate(-88deg)",
-                  boxShadow: "0px 2px 8px 0px rgba(0, 0, 0, 0.11115) inset",
-                  zIndex: 10,
-                },
-              }}
-              onClick={() => handleCardClick()}
-            >
-              <CardContent>
-                <Stack
-                  direction="row"
-                  spacing={0} // تمنع أي margin تلقائي بين العناصر
-                  sx={{
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Box>
-                    <Typography
-                      sx={{
-                        fontSize: { xs: "15px", md: "23px" },
-                        fontWeight: "500",
-                      }}
-                    >
-                      {flight.departureTime}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: { xs: "15px", md: "23px" },
-                        fontWeight: "500",
-                        color: "#6B7280",
-                      }}
-                    >
-                      {flight.departureAirport}
-                    </Typography>
-                  </Box>
-
+          {flights.map((flight) => {
+            index += 1;
+            return (
+              <Card
+                key={flight.id + "return"}
+                sx={{
+                  boxShadow: "0px 2px 8px 0px rgba(0, 0, 0, 0.11115)",
+                  borderRadius: "30px",
+                  padding: "20px",
+                  position: "relative",
+                  marginBottom: {xs: index === flights.length ? "80px" : "20px", md: "20px"},
+                  cursor: "pointer",
+                  "&:hover": {
+                    boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+                  },
+                  "&::before": {
+                    content: '""',
+                    position: "absolute",
+                    top: "50%",
+                    right: "-16px",
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "50%",
+                    backgroundColor: "#fff",
+                    transform: "translateY(-50%) rotate(92deg)",
+                    boxShadow: "0px 2px 8px 0px rgba(0, 0, 0, 0.11115) inset",
+                    zIndex: 10,
+                  },
+                  "&::after": {
+                    content: '""',
+                    position: "absolute",
+                    top: "50%",
+                    left: "-16px",
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "50%",
+                    backgroundColor: "#fff",
+                    transform: "translateY(-50%) rotate(-88deg)",
+                    boxShadow: "0px 2px 8px 0px rgba(0, 0, 0, 0.11115) inset",
+                    zIndex: 10,
+                  },
+                }}
+                onClick={() => handleCardClick()}
+              >
+                <CardContent>
                   <Stack
-                    sx={{ justifyContent: "center", alignItems: "center" }}
+                    direction="row"
+                    spacing={0}
+                    sx={{
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
                   >
-                    <AirplanemodeActiveIcon
-                      sx={{ transform: "rotate(90deg)" }}
-                    />
-                    <Typography
-                      sx={{
-                        fontSize: { xs: "13px", md: "18px" },
-                        fontWeight: "400",
-                      }}
+                    <Box>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "23px" },
+                          fontWeight: "500",
+                        }}
+                      >
+                        {flight.departureTime}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "23px" },
+                          fontWeight: "500",
+                          color: "#6B7280",
+                        }}
+                      >
+                        {flight.departureAirport}
+                      </Typography>
+                    </Box>
+
+                    <Stack
+                      sx={{ justifyContent: "center", alignItems: "center" }}
                     >
-                      {flight.arrivalAirport}
-                    </Typography>
+                      <AirplanemodeActiveIcon
+                        sx={{ transform: "rotate(90deg)" }}
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "13px", md: "18px" },
+                          fontWeight: "400",
+                        }}
+                      >
+                        {flight.arrivalAirport}
+                      </Typography>
+                    </Stack>
+
+                    <Box sx={{ textAlign: "right" }}>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "23px" },
+                          fontWeight: "500",
+                        }}
+                      >
+                        {flight.arrivalTime}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "23px" },
+                          fontWeight: "500",
+                          color: "#6B7280",
+                        }}
+                      >
+                        {flight.departureAirport}
+                      </Typography>
+                    </Box>
                   </Stack>
 
-                  <Box sx={{ textAlign: "right" }}>
-                    <Typography
-                      sx={{
-                        fontSize: { xs: "15px", md: "23px" },
-                        fontWeight: "500",
-                      }}
-                    >
-                      {flight.arrivalTime}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: { xs: "15px", md: "23px" },
-                        fontWeight: "500",
-                        color: "#6B7280",
-                      }}
-                    >
-                      {flight.departureAirport}
-                    </Typography>
-                  </Box>
-                </Stack>
-
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  sx={{
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginTop: "10px",
-                  }}
-                >
-                  <Box>
-                    <Typography
-                      sx={{
-                        fontSize: { xs: "10px", md: "16px" },
-                        fontWeight: "400",
-                        color: "#6B7280",
-                      }}
-                    >
-                      {flight.layover}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: { xs: "15px", md: "23px" },
-                        fontWeight: "500",
-                      }}
-                    >
-                      {flight.airline}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography
-                      sx={{
-                        fontSize: { xs: "15px", md: "23px" },
-                        fontWeight: "500",
-                      }}
-                    >
-                      $ {flight.price}
-                    </Typography>
-                  </Box>
-                </Stack>
-              </CardContent>
-            </Card>
-          ))}
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <Box>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "10px", md: "16px" },
+                          fontWeight: "400",
+                          color: "#6B7280",
+                        }}
+                      >
+                        {flight.layover}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "23px" },
+                          fontWeight: "500",
+                        }}
+                      >
+                        {flight.airline}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "23px" },
+                          fontWeight: "500",
+                        }}
+                      >
+                        $ {flight.price}
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </CardContent>
+              </Card>
+            );
+          })}
         </Box>
       </Stack>
     </Container>

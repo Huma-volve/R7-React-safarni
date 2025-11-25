@@ -31,7 +31,7 @@ export default function BoardingPass() {
         <Box
           sx={{
             position: "relative",
-            width: {xs:"100%",md:"50%"},
+            width: { xs: "100%", md: "50%" },
           }}
         >
           <Typography
@@ -49,7 +49,7 @@ export default function BoardingPass() {
           <Card
             elevation={3}
             sx={{
-              margin:"auto",
+              margin: "auto",
               width: "90%",
               borderRadius: "24px",
               padding: "20px 20px 30px",
@@ -231,7 +231,13 @@ export default function BoardingPass() {
                   <Typography className="font-semibold text-[15px] md:text-[18px]">
                     Catherine Dion
                   </Typography>
-                  <Typography className="text-gray-500 text-[13px] md:text-[15px]">
+                  <Typography
+                    className="text-gray-500"
+                    sx={{
+                      fontWeight: "400",
+                      fontSize: { xs: "13px", md: "15px" },
+                    }}
+                  >
                     24 years, Female
                   </Typography>
                 </Box>
@@ -269,6 +275,7 @@ export default function BoardingPass() {
                 padding: "8px 16px",
                 marginTop: "20px",
                 textTransform: "none",
+                marginBottom:{xs:"70px !important",md:"0"}
               }}
             >
               Check Out
