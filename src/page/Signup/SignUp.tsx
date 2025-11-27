@@ -1,16 +1,16 @@
 import image from "../../assets/signin.png"
-import { User, Mail, Lock, CheckCircle2 } from "lucide-react";
+import { User, Mail, Lock, CheckCircle2, CircleX } from "lucide-react";
 import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../store/authSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
 export default function SignUp() {
     const dispatch = useDispatch();
-
+    const navigate = useNavigate()
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -35,7 +35,7 @@ export default function SignUp() {
                     name,
                     email,
                     password,
-                    confirmPassword
+                    password_confirmation: confirmPassword
                 },
                 {
                     headers: {
@@ -45,12 +45,14 @@ export default function SignUp() {
                 }
             );
 
-            const token = res.data.token;
 
             // save token
-            dispatch(loginSuccess(token));
-
+            dispatch(loginSuccess({
+                token: res.data.token,
+                email
+            }));
             console.log("SIGNUP SUCCESS:", res.data);
+            navigate("/OTP")
 
         } catch (error: unknown) {
             const err = getAxiosError(error);
@@ -161,7 +163,7 @@ export default function SignUp() {
                             <span className={password && confirmPassword && password === confirmPassword ? 'text-green-500' : ''}> password match with confirm password</span>
                         </div>
                         {message && <div className="flex items-center gap-2">
-                            <CheckCircle2 size={16} className="text-heading-color text-red-500" />
+                            <CircleX size={16} className="text-heading-color text-red-500" />
                             <span> {message}</span>
                         </div>}
                     </div>
