@@ -6,7 +6,7 @@ export default function OTP() {
 
     const [otp, setOtp] = useState<string[]>(["", "", "", ""]);
     const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
-    const [errorMsg, setErrorMsg] = useState<string>("");
+    const [, setErrorMsg] = useState<string>("");
 
     const [timer, setTimer] = useState(30);
 
@@ -43,7 +43,7 @@ export default function OTP() {
             const res = await axios.post(
                 "https://round-3-travel.digital-vision-solutions.com/api/v1/auth/verify-otp",
                 {
-                    email,
+                    // email,
                     otp: code,
                 }
             );
