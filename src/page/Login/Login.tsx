@@ -20,7 +20,7 @@ export default function Login() {
     async function handleLogin() {
         try {
             const res = await axios.post(
-                "https://round-3-travel.digital-vision-solutions.com/api/api/v1/auth/login?",
+                "https://round-3-travel.digital-vision-solutions.com/api/api/v1/auth/login",
                 {
                     email,
                     password,

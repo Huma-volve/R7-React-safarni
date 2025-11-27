@@ -1,3 +1,4 @@
+import axios from "axios";
 import image from "../../assets/login.png"
 import { useState, useRef, useEffect } from "react";
 
@@ -5,6 +6,8 @@ export default function OTP() {
 
     const [otp, setOtp] = useState<string[]>(["", "", "", ""]);
     const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
+    const [errorMsg, setErrorMsg] = useState<string>("");
+
     const [timer, setTimer] = useState(30);
 
     // countdown
@@ -14,7 +17,9 @@ export default function OTP() {
         return () => clearInterval(interval);
     }, [timer]);
 
-    const handleChange = (value: string, index: number) => {
+    const handleChange = async (value: string, index: number) => {
+        const code = otp.join("");
+
         if (/^[0-9]$/.test(value)) {
             const newOtp = [...otp];
             newOtp[index] = value;
@@ -24,13 +29,32 @@ export default function OTP() {
             if (index < 3) {
                 inputsRef.current[index + 1]?.focus();
             }
+            if (code.length < 4) {
+                setErrorMsg("Enter full OTP");
+                return;
+            }
         } else if (value === "") {
             // allow deleting
             const newOtp = [...otp];
             newOtp[index] = "";
             setOtp(newOtp);
         }
-    };
+        try {
+            const res = await axios.post(
+                "https://round-3-travel.digital-vision-solutions.com/api/v1/auth/verify-otp",
+                {
+                    email,
+                    otp: code,
+                }
+            );
+
+            console.log("OTP Verified:", res.data);
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) { setErrorMsg(error.response?.data?.message) };
+        }
+    }
+
+
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
         if (e.key === "Backspace" && !otp[index] && index > 0) {
