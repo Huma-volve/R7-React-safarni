@@ -54,7 +54,7 @@ export default function AvailableTours() {
             {/* Grid: 2 × 2 */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {tours.map((tour: Tour, index) => (
-                    <div
+                    <Link to={`/destination/${tour.id}`}
                         key={index}
                         className="flex-col sm:flex-row flex items-center gap-5 p-4 rounded-[40px] bg-white shadow-[0_0_25px_rgba(30,58,138,0.15)] border border-gray-100"
                     >
@@ -91,7 +91,7 @@ export default function AvailableTours() {
                             <StarRoundedIcon sx={{ fontSize: 26, color: "#facc15" }} />
                             <span className="text-gray-700">{tour.rating}</span>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>

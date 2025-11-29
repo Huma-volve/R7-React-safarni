@@ -57,7 +57,7 @@ export default function Recommendation() {
             {/* Cards Scroll */}
             <div className="flex space-x-6 overflow-x-auto pb-3">
                 {tours.map((tour, index) => (
-                    <div
+                    <Link to={`/destination/${tour.id}`}
                         key={index}
                         className="min-w-[260px] bg-white rounded-[30px] shadow-[0_4px_25px_rgba(0,0,0,0.15)] p-4"
                     >
@@ -89,7 +89,7 @@ export default function Recommendation() {
                             <LocationOnIcon />
                             <span className="text-lg">{tour.name}</span>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>
