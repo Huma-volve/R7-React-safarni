@@ -45,11 +45,13 @@ export default function SignUp() {
                 }
             );
 
+            const username = res.data.data.user.name
 
             // save token
             dispatch(loginSuccess({
-                token: res.data.token,
-                email
+                token: res.data.data.token,
+                email,
+                username
             }));
             console.log("SIGNUP SUCCESS:", res.data);
             navigate("/OTP")

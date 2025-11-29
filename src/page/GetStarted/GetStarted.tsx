@@ -1,6 +1,19 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import image from "../../assets/getStarted.png"
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/store";
+
 export default function GetStarted() {
+
+    const email = useSelector((state: RootState) => state.auth.email) ?? "";
+    const navigate = useNavigate()
+    console.log(email)
+
+
+
+    if (email) {
+        navigate("/home")
+    }
     return (
         <>
             <div className=" bg-[#F4F4F4] sm:h-[772px] sm:w-[608px] flex justify-center items-center  rounded-4xl">

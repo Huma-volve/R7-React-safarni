@@ -73,8 +73,10 @@ export default function OTP() {
 
 
             const token = res.data.data.token;
+            const username = res.data.data.user.name
+
             navigate("/home");
-            dispatch(loginSuccess({ token, email }));
+            dispatch(loginSuccess({ token, email, username }));
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
                 setErrorMsg(error.response?.data?.message || "Invalid OTP");

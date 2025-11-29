@@ -197,7 +197,7 @@ export default function Compare() {
       {/* البطاقات العلوية */}
       <Grid container spacing={2}>
         {result.map((item) => (
-          <Grid size={{ xs: 12,sm: 6 }} key={item.id}>
+          <Grid size={{ xs: 12, sm: 6 }} key={item.id}>
             <Card
               sx={{
                 borderRadius: "20px",
@@ -226,8 +226,8 @@ export default function Compare() {
                       width: { xs: "103px", md: "170px" },
                       height: { xs: "103px", md: "170px" },
                       objectFit: "cover",
-                      flexShrink: 0, 
-                      marginBottom:"7px"
+                      flexShrink: 0,
+                      marginBottom: "7px"
                     }}
                   />
                   <Box sx={{ flex: 1, overflow: "hidden" }}>
