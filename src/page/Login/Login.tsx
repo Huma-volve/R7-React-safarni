@@ -1,6 +1,6 @@
 import { Lock, Mail } from "lucide-react"
 import image from "../../assets/login.png"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../store/authSlice";
 import { useState } from "react";
@@ -11,27 +11,53 @@ export default function Login() {
     const dispatch = useDispatch();
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
+    const [message, setMessage] = useState<string>("");
+    const navigate = useNavigate()
 
-    function getAxiosError(error: unknown) {
-        if (axios.isAxiosError(error)) return error.response?.data;
-        if (error instanceof Error) return error.message;
-        return "Unknown error";
-    }
+
+
+
     async function handleLogin() {
         try {
             const res = await axios.post(
-                "https://round-3-travel.digital-vision-solutions.com/api/api/v1/auth/login?",
+                "https://round7-safarni-team-one.huma-volve.com/api/v1/auth/login",
                 {
                     email,
                     password,
                 }
             );
+            console.log(res)
 
-            const token = res.data.token;
-            dispatch(loginSuccess(token));
+            const token = res.data.data.token;
+
+            const username = res.data.data.user.name
+
+            dispatch(loginSuccess({ token, email, username }));
+            navigate("/home")
+
         } catch (error: unknown) {
-            console.log("LOGIN ERROR:", getAxiosError(error));
+            let errMsg = "Something went wrong";
+
+            if (axios.isAxiosError(error)) {
+                const data = error.response?.data;
+
+                if (data?.error?.message) {
+                    errMsg = data.error.message;
+                }
+                else if (data?.message) {
+                    errMsg = data.message;
+                }
+                else {
+                    errMsg = JSON.stringify(data);
+                }
+            } else if (error instanceof Error) {
+                errMsg = error.message;
+            }
+
+            setMessage(errMsg);
         }
+
+
     }
 
     return (
@@ -85,6 +111,9 @@ export default function Login() {
                             </Link>
                         </div>
                     </div>
+                    {message && <p className="text-red-500 mt-4 text-center font-semibold bg-red-100 py-2 rounded-md">
+                        {message}</p>}
+
 
                     {/* Login Button */}
                     <button
