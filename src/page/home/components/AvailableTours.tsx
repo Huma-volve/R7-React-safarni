@@ -8,8 +8,9 @@ export default function AvailableTours() {
         id: number;
         name: string;
         rating: number;
-        price: number;
-        main_image_thumb: string;
+        pricing?: {
+            adult_price: number;
+        }; main_image_thumb: string;
         category: {
             id: number;
             name: string;
@@ -79,7 +80,7 @@ export default function AvailableTours() {
                             <p className="text-gray-600 text-lg">
                                 From{" "}
                                 <span className="text-blue-600 font-semibold">
-                                    {tour.price}$
+                                    {tour.pricing?.adult_price}$
                                 </span>{" "}
                                 Per Person
                             </p>
