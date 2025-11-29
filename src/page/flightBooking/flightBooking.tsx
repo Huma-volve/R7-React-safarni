@@ -5,35 +5,34 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import SouthEastIcon from "@mui/icons-material/SouthEast";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { searchFlights } from "../../store/flight/flightSlice";
+import type { AppDispatch } from "../../store/store";
+import { updateBookingData } from "../../store/flight/flightSlice";
 interface FormState {
   location: string;
   destination: string;
   departure: string;
   returnDate: string;
-  passengers: string;
+  passengers: string; // ← غيرنا لـ string
 }
-
 export default function FlightBooking() {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch<AppDispatch>();
   const [tripType, setTripType] = useState("round");
-
   const [form, setForm] = useState<FormState>({
     location: "",
     destination: "",
     departure: "",
     returnDate: "",
-    passengers: "1 Passenger",
+    passengers: "1", // ← افتراضي كـ string
   });
-
   const [errors, setErrors] = useState({
     location: false,
     destination: false,
     departure: false,
     returnDate: false,
   });
-
   const handleChange = (field: keyof FormState, value: string) => {
     setForm({ ...form, [field]: value });
     setErrors({ ...errors, [field]: false });
@@ -44,18 +43,46 @@ export default function FlightBooking() {
       location: form.location.trim() === "",
       destination: form.destination.trim() === "",
       departure: form.departure.trim() === "",
-      returnDate: tripType !== "one" ? form.returnDate.trim() === "" : false,
+      returnDate: tripType !== "one" && form.returnDate.trim() === "",
     };
     setErrors(newErrors);
-
     return !Object.values(newErrors).includes(true);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validateForm()) return;
-    navigate("/flightbooking/flightselector");
-  };
 
+    const passengers = parseInt(form.passengers) || 1;
+    dispatch(
+      updateBookingData({
+        origin: form.location,
+        destination: form.destination,
+        date: form.departure,
+        passengers: passengers,
+      })
+    );
+
+    try {
+      await dispatch(
+        searchFlights({
+          origin: form.location,
+          // destination: form.destination,
+          // date: form.departure,
+          // passengers: passengers,
+        })
+      ).unwrap();
+      navigate("/flightbooking/flightselector");
+    } catch (error: any) {
+      let message =
+        "Failed to search flights. Please check your input and try again.";
+      if (error.response?.data?.message) {
+        message = error.response.data.message;
+      } else if (error.message) {
+        message = error.message;
+      }
+      alert(`❌ ${message}`);
+    }
+  };
   return (
     <Container>
       <Stack
@@ -65,7 +92,11 @@ export default function FlightBooking() {
         }}
       >
         <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-          <img src="/assets/flightBooking/Rectangle 20 (2).png" alt="" />
+          <img
+            src="/assets/flightBooking/Rectangle 20 (2).png"
+            alt="Flight Booking"
+            className="w-full h-auto"
+          />
         </Box>
 
         <Box sx={{ width: { xs: "100%", md: "50%" }, position: "relative" }}>
@@ -74,12 +105,11 @@ export default function FlightBooking() {
             <div className="flex items-center gap-4 mb-6 overflow-auto">
               <button
                 onClick={() => setTripType("round")}
-                className={`flex items-center shrink-0 w-[150px] text-[14px] gap-[8px] pt-[8px] pb-[8px] pl-[16px] pr-[16px] rounded-full transition
-                    ${
-                      tripType === "round"
-                        ? "bg-[#EBF5FF] text-[#1A56DB]"
-                        : "bg-gray-100 text-gray-600"
-                    }`}
+                className={`flex items-center shrink-0 w-[150px] text-[14px] gap-[8px] pt-[8px] pb-[8px] pl-[16px] pr-[16px] rounded-full transition ${
+                  tripType === "round"
+                    ? "bg-[#EBF5FF] text-[#1A56DB]"
+                    : "bg-gray-100 text-gray-600"
+                }`}
               >
                 <AutorenewIcon fontSize="small" />
                 Round Trip
@@ -87,12 +117,11 @@ export default function FlightBooking() {
 
               <button
                 onClick={() => setTripType("multi")}
-                className={`flex items-center shrink-0 w-[130px] text-[14px] gap-[8px] pt-[8px] pb-[8px] pl-[16px] pr-[16px] rounded-full transition
-                    ${
-                      tripType === "multi"
-                        ? "bg-[#EBF5FF] text-[#1A56DB]"
-                        : "bg-gray-100 text-gray-600"
-                    }`}
+                className={`flex items-center shrink-0 w-[130px] text-[14px] gap-[8px] pt-[8px] pb-[8px] pl-[16px] pr-[16px] rounded-full transition ${
+                  tripType === "multi"
+                    ? "bg-[#EBF5FF] text-[#1A56DB]"
+                    : "bg-gray-100 text-gray-600"
+                }`}
               >
                 <SouthEastIcon fontSize="small" />
                 Multi City
@@ -100,12 +129,11 @@ export default function FlightBooking() {
 
               <button
                 onClick={() => setTripType("one")}
-                className={`flex items-center shrink-0 w-[128px] text-[14px] gap-[8px] pt-[8px] pb-[8px] pl-[16px] pr-[16px] rounded-full transition
-                    ${
-                      tripType === "one"
-                        ? "bg-[#EBF5FF] text-[#1A56DB]"
-                        : "bg-gray-100 text-gray-600"
-                    }`}
+                className={`flex items-center shrink-0 w-[128px] text-[14px] gap-[8px] pt-[8px] pb-[8px] pl-[16px] pr-[16px] rounded-full transition ${
+                  tripType === "one"
+                    ? "bg-[#EBF5FF] text-[#1A56DB]"
+                    : "bg-gray-100 text-gray-600"
+                }`}
               >
                 <FlightTakeoffIcon fontSize="small" />
                 One Way
@@ -125,6 +153,7 @@ export default function FlightBooking() {
                   placeholder="Montreal, Canada"
                   error={errors.location}
                   helperText={errors.location ? "This field is required" : ""}
+                  value={form.location}
                   onChange={(e) => handleChange("location", e.target.value)}
                 />
               </div>
@@ -142,12 +171,13 @@ export default function FlightBooking() {
                   helperText={
                     errors.destination ? "This field is required" : ""
                   }
+                  value={form.destination}
                   onChange={(e) => handleChange("destination", e.target.value)}
                 />
               </div>
 
               {/* Dates */}
-              <div className="flex gap-4">
+              <Stack sx={{ flexDirection: { xs: "column", md: "row" }, gap: 2 }}>
                 <div className="flex-1">
                   <label className="block mb-1 text-[18px] font-medium text-gray-700">
                     Departure
@@ -155,49 +185,46 @@ export default function FlightBooking() {
                   <TextField
                     fullWidth
                     size="small"
-                    type="text"
-                    placeholder="Dec 16th, 2025"
+                    type="date" // ✅ مهم جدًا
+                    InputLabelProps={{ shrink: true }} // علشان الـ label يظهر صح
                     error={errors.departure}
                     helperText={errors.departure ? "Required" : ""}
-                    onChange={(e) =>
-                      handleChange("departure", e.target.value)
-                    }
+                    value={form.departure}
+                    onChange={(e) => handleChange("departure", e.target.value)}
                   />
                 </div>
 
-                <div className="flex-1">
+                <div>
                   <label className="block mb-1 text-[18px] font-medium text-gray-700">
                     Return
                   </label>
                   <TextField
                     fullWidth
                     size="small"
-                    type="text"
-                    placeholder="Jan 6th, 2025"
+                    type="date" // ✅
+                    InputLabelProps={{ shrink: true }}
                     disabled={tripType === "one"}
                     error={errors.returnDate}
                     helperText={
-                      tripType !== "one" && errors.returnDate
-                        ? "Required"
-                        : ""
+                      tripType !== "one" && errors.returnDate ? "Required" : ""
                     }
-                    onChange={(e) =>
-                      handleChange("returnDate", e.target.value)
-                    }
+                    value={form.returnDate}
+                    onChange={(e) => handleChange("returnDate", e.target.value)}
                   />
                 </div>
-              </div>
+              </Stack>
 
               {/* Passenger */}
               <div>
                 <label className="block mb-1 text-[18px] font-medium text-gray-700">
                   Passenger
                 </label>
+                {/* ✅ options كـ strings، وvalue كـ string */}
                 <Autocomplete
-                  options={["1 Passenger", "2 Passengers", "3 Passengers"]}
-                  defaultValue="1 Passenger"
+                  options={["1", "2", "3", "4"]}
+                  value={form.passengers} // ← string
                   onChange={(_, value) =>
-                    handleChange("passengers", value || "1 Passenger")
+                    handleChange("passengers", value || "1")
                   }
                   renderInput={(params) => (
                     <TextField {...params} size="small" />
@@ -216,7 +243,7 @@ export default function FlightBooking() {
                   fontWeight: "600",
                   padding: "8px 16px",
                   marginTop: "20px",
-                  marginBottom:{md:"0px",xs:"70px"},
+                  marginBottom: { md: "0px", xs: "70px" },
                   textTransform: "none",
                 }}
               >

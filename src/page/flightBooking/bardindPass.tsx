@@ -11,7 +11,79 @@ import {
 import { Flight } from "@mui/icons-material";
 import Back from "../../components/back";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/store";
+
 export default function BoardingPass() {
+  // ✅ جلب كل بيانات الحجز من Redux (بدون early return)
+  const bookingData = useSelector(
+    (state: RootState) => state.flight.bookingData
+  );
+  console.log("bookingData");
+  console.log(bookingData);
+  const selectedFlight = bookingData?.selectedFlight;
+  const selectedSeat = bookingData?.selectedSeat;
+  const passengerInfo = bookingData?.passengerInfo;
+  console.log("bookingData: ", bookingData);
+  // ✅ جلب بيانات المستخدم من localStorage (مؤقت حتى ندمج passengerInfo)
+  const [user, setUser] = useState<any>(null);
+  useEffect(() => {
+    const userStr = localStorage.getItem("user");
+    if (userStr) {
+      try {
+        setUser(JSON.parse(userStr));
+      } catch (e) {
+        console.error("Invalid user data in localStorage");
+      }
+    }
+  }, []);
+
+  // ✅ حساب العمر من تاريخ الميلاد
+  const getAge = (birthDate: string): number => {
+    if (!birthDate || birthDate.startsWith("0001-01-01")) return 0;
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birth.getDate())
+    ) {
+      age--;
+    }
+    return age;
+  };
+
+  // ✅ تنسيق الوقت
+  const formatTime = (dateStr: string | undefined): string => {
+    if (!dateStr) return "—";
+    return new Date(dateStr).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  // ✅ تنسيق التاريخ
+  const formatDate = (dateStr: string | undefined): string => {
+    if (!dateStr) return "—";
+    return new Date(dateStr).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  // ✅ دمج بيانات الراكب من Redux أو localStorage
+  const passengerName = passengerInfo?.name || user?.data?.fullName || "—";
+  const passengerAge = passengerInfo?.age
+    ? `${passengerInfo.age} years, ${passengerInfo.gender || "—"}`
+    : user?.data?.birthDate
+    ? `${getAge(user.data.birthDate)===0?"-":getAge(user.data.birthDate)} years, male`
+    : "—";
+  const passengerImage =
+    user?.data?.imgUrl || "/assets/barding/Avatar Place holder.png";
+
   return (
     <Container maxWidth={false} disableGutters sx={{ overflow: "visible" }}>
       <Back />
@@ -24,16 +96,15 @@ export default function BoardingPass() {
       >
         {/* LEFT IMAGE */}
         <Box sx={{ width: "50%", display: { xs: "none", md: "block" } }}>
-          <img src="/assets/flightBooking/Rectangle 20 (2).png" alt="" />
+          <img
+            src="/assets/flightBooking/Rectangle 20 (2).png"
+            alt=""
+            style={{ width: "100%" }}
+          />
         </Box>
 
         {/* RIGHT BOARDING PASS */}
-        <Box
-          sx={{
-            position: "relative",
-            width: { xs: "100%", md: "50%" },
-          }}
-        >
+        <Box sx={{ position: "relative", width: { xs: "100%", md: "50%" } }}>
           <Typography
             sx={{
               fontSize: { xs: "18px", md: "26px" },
@@ -42,10 +113,9 @@ export default function BoardingPass() {
               textAlign: "center",
             }}
           >
-            Barding pass
+            Boarding Pass
           </Typography>
 
-          {/* CARD */}
           <Card
             elevation={3}
             sx={{
@@ -99,72 +169,127 @@ export default function BoardingPass() {
             />
 
             {/* HEADER */}
-            <Box className="flex justify-between items-end mt-4">
-              <Box className="flex justify-between gap-2 items-center flex-col">
-                <img
-                  src="/assets/barding/image 13 (1).png"
-                  alt="Air Canada"
-                  className="w-6"
-                />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+                mt: 4,
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 1,
+                }}
+              >
                 <Typography
                   sx={{
                     fontSize: { xs: "13px", md: "15px" },
                     fontWeight: "500",
                   }}
                 >
-                  Air Canada
+                  {selectedFlight?.airline || "Airline"}
                 </Typography>
               </Box>
 
               <Typography
                 sx={{ fontSize: { xs: "13px", md: "20px" }, fontWeight: "400" }}
               >
-                December 16th, 2022
+                {formatDate(bookingData?.date)}
               </Typography>
             </Box>
 
             {/* FLIGHT TIME */}
-            <Box className="flex justify-between items-center my-4 px-2">
-              <div className="text-center">
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                my: 4,
+                px: 2,
+              }}
+            >
+              <div style={{ textAlign: "center" }}>
                 <Typography
                   sx={{
                     fontSize: { xs: "15px", md: "21px" },
                     fontWeight: "500",
                   }}
                 >
-                  07h05
+                  {formatTime(selectedFlight?.departure_time)}
                 </Typography>
-                <Typography className="text-gray-500 text-[13px] md:text-[15px] font-[600]">
-                  YUL
+                <Typography
+                  className="text-gray-500"
+                  sx={{
+                    fontSize: { xs: "13px", md: "15px" },
+                    fontWeight: "600",
+                  }}
+                >
+                  {selectedFlight?.origin.airport_code || "—"}
                 </Typography>
               </div>
 
-              <div className="flex flex-col items-center">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
                 <Flight sx={{ transform: "rotate(90deg)", fontSize: "15px" }} />
-                <Typography className="text-gray-400 text-[11px] md:text-[13px] font-[400]">
-                  13h00
+                <Typography
+                  className="text-gray-400"
+                  sx={{
+                    fontSize: { xs: "11px", md: "13px" },
+                    fontWeight: "400",
+                  }}
+                >
+                  {selectedFlight?.duration_minutes !== undefined
+                    ? selectedFlight.duration_minutes / 60
+                    : "—"}
                 </Typography>
               </div>
 
-              <div className="text-center">
+              <div style={{ textAlign: "center" }}>
                 <Typography
                   sx={{
                     fontSize: { xs: "15px", md: "21px" },
                     fontWeight: "500",
                   }}
                 >
-                  20h05
+                  {formatTime(selectedFlight?.arrival_time)}
                 </Typography>
-                <Typography className="text-gray-500 text-[13px] md:text-[15px] font-[600]">
+                <Typography
+                  className="text-gray-500"
+                  sx={{
+                    fontSize: { xs: "13px", md: "15px" },
+                    fontWeight: "600",
+                  }}
+                >
                   NRT
                 </Typography>
               </div>
             </Box>
             <Divider />
+
             {/* DETAILS */}
-            <Box className="grid grid-cols-4 gap-4 text-center my-6">
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(4, 1fr)",
+                gap: 2,
+                textAlign: "center",
+                my: 6,
+              }}
+            >
               <div>
-                <Typography className="text-gray-500 text-[13px] md:text-[15px]">
+                <Typography
+                  className="text-gray-500"
+                  sx={{ fontSize: { xs: "13px", md: "15px" } }}
+                >
                   8
                 </Typography>
                 <Typography
@@ -177,8 +302,11 @@ export default function BoardingPass() {
                 </Typography>
               </div>
               <div>
-                <Typography className="text-gray-500 text-[13px] md:text-[15px]">
-                  6
+                <Typography
+                  className="text-gray-500"
+                  sx={{ fontSize: { xs: "13px", md: "15px" } }}
+                >
+                  {selectedSeat || "—"}
                 </Typography>
                 <Typography
                   sx={{
@@ -190,7 +318,10 @@ export default function BoardingPass() {
                 </Typography>
               </div>
               <div>
-                <Typography className="text-gray-500 text-[13px] md:text-[15px]">
+                <Typography
+                  className="text-gray-500"
+                  sx={{ fontSize: { xs: "13px", md: "15px" } }}
+                >
                   3
                 </Typography>
                 <Typography
@@ -203,8 +334,11 @@ export default function BoardingPass() {
                 </Typography>
               </div>
               <div>
-                <Typography className="text-gray-500 text-[13px] md:text-[15px]">
-                  AC006
+                <Typography
+                  className="text-gray-500"
+                  sx={{ fontSize: { xs: "13px", md: "15px" } }}
+                >
+                  {selectedFlight?.id || "—"}
                 </Typography>
                 <Typography
                   sx={{
@@ -220,16 +354,28 @@ export default function BoardingPass() {
             <Divider />
 
             {/* PASSENGER INFO */}
-            <Box className="flex justify-between items-center py-4">
-              <Box className="flex items-center gap-3">
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                py: 4,
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                 <Avatar
-                  src="/assets/barding/Avatar Place holder.png"
+                  src={passengerImage}
                   alt="Passenger"
                   sx={{ width: 45, height: 45 }}
                 />
                 <Box>
-                  <Typography className="font-semibold text-[15px] md:text-[18px]">
-                    Catherine Dion
+                  <Typography
+                    sx={{
+                      fontWeight: "600",
+                      fontSize: { xs: "15px", md: "18px" },
+                    }}
+                  >
+                    {passengerName}
                   </Typography>
                   <Typography
                     className="text-gray-500"
@@ -238,33 +384,42 @@ export default function BoardingPass() {
                       fontSize: { xs: "13px", md: "15px" },
                     }}
                   >
-                    24 years, Female
+                    {passengerAge}
                   </Typography>
                 </Box>
               </Box>
 
-              <Box className="flex items-center gap-2">
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <img
                   src="/assets/barding/Sofa.png"
                   alt="Seat"
-                  className="w-6"
+                  style={{ width: 24 }}
                 />
-                <Typography className="font-semibold text-[15px] md:text-[18px]">
-                  29A
+                <Typography
+                  sx={{
+                    fontWeight: "600",
+                    fontSize: { xs: "15px", md: "18px" },
+                  }}
+                >
+                  {selectedSeat || "—"}
                 </Typography>
               </Box>
             </Box>
 
-            <Divider className="my-4" />
+            <Divider sx={{ my: 4 }} />
 
             {/* QR CODE */}
-            <Box className="w-full flex justify-center py-4">
+            <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
               <img src="/assets/barding/Scan.png" alt="QR Code" />
             </Box>
           </Card>
 
           {/* CHECKOUT BUTTON */}
-          <Link to="/paymentpage" className="w-full">
+          <Link
+            to="/paymentpage"
+            className="w-full"
+            style={{ textDecoration: "none" }}
+          >
             <Button
               variant="contained"
               fullWidth
@@ -275,7 +430,7 @@ export default function BoardingPass() {
                 padding: "8px 16px",
                 marginTop: "20px",
                 textTransform: "none",
-                marginBottom:{xs:"70px !important",md:"0"}
+                marginBottom: { xs: "70px !important", md: "0" },
               }}
             >
               Check Out

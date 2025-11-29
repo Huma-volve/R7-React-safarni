@@ -26,7 +26,7 @@ export default function SignUp() {
 
         try {
             const res = await axios.post(
-                "http://round7-safarni-team-one.huma-volve.com/api//api/v1/auth/register",
+                "https://round7-safarni-team-one.huma-volve.com/api/v1/auth/register",
                 {
                     name,
                     email,

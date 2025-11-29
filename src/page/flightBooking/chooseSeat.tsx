@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -8,73 +8,85 @@ import {
   Stack,
 } from "@mui/material";
 import Back from "../../components/back";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from "../../store/store";
+import { fetchSeats } from "../../store/flight/flightSlice";
+//import type { ApiSeat } from "../../store/flight/flightSlice";
+import { updateBookingData } from "../../store/flight/flightSlice";
+
 type SeatStatus = "available" | "selected" | "unavailable";
-type SeatsMap = Record<number, SeatStatus>;
 
 export default function SeatSelector() {
-  const [selectedSeat, setSelectedSeat] = useState<number | null>(6);
+  const { flightId } = useParams<{ flightId: string }>();
+  console.log("flightId:", flightId);
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const { apiSeats, loading, error } = useSelector(
+    (state: RootState) => state.flight
+  );
+  const [selectedSeatNumber, setSelectedSeatNumber] = useState<string | null>(
+    null
+  );
+  const [seatMap, setSeatMap] = useState<Record<string, SeatStatus>>({});
+  console.log(apiSeats);
+  // طلب المقاعد عند تحميل الصفحة
+  useEffect(() => {
+    if (flightId) {
+      dispatch(fetchSeats(flightId));
+    }
+  }, [dispatch, flightId]);
+
+  // بناء خريطة المقاعد من البيانات الجاية من الـ API
+  useEffect(() => {
+    const map: Record<string, SeatStatus> = {};
+    apiSeats.forEach((seat) => {
+      map[seat.seat_number] = seat.is_available ? "available" : "unavailable";
+    });
+    setSeatMap(map);
+  }, [apiSeats]);
 
   const handleContinue = () => {
-    if (selectedSeat === null) {
+    if (!selectedSeatNumber) {
       alert("Please select a seat before continuing.");
       return;
     }
-    navigate("/flightbooking/flightselector/seatselector/boardingpass");
+    dispatch(
+      updateBookingData({
+        selectedSeat: selectedSeatNumber,
+      })
+    );
+    navigate("/flightbooking/flightselector/seatselector/:id/boardingpass");
   };
-  const [seats, setSeats] = useState<SeatsMap>(() => {
-    const map: SeatsMap = {};
-    for (let i = 1; i <= 30; i++) map[i] = "unavailable";
 
-    map[4] = "available";
-    map[8] = "available";
-    map[9] = "available";
-    map[10] = "available";
-    map[16] = "available";
-    map[17] = "available";
-    map[20] = "available";
-    map[24] = "available";
-    map[26] = "available";
-    map[29] = "available";
-    map[28] = "available";
-    map[6] = "selected";
-    return map;
-  });
+  const handleSelectSeat = (seatNumber: string) => {
+    if (seatMap[seatNumber] !== "available") return;
 
-  const ticketPrice = 150;
-  const totalPrice = selectedSeat ? ticketPrice : 0;
-
-  const handleSelectSeat = (seatNumber: number) => {
-    if (seats[seatNumber] === "unavailable") return;
-
-    setSeats((prev) => {
-      const updated = { ...prev };
-
-      Object.keys(updated).forEach((k) => {
-        if (updated[+k] === "selected") updated[+k] = "available";
-      });
-
-      updated[seatNumber] = "selected";
-      return updated;
+    const updatedMap = { ...seatMap };
+    // إلغاء الاختيار السابق
+    Object.keys(updatedMap).forEach((key) => {
+      if (updatedMap[key] === "selected") {
+        updatedMap[key] = "available";
+      }
     });
-
-    setSelectedSeat(seatNumber);
+    updatedMap[seatNumber] = "selected";
+    setSeatMap(updatedMap);
+    setSelectedSeatNumber(seatNumber);
   };
 
-  const renderSeatButton = (num: number) => {
-    const status = seats[num];
+  const renderSeatButton = (seatNumber: string) => {
+    const status = seatMap[seatNumber] || "unavailable";
     const isUnavailable = status === "unavailable";
     const isSelected = status === "selected";
 
     return (
       <Button
-        key={num}
-        onClick={() => handleSelectSeat(num)}
+        key={seatNumber}
+        onClick={() => handleSelectSeat(seatNumber)}
         disabled={isUnavailable}
         sx={{
-          width: { xs: "38px", md: "50px" },
-          height: { xs: "38px", md: "50px" },
+          width: { xs: "27px", md: "50px" },
+          height: { xs: "27px", md: "50px" },
           fontSize: { xs: "12px", md: "18px" },
           fontWeight: 400,
           bgcolor: isUnavailable
@@ -88,10 +100,63 @@ export default function SeatSelector() {
           minWidth: "auto",
         }}
       >
-        {num}
+        {seatNumber}
       </Button>
     );
   };
+
+  // بناء تخطيط المقاعد حسب الصف (A1, B1, C1, D1, E1, F1 ...)
+  const renderSeatLayout = () => {
+    const allSeats = Object.keys(seatMap);
+    if (allSeats.length === 0) return null;
+
+    // استخراج أرقام الصفوف
+    const rowsMap: Record<string, string[]> = {};
+    allSeats.forEach((seatNum) => {
+      const row = seatNum.replace(/\D/g, ""); // "A1" → "1"
+      if (!rowsMap[row]) rowsMap[row] = [];
+      rowsMap[row].push(seatNum);
+    });
+
+    const sortedRows = Object.keys(rowsMap)
+      .sort((a, b) => parseInt(a) - parseInt(b))
+      .slice(0, 6); // أول 6 صفوف كمثال
+
+    return sortedRows.map((row) => {
+      const seatsInRow = rowsMap[row].sort(); // A1, B1, C1...
+      const left = seatsInRow.filter((s) => ["A", "B"].includes(s[0]));
+      const right = seatsInRow.filter((s) =>
+        ["C", "D", "E", "F"].includes(s[0])
+      );
+
+      return (
+        <Stack
+          key={row}
+          direction="row"
+          spacing={3}
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{ width: "100%" }}
+        >
+          <Stack direction="row" spacing={2}>
+            {left.map(renderSeatButton)}
+          </Stack>
+          <Stack direction="row" spacing={2}>
+            {right.map(renderSeatButton)}
+          </Stack>
+        </Stack>
+      );
+    });
+  };
+
+  const selectedSeatData = apiSeats.find(
+    (s) => s.seat_number === selectedSeatNumber
+  );
+  const ticketPrice = selectedSeatData ? parseFloat(selectedSeatData.price) : 0;
+
+  if (loading) return <div className="text-center py-10">Loading seats...</div>;
+  if (error)
+    return <div className="text-center py-10 text-red-500">{error}</div>;
 
   return (
     <Container>
@@ -102,7 +167,6 @@ export default function SeatSelector() {
           gap: { xs: "0px", md: "105px" },
         }}
       >
-        {/* image */}
         <Box sx={{ width: "50%", display: { xs: "none", md: "block" } }}>
           <img
             src="/assets/flightBooking/Rectangle 20 (2).png"
@@ -111,7 +175,6 @@ export default function SeatSelector() {
           />
         </Box>
 
-        {/* right content */}
         <Stack
           spacing={4}
           sx={{
@@ -124,7 +187,7 @@ export default function SeatSelector() {
             Choose seat
           </Typography>
 
-          {/* legend */}
+          {/* Legend */}
           <Stack direction="row" spacing={3} mb={4}>
             <Stack direction="row" spacing={1} alignItems="center">
               <Box
@@ -141,7 +204,6 @@ export default function SeatSelector() {
                 Available
               </Typography>
             </Stack>
-
             <Stack direction="row" spacing={1} alignItems="center">
               <Box
                 sx={{
@@ -157,7 +219,6 @@ export default function SeatSelector() {
                 Selected
               </Typography>
             </Stack>
-
             <Stack direction="row" spacing={1} alignItems="center">
               <Box
                 sx={{
@@ -170,13 +231,12 @@ export default function SeatSelector() {
               <Typography
                 sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}
               >
-                Un available
+                Unavailable
               </Typography>
             </Stack>
           </Stack>
 
-          {/* seats layout */}
-          {/* seats layout - ROW-BY-ROW layout with proper spacing */}
+          {/* Seats Layout */}
           <Box
             sx={{
               width: "100%",
@@ -185,48 +245,16 @@ export default function SeatSelector() {
               gap: 3,
             }}
           >
-            {[...Array(6)].map((_, rowIndex) => {
-              const rowStart = rowIndex * 5 + 1;
-              const leftSeats = [rowStart, rowStart + 1]; // 2 seats on left
-              const rightSeats = [rowStart + 2, rowStart + 3, rowStart + 4]; // 3 seats on right
-
-              return (
-                <Stack
-                  key={rowIndex}
-                  direction="row"
-                  spacing={3} // 👈 هذا يتحكم في المسافة بين الجانبين (اليسار واليمين)
-                  alignItems="center"
-                  justifyContent="space-between"
-                  sx={{ width: "100%" }}
-                >
-                  {/* Left side: 2 seats */}
-                  <Stack direction="row" spacing={2}>
-                    {" "}
-                    {/* 👈 المسافة بين المقاعد داخل الطرف */}
-                    {leftSeats.map((num) => renderSeatButton(num))}
-                  </Stack>
-
-                  {/* Right side: 3 seats */}
-                  <Stack direction="row" spacing={2}>
-                    {" "}
-                    {/* 👈 نفس المسافة هنا */}
-                    {rightSeats.map((num) => renderSeatButton(num))}
-                  </Stack>
-                </Stack>
-              );
-            })}
+            {renderSeatLayout()}
           </Box>
 
-          {/* SUMMARY */}
+          {/* Summary */}
           <Divider className="my-6" />
           <Box sx={{ width: "100%" }}>
             <Stack
-              direction={"row"}
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
             >
               <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>
                 Ticket price
@@ -238,12 +266,9 @@ export default function SeatSelector() {
               </Typography>
             </Stack>
             <Stack
-              direction={"row"}
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
             >
               <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>
                 Total Price
@@ -251,28 +276,25 @@ export default function SeatSelector() {
               <Typography
                 sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}
               >
-                ${totalPrice.toFixed(2)}
+                ${ticketPrice.toFixed(2)}
               </Typography>
             </Stack>
             <Stack
-              direction={"row"}
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
             >
               <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>
-                your Seat
+                Your Seat
               </Typography>
-
               <Typography
                 sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}
               >
-                {selectedSeat ?? "-"}
+                {selectedSeatNumber ?? "-"}
               </Typography>
             </Stack>
           </Box>
+
           <Button
             variant="contained"
             fullWidth
@@ -283,7 +305,7 @@ export default function SeatSelector() {
               fontWeight: "600",
               padding: "8px 16px",
               marginTop: "20px",
-              marginBottom:{xs:"80px !important",md:"0px"},
+              marginBottom: { xs: "80px !important", md: "0px" },
               textTransform: "none",
             }}
           >
