@@ -64,7 +64,6 @@ const router = createBrowserRouter([
       { path: "hotels/pickUp/:pickId/room/:roomId/count", element: <Count /> },
       { path: "addcard", element: <AddCard /> },
       { path: "HotelReviewForm", element: <HotelReviewForm /> },
-      { path: "filters-panel", element: <FiltersPanel /> },
       { path: "destination", element: <Destination /> },
       { path: "paymentpage", element: <PaymentPage /> },
       { path: "paymentpage/succfullypay", element: <SuccfullyPay /> },
