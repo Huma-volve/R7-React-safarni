@@ -85,7 +85,6 @@ export default function SeatSelector() {
           color: isUnavailable ? "black" : isSelected ? "black" : "white",
           borderRadius: 1.5,
           textTransform: "none",
-
           minWidth: "auto",
         }}
       >
@@ -137,7 +136,7 @@ export default function SeatSelector() {
                 }}
               />
               <Typography
-                sx={{ fontSize: { xs: "14px", md: "20px" }, fontWeight: 400 }}
+                sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}
               >
                 Available
               </Typography>
@@ -153,7 +152,7 @@ export default function SeatSelector() {
                 }}
               />
               <Typography
-                sx={{ fontSize: { xs: "14px", md: "20px" }, fontWeight: 400 }}
+                sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}
               >
                 Selected
               </Typography>
@@ -169,7 +168,7 @@ export default function SeatSelector() {
                 }}
               />
               <Typography
-                sx={{ fontSize: { xs: "14px", md: "20px" }, fontWeight: 400 }}
+                sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}
               >
                 Un available
               </Typography>
@@ -284,6 +283,7 @@ export default function SeatSelector() {
               fontWeight: "600",
               padding: "8px 16px",
               marginTop: "20px",
+              marginBottom:{xs:"80px !important",md:"0px"},
               textTransform: "none",
             }}
           >

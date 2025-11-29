@@ -203,21 +203,27 @@ export default function Compare() {
                 borderRadius: "20px",
                 boxShadow: 20,
                 backgroundColor: "#FAFAFA",
-                height: { xs: 119, md: 202 }, // 👈 ارتفاع ثابت
+                // height: { xs: 119, md: 202 }, // 👈 ارتفاع ثابت
                 display: "flex",
                 flexDirection: "column",
               }}
             >
               <CardContent
                 sx={{
-                  padding: "16px",
                   display: "flex",
+                  // padding: "8px",
+                  // paddingBottom: "8px",
                   flexDirection: "column",
                   justifyContent: "space-between",
                   flexGrow: 1,
                 }}
               >
-                <Stack direction="row" alignItems="flex-start" spacing={2}>
+                <Stack
+                  direction="row"
+                  alignItems="flex-start"
+                  spacing={2}
+                  sx={{ justifyContent: "center", alignItems: "center" }}
+                >
                   <CardMedia
                     component="img"
                     image={item.image}
@@ -227,7 +233,7 @@ export default function Compare() {
                       height: { xs: "103px", md: "170px" },
                       objectFit: "cover",
                       flexShrink: 0,
-                      marginBottom: "7px"
+                      marginBottom: "7px",
                     }}
                   />
                   <Box sx={{ flex: 1, overflow: "hidden" }}>
@@ -335,7 +341,7 @@ export default function Compare() {
                       {i.dec.map((item, idx) => (
                         <Typography
                           key={idx}
-                          sx={{ fontSize: "18px", fontWeight: "400", mt: 1 }}
+                          sx={{ fontSize: {xs:"14px", md:"18px"}, fontWeight: "400", mt: 1 }}
                         >
                           ✔ {item}
                         </Typography>
@@ -350,7 +356,7 @@ export default function Compare() {
 
         {/* زر الاستمرار */}
         <Box
-          sx={{ display: "flex", justifyContent: "center", marginTop: "30px" }}
+          sx={{ display: "flex", justifyContent: "center", marginTop: "30px", marginBottom:"70px"}}
         >
           <Button
             ref={continueButtonRef}

@@ -13,12 +13,13 @@ import Back from "../../components/back";
 import { Link } from "react-router-dom";
 export default function BoardingPass() {
   return (
-    <Container>
+    <Container maxWidth={false} disableGutters sx={{ overflow: "visible" }}>
       <Back />
       <Stack
         sx={{
           flexDirection: { xs: "column", md: "row" },
           gap: { xs: "0px", md: "105px" },
+          overflow: "visible",
         }}
       >
         {/* LEFT IMAGE */}
@@ -27,12 +28,17 @@ export default function BoardingPass() {
         </Box>
 
         {/* RIGHT BOARDING PASS */}
-        <Box sx={{ width: { xs: "100%", md: "50%" }, position: "relative" }}>
+        <Box
+          sx={{
+            position: "relative",
+            width: { xs: "100%", md: "50%" },
+          }}
+        >
           <Typography
             sx={{
               fontSize: { xs: "18px", md: "26px" },
               fontWeight: "500",
-              marginBottom: "10px",
+              marginBottom: "20px",
               textAlign: "center",
             }}
           >
@@ -40,12 +46,56 @@ export default function BoardingPass() {
           </Typography>
 
           {/* CARD */}
-          <Card elevation={3} className="rounded-3xl px-6 pt-4 pb-6 relative">
+          <Card
+            elevation={3}
+            sx={{
+              margin: "auto",
+              width: "90%",
+              borderRadius: "24px",
+              padding: "20px 20px 30px",
+              position: "relative",
+              overflow: "visible",
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                top: "50%",
+                right: "-16px",
+                width: "30px",
+                height: "30px",
+                borderRadius: "50%",
+                backgroundColor: "#fff",
+                transform: "translateY(-50%) rotate(92deg)",
+                boxShadow: "0px -2px 2px rgba(0, 0, 0, 0.2) inset",
+                zIndex: 10,
+              },
+              "&::after": {
+                content: '""',
+                position: "absolute",
+                top: "50%",
+                left: "-16px",
+                width: "30px",
+                height: "30px",
+                borderRadius: "50%",
+                backgroundColor: "#fff",
+                transform: "translateY(-50%) rotate(-88deg)",
+                boxShadow: "0px -2px 2px rgba(0, 0, 0, 0.2) inset",
+                zIndex: 10,
+              },
+            }}
+          >
             {/* TOP BAR */}
             <img
               src="/assets/barding/Rectangle 292.png"
               alt=""
-              className="w-full absolute top-[-5px] left-0"
+              style={{
+                position: "absolute",
+                top: "-6px",
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: "130%",
+                zIndex: 10,
+                opacity: "0.4",
+              }}
             />
 
             {/* HEADER */}
@@ -117,7 +167,12 @@ export default function BoardingPass() {
                 <Typography className="text-gray-500 text-[13px] md:text-[15px]">
                   8
                 </Typography>
-                <Typography className="font-bold text-[13px] md:text-[15px]">
+                <Typography
+                  sx={{
+                    fontWeight: "500",
+                    fontSize: { xs: "13px", md: "15px" },
+                  }}
+                >
                   Gate
                 </Typography>
               </div>
@@ -125,7 +180,12 @@ export default function BoardingPass() {
                 <Typography className="text-gray-500 text-[13px] md:text-[15px]">
                   6
                 </Typography>
-                <Typography className="font-bold text-[13px] md:text-[15px]">
+                <Typography
+                  sx={{
+                    fontWeight: "500",
+                    fontSize: { xs: "13px", md: "15px" },
+                  }}
+                >
                   Seat
                 </Typography>
               </div>
@@ -133,7 +193,12 @@ export default function BoardingPass() {
                 <Typography className="text-gray-500 text-[13px] md:text-[15px]">
                   3
                 </Typography>
-                <Typography className="font-bold text-[13px] md:text-[15px]">
+                <Typography
+                  sx={{
+                    fontWeight: "500",
+                    fontSize: { xs: "13px", md: "15px" },
+                  }}
+                >
                   Terminal
                 </Typography>
               </div>
@@ -141,7 +206,12 @@ export default function BoardingPass() {
                 <Typography className="text-gray-500 text-[13px] md:text-[15px]">
                   AC006
                 </Typography>
-                <Typography className="font-bold text-[13px] md:text-[15px]">
+                <Typography
+                  sx={{
+                    fontWeight: "500",
+                    fontSize: { xs: "13px", md: "15px" },
+                  }}
+                >
                   Flight
                 </Typography>
               </div>
@@ -161,7 +231,13 @@ export default function BoardingPass() {
                   <Typography className="font-semibold text-[15px] md:text-[18px]">
                     Catherine Dion
                   </Typography>
-                  <Typography className="text-gray-500 text-[13px] md:text-[15px]">
+                  <Typography
+                    className="text-gray-500"
+                    sx={{
+                      fontWeight: "400",
+                      fontSize: { xs: "13px", md: "15px" },
+                    }}
+                  >
                     24 years, Female
                   </Typography>
                 </Box>
@@ -199,6 +275,7 @@ export default function BoardingPass() {
                 padding: "8px 16px",
                 marginTop: "20px",
                 textTransform: "none",
+                marginBottom:{xs:"70px !important",md:"0"}
               }}
             >
               Check Out
