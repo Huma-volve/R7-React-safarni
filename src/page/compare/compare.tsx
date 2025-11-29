@@ -14,143 +14,58 @@ import { useState, useEffect, useRef } from "react";
 import Back from "../../components/back";
 import { Search } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from "../../store/store";
+import { fetchSearchById } from "../../store/compareSlice";
 
 export default function Compare() {
+  const [search, setSearch] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [erLo, seterLo] = useState("");
+
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
+
   const navigate = useNavigate();
   const compareSectionRef = useRef<HTMLDivElement | null>(null);
   const continueButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const result = [
-    {
-      id: "1",
-      image: "/assets/coompare/Depth 3, Frame 0 (1).png",
-      title: "Paris  Evening Cruise",
-      price: "$75",
-      time: "6:00 PM - 9:00 PM",
-      dec: "Enjoy a romantic evening cruise in Paris.",
-    },
-    {
-      id: "2",
-      image: "/assets/coompare/Depth 3, Frame 0 (3).png",
-      title: "Iconic Paris Tour",
-      price: "$50",
-      time: "10:00 AM - 1:00 PM",
-      dec: "Explore Paris's iconic landmarks and hidden gems in Paris.",
-    },
-    {
-      id: "3",
-      image: "/assets/coompare/Depth 3, Frame 0 (2).png",
-      title: "Paris Art & Culture Tour",
-      price: " $60",
-      time: "2:00 PM - 5:00 PM",
-      dec: "Discover Paris's artistic side with visits to renowned museums in Paris.",
-    },
-    {
-      id: "4",
-      image: "/assets/coompare/Depth 3, Frame 0 (4).png",
-      title: "Paris Historical Sites",
-      price: "$45",
-      time: "9:00 AM - 12:00 PM",
-      dec: "Explore the historic heart of Paris, including Notre Dame and the Latin Quarter in Paris.",
-    },
-    {
-      id: "5",
-      image: "/assets/coompare/Depth 3, Frame 0 (5).png",
-      title: "Paris Louvre Museum Tour",
-      time: "1:00 PM - 4:00 PM",
-      price: " $55",
-      dec: "A guided tour of the Louvre Museum, showcasing Paris's art ",
-    },
-    {
-      id: "6",
-      image: "/assets/coompare/Depth 3, Frame 0 (5).png",
-      title: "Paris  Evening Cruise",
-      price: " $75",
-      time: "6:00 PM - 9:00 PM",
-      dec: "Enjoy a romantic evening cruise in Paris.",
-    },
-  ];
+  const dispatch = useDispatch<AppDispatch>();
+  const { product, loading, error } = useSelector(
+    (state: RootState) => state.compare
+  );
 
-  const comp = [
-    {
-      id: "1",
-      title: "Paris  Evening Cruise",
-      price: "$75",
-      dec: [
-        "Duration: 3 hours.",
-        "Highlights: Evening cruise.",
-        "Availability: Available.",
-        "Guide: Local guide.",
-        "Transportation: Boat.",
-      ],
-    },
-    {
-      id: "2",
-      title: "Iconic Paris Tour",
-      price: "$50",
-      dec: [
-        "Duration: 3 hours.",
-        "Highlights: Eiffel Tower, Louvre.",
-        "Availability: Available.",
-        "Guide: Expert guide.",
-        "Transportation: Walking + Metro.",
-      ],
-    },
-    {
-      id: "3",
-      title: "Paris Art & Culture Tour",
-      price: "$60",
-      dec: [
-        "Duration: 3 hours.",
-        "Highlights: Musée d'Orsay, Montmartre.",
-        "Availability: Available.",
-        "Guide: Art historian.",
-        "Transportation: Walking.",
-      ],
-    },
-    {
-      id: "4",
-      title: "Paris Historical Sites",
-      price: "$45",
-      dec: [
-        "Duration: 3 hours.",
-        "Highlights: Notre Dame, Latin Quarter.",
-        "Availability: Available.",
-        "Guide: Local historian.",
-        "Transportation: Walking.",
-      ],
-    },
-    {
-      id: "5",
-      title: "Paris Louvre Museum Tour",
-      price: "$55",
-      dec: [
-        "Duration: 3 hours.",
-        "Highlights: Mona Lisa, Venus de Milo.",
-        "Availability: Available.",
-        "Guide: Certified museum guide.",
-        "Transportation: Walking.",
-      ],
-    },
-    {
-      id: "6",
-      title: "Seine River Dinner Cruise",
-      price: "$85",
-      dec: [
-        "Duration: 2.5 hours.",
-        "Highlights: Gourmet dinner, live music.",
-        "Availability: Limited seats.",
-        "Guide: None (dining experience).",
-        "Transportation: Luxury boat.",
-      ],
-    },
-  ];
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(search);
+    }, 500);
 
-  // إغلاق الاختيار عند الضغط خارج منطقة المقارنة
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  useEffect(() => {
+    if (debouncedQuery) {
+      dispatch(fetchSearchById(debouncedQuery));
+    }
+  }, [debouncedQuery]);
+
+  useEffect(() => {
+    if (loading) {
+      seterLo("Loading...");
+    } else if (error) {
+      seterLo(error);
+    } else if (
+      Array.isArray(product) &&
+      product.length === 0 &&
+      debouncedQuery !== ""
+    ) {
+      seterLo("No results found");
+    } else {
+      seterLo("");
+    }
+  }, [loading, error, product, debouncedQuery]);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      // إذا كان الضغط على الزر → لا تمسح الاختيار
       if (
         continueButtonRef.current &&
         continueButtonRef.current.contains(event.target as Node)
@@ -158,7 +73,6 @@ export default function Compare() {
         return;
       }
 
-      // إذا كان الضغط خارج منطقة المقارنة → امسح الاختيار
       if (
         compareSectionRef.current &&
         !compareSectionRef.current.contains(event.target as Node)
@@ -168,195 +82,239 @@ export default function Compare() {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
     <Container>
-      {/* شريط البحث */}
+      {/* Search Bar */}
       <Stack direction="row" alignItems="center" mb={3}>
         <Back />
-        <TextField
-          fullWidth
-          InputProps={{
-            startAdornment: <Search sx={{ color: "blue" }} />,
-          }}
-          sx={{
-            marginLeft: "10px",
-            background: "#fff",
-            borderRadius: "15px",
-            "& .MuiOutlinedInput-root": {
-              borderRadius: "15px",
-            },
-          }}
-        />
-      </Stack>
 
-      {/* البطاقات العلوية */}
-      <Grid container spacing={2}>
-        {result.map((item) => (
-          <Grid size={{ xs: 12, sm: 6 }} key={item.id}>
-            <Card
+        {/* Wrap input + error */}
+        <Box sx={{ ml: 2, width: "100%" }}>
+          <TextField
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            fullWidth
+            InputProps={{
+              startAdornment: <Search sx={{ color: "blue" }} />,
+            }}
+            sx={{
+              background: "#fff",
+              borderRadius: "15px",
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "15px",
+              },
+            }}
+          />
+
+          {/*  Error message directly under input */}
+          {erLo && (
+            <Typography
               sx={{
-                borderRadius: "20px",
-                boxShadow: 20,
-                backgroundColor: "#FAFAFA",
-                // height: { xs: 119, md: 202 }, // 👈 ارتفاع ثابت
-                display: "flex",
-                flexDirection: "column",
+                color: error ? "red" : "black",
+                mt: 1,
+                ml: 1,
+                fontSize: "14px",
               }}
             >
-              <CardContent
+              {erLo}
+            </Typography>
+          )}
+        </Box>
+      </Stack>
+
+      {/*  Results cards */}
+      <Grid container spacing={2}>
+        {Array.isArray(product) &&
+          product.length > 0 &&
+          product.map((item: any) => (
+            <Grid size={{ xs: 12, sm: 6 }} key={item.id}>
+              <Card
                 sx={{
+                  borderRadius: "20px",
+                  boxShadow: 20,
+                  backgroundColor: "#FAFAFA",
                   display: "flex",
-                  // padding: "8px",
-                  // paddingBottom: "8px",
                   flexDirection: "column",
-                  justifyContent: "space-between",
-                  flexGrow: 1,
                 }}
               >
-                <Stack
-                  direction="row"
-                  alignItems="flex-start"
-                  spacing={2}
-                  sx={{ justifyContent: "center", alignItems: "center" }}
+                <CardContent
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    flexGrow: 1,
+                  }}
                 >
-                  <CardMedia
-                    component="img"
-                    image={item.image}
-                    alt={item.title}
-                    sx={{
-                      width: { xs: "103px", md: "170px" },
-                      height: { xs: "103px", md: "170px" },
-                      objectFit: "cover",
-                      flexShrink: 0,
-                      marginBottom: "7px",
-                    }}
-                  />
-                  <Box sx={{ flex: 1, overflow: "hidden" }}>
-                    <Typography
+                  <Stack
+                    direction="row"
+                    alignItems="flex-start"
+                    spacing={2}
+                    sx={{ justifyContent: "center", alignItems: "center" }}
+                  >
+                    <CardMedia
+                      component="img"
+                      image={item.main_image}
+                      alt={item.name}
                       sx={{
-                        fontSize: { xs: "15px", md: "24px" },
-                        fontWeight: "500",
-                        lineHeight: 1.3,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        display: "-webkit-box",
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: "vertical",
+                        width: { xs: "103px", md: "170px" },
+                        height: { xs: "103px", md: "170px" },
+                        objectFit: "cover",
+                        flexShrink: 0,
+                        mb: 1,
                       }}
-                    >
-                      {item.title}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        color: "#6B7280",
-                        fontSize: { xs: "13px", md: "22px" },
-                        fontWeight: "400",
-                        mt: 0.5,
-                        lineHeight: 1.3,
-                      }}
-                    >
-                      {item.time} | <span>{item.price}</span>
-                    </Typography>
-                    <Typography
-                      sx={{
-                        color: "#6B7280",
-                        fontSize: { xs: "13px", md: "22px" },
-                        fontWeight: "400",
-                        mt: 0.5,
-                        lineHeight: 1.4,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        display: "-webkit-box",
-                        WebkitLineClamp: 3,
-                        WebkitBoxOrient: "vertical",
-                      }}
-                    >
-                      {item.dec}
-                    </Typography>
-                  </Box>
-                </Stack>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+                    />
+
+                    <Box sx={{ flex: 1, overflow: "hidden" }}>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "24px" },
+                          fontWeight: "500",
+                          lineHeight: 1.3,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+
+                      <Typography
+                        sx={{
+                          color: "#6B7280",
+                          fontSize: { xs: "13px", md: "22px" },
+                          fontWeight: "400",
+                          mt: 0.5,
+                        }}
+                      >
+                        {item.time_start} | <span>{item.price_per_person}</span>
+                      </Typography>
+
+                      <Typography
+                        sx={{
+                          color: "#6B7280",
+                          fontSize: { xs: "13px", md: "22px" },
+                          fontWeight: "400",
+                          mt: 0.5,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: "vertical",
+                        }}
+                      >
+                        {item.short_description}
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
       </Grid>
 
-      {/* قسم المقارنة */}
-      <Box sx={{ marginTop: "50px" }}>
+      {/* Compare Section */}
+      <Box sx={{ mt: 8 }}>
         <Typography
-          sx={{ fontSize: "26px", fontWeight: "500", marginBottom: "20px" }}
+          sx={{
+            fontSize: "26px",
+            fontWeight: "500",
+            mb: 3,
+            display:
+              !loading &&
+              !error &&
+              Array.isArray(product) &&
+              product.length === 0
+                ? "none"
+                : "block",
+          }}
         >
           Compare
         </Typography>
 
-        {/* الحاوية الرئيسية التي نستخدمها للـ ref */}
         <Box ref={compareSectionRef}>
           <Grid container spacing={2}>
-            {comp.map((i) => {
-              const isSelected = selectedCard === i.id;
-              return (
-                <Grid
-                  size={{ xs: 12, md: 6, lg: 4 }}
-                  key={i.id}
-                  onClick={() => setSelectedCard(i.id)}
-                  sx={{ cursor: "pointer" }}
-                >
-                  <Card
-                    sx={{
-                      borderRadius: "20px",
-                      backgroundColor: "#FAFAFA",
-                      border: isSelected ? "2px solid #1C64F2" : "none",
-                    }}
+            {Array.isArray(product) &&
+              product.length > 0 &&
+              product.map((i: any) => {
+                const isSelected = selectedCard === i.id;
+                return (
+                  <Grid
+                    size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+                    key={i.id}
+                    onClick={() => setSelectedCard(i.id)}
+                    sx={{ cursor: "pointer", display: "flex" }}
                   >
-                    <CardContent sx={{ padding: "20px" }}>
-                      <Typography sx={{ fontSize: "20px", fontWeight: "500" }}>
-                        {i.title}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: "20px",
-                          fontWeight: "500",
-                          color: "#6B7280",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 1,
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontSize: "40px",
-                            fontWeight: "normal",
-                            color: "black",
+                    <Card
+                      sx={{
+                        borderRadius: "20px",
+                        backgroundColor: "#FAFAFA",
+                        border: isSelected ? "2px solid #1C64F2" : "none",
+                        display: "flex",
+                        flex: 1,
+                        flexDirection: "column",
+                      }}
+                    >
+                      <CardContent sx={{ padding: "20px" }}>
+                        <Typography
+                          sx={{ fontSize: "20px", fontWeight: "500" }}
+                        >
+                          {i.name}
+                        </Typography>
+
+                        <Typography
+                          sx={{
+                            fontSize: "20px",
+                            fontWeight: "500",
+                            color: "#6B7280",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1,
                           }}
                         >
-                          {i.price}
-                        </span>
-                        /person
-                      </Typography>
-                      {i.dec.map((item, idx) => (
-                        <Typography
-                          key={idx}
-                          sx={{ fontSize: {xs:"14px", md:"18px"}, fontWeight: "400", mt: 1 }}
-                        >
-                          ✔ {item}
+                          <span
+                            style={{
+                              fontSize: "40px",
+                              fontWeight: "normal",
+                              color: "black",
+                            }}
+                          >
+                            {i.price_per_person}
+                          </span>
+                          /person
                         </Typography>
-                      ))}
-                    </CardContent>
-                  </Card>
-                </Grid>
-              );
-            })}
+
+                        {i.highlights.map((item: any, idx: number) => (
+                          <Typography
+                            key={idx}
+                            sx={{
+                              fontSize: { xs: "14px", md: "18px" },
+                              fontWeight: "400",
+                              mt: 1,
+                            }}
+                          >
+                            ✔ {item}
+                          </Typography>
+                        ))}
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                );
+              })}
           </Grid>
         </Box>
 
-        {/* زر الاستمرار */}
         <Box
-          sx={{ display: "flex", justifyContent: "center", marginTop: "30px", marginBottom:"70px"}}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            mt: 4,
+            mb: 8,
+          }}
         >
           <Button
             ref={continueButtonRef}

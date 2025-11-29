@@ -64,7 +64,8 @@ const router = createBrowserRouter([
       { path: "hotels/pickUp/:pickId/room/:roomId/count", element: <Count /> },
       { path: "addcard", element: <AddCard /> },
       { path: "HotelReviewForm", element: <HotelReviewForm /> },
-      { path: "destination", element: <Destination /> },
+      { path: "filters-panel", element: <FiltersPanel /> },
+      { path: "destination/:id", element: <Destination /> },
       { path: "paymentpage", element: <PaymentPage /> },
       { path: "paymentpage/succfullypay", element: <SuccfullyPay /> },
       { path: "compare", element: <Compare /> },
@@ -72,9 +73,8 @@ const router = createBrowserRouter([
       { path: "favorite", element: <Favorite /> },
       { path: "flightbooking", element: <FlightBooking /> },
       { path: "flightbooking/flightselector", element: <FlightSelector /> },
-      { path: "flightbooking/flightselector/seatselector", element: <SeatSelector /> },
-      { path: "flightbooking/flightselector/seatselector/boardingpass", element: <BoardingPass />, },
-
+      { path: "flightbooking/flightselector/seatselector/:flightId", element: <SeatSelector /> },
+      { path: "flightbooking/flightselector/seatselector/:id/boardingpass", element: <BoardingPass />, },
     ],
   },
   {
