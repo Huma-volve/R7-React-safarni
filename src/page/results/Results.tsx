@@ -25,6 +25,19 @@ interface Tour {
         adult_price: number;
     };
 }
+interface Hotel {
+    id: number;
+    name: string;
+    slug: string;
+    short_description: string;
+    main_image: string;
+    total_reviews?: number;
+    rating: number;
+    duration_days?: number;
+    pricing?: {
+        adult_price: number;
+    };
+}
 
 
 export default function SearchResults() {
@@ -43,6 +56,8 @@ export default function SearchResults() {
     const tours = Array.isArray(state?.results?.tours)
         ? state.results.tours
         : [];
+    const hotels: Hotel[] = state?.results?.hotels || [];
+
 
     return (
         <div className="p-5">
@@ -139,7 +154,89 @@ export default function SearchResults() {
                             </CardContent>
                         </Link>
                     </Card>
-                 
+
+                ))}
+                <div className="my-5"></div>
+                {hotels.map((hotel: Hotel) => (
+                    <Card
+                        key={hotel.name}
+                        sx={{
+                            borderRadius: "18px",
+                            overflow: "hidden",
+                            boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+                            position: "relative",
+                        }}
+                    >
+                        {/* Image */}
+                        <CardMedia
+                            component="img"
+                            image={hotel.main_image}
+                            sx={{
+                                height: "200px",
+                                width: "90%",
+                                objectFit: "cover",
+                                margin: " 15px auto 0",
+                                borderRadius: "18px",
+                            }}
+                        />
+
+                        {/* Heart icon */}
+                        <IconButton
+                            onClick={() => toggleFav(hotel.name)}
+                            sx={{
+                                position: "absolute",
+                                top: 30,
+                                right: 30,
+                                backgroundColor: "white",
+                                "&:hover": { backgroundColor: "white" },
+                            }}
+                        >
+                            {favorites.includes(hotel.name) ? (
+                                <FavoriteIcon sx={{ color: "#e53935" }} />
+                            ) : (
+                                <FavoriteBorderIcon sx={{ color: "#333" }} />
+                            )}
+                        </IconButton>
+
+                        {/* Content */}
+                        <Link to={`/destination`}>
+                            <CardContent>
+                                <Stack
+                                    direction={"row"}
+                                    sx={{ justifyContent: "space-between" }}
+                                >
+                                    <Typography
+                                        color="#9CA3AF"
+                                        sx={{ fontSize: "18px", fontWeight: "500" }}
+                                    >
+                                        Full Day Tours
+                                    </Typography>
+
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <div className="text-[18px]">⭐</div>
+                                        <Typography sx={{ fontSize: "16px" }} fontWeight={500}>
+                                            {hotel.rating}
+                                        </Typography>
+                                    </div>
+                                </Stack>
+
+                                <Typography
+                                    sx={{ fontSize: "22px", fontWeight: 500, color: "#111928" }}
+                                >
+                                    {hotel.name}
+                                </Typography>
+
+                                <Typography color="#6B7280">
+                                    From{" "}
+                                    <span className="text-blue-500 font-semibold">
+                                        {hotel.pricing?.adult_price}$
+                                    </span>{" "}
+                                    Per Person
+                                </Typography>
+                            </CardContent>
+                        </Link>
+                    </Card>
+
                 ))}
             </div>
         </div>

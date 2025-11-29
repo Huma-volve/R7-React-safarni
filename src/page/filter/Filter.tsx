@@ -10,6 +10,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
+const LIMIT = 8500;
+
 /* --------- TYPES ---------- */
 interface Tour {
     id: number;
@@ -142,7 +144,7 @@ export default function FiltersPanel() {
                 "https://round7-safarni-team-one.huma-volve.com/api/v1/search",
                 { params }
             );
-
+            console.log(res.data)
             const data = {
                 tours: res.data.data.tours?.data || [],
                 hotels: res.data.data.hotels?.data || [],
@@ -189,12 +191,83 @@ export default function FiltersPanel() {
             <hr className="border-gray-300" />
 
             {/* BUDGET */}
+
+
+
             <div>
                 <h2 className="text-lg font-semibold text-gray-800 mb-4">Budget Range</h2>
 
-                <div className="relative bg-blue-100 h-32 w-full rounded-xl flex items-end pb-2">
-                    <div className="absolute left-10 bottom-0 w-4 h-4 bg-blue-600 rounded-full"></div>
-                    <div className="absolute right-10 bottom-0 w-4 h-4 bg-blue-600 rounded-full"></div>
+                <div className="relative h-32 w-full rounded-xl flex items-end pb-2 bg-blue-50">
+
+                    {/* TRACK */}
+                    <div className="absolute left-4 right-4 top-[55%] h-[6px] bg-blue-200 rounded-full"></div>
+
+                    {/* FILLED RANGE */}
+                    <div
+                        className="absolute top-[55%] h-[6px] bg-blue-600 rounded-full"
+                        style={{
+                            left: `${(min / LIMIT) * 100}%`,
+                            width: `${((max - min) / LIMIT) * 100}%`,
+                        }}
+                    />
+
+                    {/* INVISIBLE RANGE FOR KEYBOARD ONLY (no clicks) */}
+                    <input
+                        type="range"
+                        min={0}
+                        max={LIMIT}
+                        value={min}
+                        onChange={(e) => setMin(Number(e.target.value))}
+                        className="absolute top-[55%] w-full opacity-0 pointer-events-none"
+                    />
+                    <input
+                        type="range"
+                        min={0}
+                        max={LIMIT}
+                        value={max}
+                        onChange={(e) => setMax(Number(e.target.value))}
+                        className="absolute top-[55%] w-full opacity-0 pointer-events-none"
+                    />
+
+                    {/* MIN HANDLE — CLICKABLE */}
+                    <div
+                        onMouseDown={() => {
+                            const move = (e: MouseEvent) => {
+                                const rect = (e.target as HTMLElement).parentElement!.getBoundingClientRect();
+                                const x = e.clientX - rect.left;
+                                const val = Math.round((x / rect.width) * LIMIT);
+                                if (val < max && val >= 0) setMin(val);
+                            };
+                            const up = () => {
+                                window.removeEventListener("mousemove", move);
+                                window.removeEventListener("mouseup", up);
+                            };
+                            window.addEventListener("mousemove", move);
+                            window.addEventListener("mouseup", up);
+                        }}
+                        className="absolute bottom-0 w-5 h-5 bg-blue-600 rounded-full cursor-pointer -translate-x-1/2"
+                        style={{ left: `${(min / LIMIT) * 100}%` }}
+                    />
+
+                    {/* MAX HANDLE — CLICKABLE */}
+                    <div
+                        onMouseDown={() => {
+                            const move = (e: MouseEvent) => {
+                                const rect = (e.target as HTMLElement).parentElement!.getBoundingClientRect();
+                                const x = e.clientX - rect.left;
+                                const val = Math.round((x / rect.width) * LIMIT);
+                                if (val > min && val <= LIMIT) setMax(val);
+                            };
+                            const up = () => {
+                                window.removeEventListener("mousemove", move);
+                                window.removeEventListener("mouseup", up);
+                            };
+                            window.addEventListener("mousemove", move);
+                            window.addEventListener("mouseup", up);
+                        }}
+                        className="absolute bottom-0 w-5 h-5 bg-blue-600 rounded-full cursor-pointer -translate-x-1/2"
+                        style={{ left: `${(max / LIMIT) * 100}%` }}
+                    />
                 </div>
 
                 <div className="flex justify-between mt-3">
@@ -208,6 +281,10 @@ export default function FiltersPanel() {
                     </div>
                 </div>
             </div>
+
+
+
+
 
             <hr className="border-gray-300" />
 

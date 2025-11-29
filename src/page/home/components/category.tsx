@@ -1,12 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Categories() {
-    const navigate = useNavigate();
 
     const items = [
         {
             title: "Flight",
-            path: "/flight",
+            path: "/flightbooking",
             img: "https://images.pexels.com/photos/358319/pexels-photo-358319.jpeg",
         },
         {
@@ -16,7 +15,7 @@ export default function Categories() {
         },
         {
             title: "Tours",
-            path: "/tours",
+            path: "/internal",
             img: "https://images.pexels.com/photos/442559/pexels-photo-442559.jpeg",
         },
         {
@@ -32,9 +31,8 @@ export default function Categories() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 place-items-center">
                 {items.map((item) => (
-                    <div
+                    <Link to={item.path}
                         key={item.title}
-                        onClick={() => navigate(item.path)}
                         className=" flex flex-col items-center cursor-pointer hover:scale-105 transition-transform"
                     >
                         <div className="w-40 h-40 rounded-full overflow-hidden shadow-md">
@@ -48,7 +46,7 @@ export default function Categories() {
                         <p className="text-blue-600 text-2xl font-semibold mt-3">
                             {item.title}
                         </p>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>
