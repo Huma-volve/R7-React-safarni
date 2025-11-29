@@ -1,179 +1,106 @@
-import { useState } from "react";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useLocation } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import Back from "../../components/back";
 
-type Tour = {
+interface Tour {
     id: number;
-    title: string;
-    image: string;
+    name: string;
+    slug: string;
+    short_description: string;
+    main_image: string;
+    total_reviews?: number;
     rating: number;
-    reviews: number;
-    pickup: string;
-    days: string;
-    price: string;
-};
-
-const toursData: Tour[] = [
-    {
-        id: 1,
-        title: "Eiffel Tower",
-        image:
-            "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg",
-        rating: 4.5,
-        reviews: 650,
-        pickup: "Pickup Available",
-        days: "5 Days",
-        price: "1050$",
-    },
-    {
-        id: 2,
-        title: "Paris City Tour",
-        image:
-            "https://images.pexels.com/photos/1796727/pexels-photo-1796727.jpeg",
-        rating: 4.1,
-        reviews: 650,
-        pickup: "Pickup Available",
-        days: "7 Days",
-        price: "1500$",
-    },
-    {
-        id: 3,
-        title: "River Cruise",
-        image:
-            "https://images.pexels.com/photos/1694351/pexels-photo-1694351.jpeg",
-        rating: 4.0,
-        reviews: 350,
-        pickup: "Pickup Available",
-        days: "6 Hour",
-        price: "100$",
-    },
-    {
-        id: 4,
-        title: "Best of Swiss",
-        image:
-            "https://images.pexels.com/photos/1670187/pexels-photo-1670187.jpeg",
-        rating: 4.7,
-        reviews: 950,
-        pickup: "Pickup Available",
-        days: "10 Days",
-        price: "2200$",
-    },
-    {
-        id: 5,
-        title: "The Tour de France",
-        image:
-            "https://images.pexels.com/photos/248547/pexels-photo-248547.jpeg",
-        rating: 3.1,
-        reviews: 256,
-        pickup: "Pickup Available",
-        days: "6 Hour",
-        price: "155$",
-    },
-    {
-        id: 6,
-        title: "Disneyland Paris",
-        image:
-            "https://images.pexels.com/photos/261327/pexels-photo-261327.jpeg",
-        rating: 4.3,
-        reviews: 950,
-        pickup: "Pickup Available",
-        days: "10 Days",
-        price: "2100$",
-    },
-    {
-        id: 7,
-        title: "Paris City Tour",
-        image:
-            "https://images.pexels.com/photos/1089309/pexels-photo-1089309.jpeg",
-        rating: 4.1,
-        reviews: 650,
-        pickup: "Pickup Available",
-        days: "7 Days",
-        price: "1500$",
-    },
-    {
-        id: 8,
-        title: "Disneyland Paris",
-        image:
-            "https://images.pexels.com/photos/1796797/pexels-photo-1796797.jpeg",
-        rating: 4.5,
-        reviews: 650,
-        pickup: "Pickup Available",
-        days: "5 Days",
-        price: "1050$",
-    },
-];
-
-export default function Results() {
-    const [favorites, setFavorites] = useState<number[]>([]);
-
-    const toggleFav = (id: number) => {
-        setFavorites((prev) =>
-            prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-        );
+    duration_days?: number;
+    pricing?: {
+        adult_price: number;
     };
+}
+
+
+export default function SearchResults() {
+    const { state } = useLocation();
+
+    const locationName = state?.location || "Search";
+    const tours = Array.isArray(state?.results?.tours)
+        ? state.results.tours
+        : [];
 
     return (
-        <>
-            <Back />
+        <div className="p-5">
+            {/* TITLE */}
+            <h1 className="text-3xl font-bold text-[#1F2937] mb-6">
+                {locationName}{" "}
+                <span className="text-gray-500">{tours.length} Result</span>
+            </h1>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
-                {toursData.map((tour) => (
-                    <div
-                        key={tour.id}
-                        className="bg-white rounded-2xl shadow-md p-3 border border-gray-200 hover:shadow-lg transition"
-                    >
-                        {/* Image section */}
-                        <div className="relative">
+            {/* NO RESULTS */}
+            {tours.length === 0 && (
+                <p className="text-gray-500 text-lg">No tours found.</p>
+            )}
+
+            {/* GRID RESULTS */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+                {tours.map((tour: Tour) => (
+                    <div className="
+            bg-white rounded-[30px] shadow-[0_10px_40px_rgba(0,0,0,0.1)]
+            border border-gray-200 overflow-hidden p-4 cursor-pointer
+            hover:shadow-[0_12px_45px_rgba(0,0,0,0.15)] transition">
+
+                        {/* IMAGE */}
+                        <div className="relative w-full h-56 rounded-[25px] overflow-hidden mb-4">
                             <img
-                                src={tour.image}
-                                alt={tour.title}
-                                className="w-full h-52 object-cover rounded-xl"
+                                src={tour.main_image}
+                                className="w-full h-full object-cover"
                             />
 
-                            {/* Favorite Button */}
-                            <button
-                                onClick={() => toggleFav(tour.id)}
-                                className="absolute top-3 right-3 bg-white rounded-full p-1 shadow"
-                            >
-                                {favorites.includes(tour.id) ? (
-                                    <FavoriteIcon sx={{ color: "red" }} />
-                                ) : (
-                                    <FavoriteBorderIcon sx={{ color: "#222" }} />
-                                )}
-                            </button>
+                            {/* Favorite Icon */}
+                            <div className="absolute top-4 right-4 bg-white p-3 rounded-full shadow-md">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="red"
+                                    viewBox="0 0 24 24"
+                                    className="w-6 h-6"
+                                >
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+                             2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+                             C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 
+                             22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                                    />
+                                </svg>
+                            </div>
                         </div>
 
-                        {/* Title */}
-                        <h3 className="text-lg font-semibold mt-3">{tour.title}</h3>
+                        {/* TITLE */}
+                        <h3 className="text-xl font-semibold text-gray-900">{tour.name}</h3>
 
-                        {/* Rating */}
-                        <div className="flex items-center text-sm text-gray-600 mt-1">
-                            <StarIcon sx={{ color: "#fbbf24", fontSize: 20 }} />
-                            <span className="ml-1 font-semibold">{tour.rating}</span>
-                            <span className="ml-1 text-gray-500">({tour.reviews})</span>
+                        {/* RATING */}
+                        <div className="flex items-center mt-1 text-gray-600">
+                            <span className="text-yellow-500 flex items-center gap-1 font-medium">
+                                <StarIcon fontSize="small" />
+                                {tour.rating}
+                            </span>
+                            <span className="text-gray-500 ml-1">
+                                ({tour.total_reviews || 650})
+                            </span>
                         </div>
 
-                        {/* Pickup + Days */}
-                        <div className="flex items-center text-sm text-gray-600 mt-1">
-                            <span>{tour.pickup}</span>
-                            <FiberManualRecordIcon
-                                sx={{ fontSize: 8, margin: "0 6px", color: "#3354D8" }}
-                            />
-                            <span>{tour.days}</span>
-                        </div>
+                        {/* PICKUP */}
+                        <p className="text-gray-500 mt-2 text-[15px]">Pickup Available</p>
 
-                        {/* Price */}
-                        <p className="text-gray-700 text-sm mt-1">
-                            From <span className="text-blue-600 font-semibold">{tour.price}</span> per Person
+                        {/* DAYS */}
+                        <p className="text-gray-700 flex items-center gap-2 mt-1 text-[15px]">
+                            <span className="w-3 h-3 rounded-full bg-blue-600 inline-block"></span>
+                            {tour.duration_days || 5} Days
                         </p>
+
+                        {/* PRICE */}
+                        <p className="text-[18px] mt-2">
+                            From <span className="text-blue-600 font-bold">{tour.pricing?.adult_price}$</span> per Person
+                        </p>
+
                     </div>
                 ))}
             </div>
-        </>
-
+        </div>
     );
 }

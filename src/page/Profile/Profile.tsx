@@ -5,12 +5,28 @@ import LanguageIcon from "@mui/icons-material/Language";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { ReactNode } from "react";
 import Back from "../../components/back";
+import type { RootState } from "../../store/store";
 
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/authSlice";
 
 export default function Profile() {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    function handleLogout() {
+        dispatch(logout());
+        navigate("/login");
+    }
+
+    const email = useSelector((state: RootState) => state.auth.email) ?? "";
+    const username = useSelector((state: RootState) => state.auth.username) ?? "";
+
+
     return (
         <div className="w-full min-h-screen text-[#111928]  pb-10">
             <Back />
@@ -36,8 +52,8 @@ export default function Profile() {
 
                     {/* Name + Email */}
                     <div>
-                        <h2 className="text-2xl font-semibold">Knee Due</h2>
-                        <p className="text-gray-400 text-lg">kneedue@gmail.com</p>
+                        <h2 className="text-2xl font-semibold">{username}</h2>
+                        <p className="text-gray-400 text-lg">{email}</p>
                     </div>
                 </div>
             </div>
@@ -76,12 +92,13 @@ export default function Profile() {
                     />
 
                     {/* Logout */}
-                    <div className="flex items-center justify-between bg-white py-4 px-5 rounded-[20px]  cursor-pointer">
+                    <button onClick={handleLogout} className="flex items-center justify-between bg-white py-4 px-5 rounded-[20px]  cursor-pointer">
                         <div className="flex items-center gap-3">
                             <LogoutIcon sx={{ fontSize: 26, color: "red" }} />
-                            <p className="text-red-600 text-lg font-medium">Logout</p>
+                            <p
+                                className="text-red-600 text-lg font-medium">Logout</p>
                         </div>
-                    </div>
+                    </button>
 
                 </div>
             </div>

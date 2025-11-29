@@ -1,6 +1,6 @@
 import { Lock, Mail } from "lucide-react"
 import image from "../../assets/login.png"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../store/authSlice";
 import { useState } from "react";
@@ -12,6 +12,8 @@ export default function Login() {
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [message, setMessage] = useState<string>("");
+    const navigate = useNavigate()
+
 
 
 
@@ -24,10 +26,14 @@ export default function Login() {
                     password,
                 }
             );
+            console.log(res)
 
-            const token = res.data.token;
+            const token = res.data.data.token;
 
-            dispatch(loginSuccess({ token, email }));
+            const username = res.data.data.user.name
+
+            dispatch(loginSuccess({ token, email, username }));
+            navigate("/home")
 
         } catch (error: unknown) {
             let errMsg = "Something went wrong";
