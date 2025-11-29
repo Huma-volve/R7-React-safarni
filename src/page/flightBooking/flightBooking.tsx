@@ -216,6 +216,7 @@ export default function FlightBooking() {
                   fontWeight: "600",
                   padding: "8px 16px",
                   marginTop: "20px",
+                  marginBottom:{md:"0px",xs:"70px"},
                   textTransform: "none",
                 }}
               >

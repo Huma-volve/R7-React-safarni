@@ -85,3 +85,6 @@ export const nearbyHotels: Hotel[] = [
     image: "https://i.imgur.com/Q3jHF2Z.jpeg",
   },
 ];
+
+
+

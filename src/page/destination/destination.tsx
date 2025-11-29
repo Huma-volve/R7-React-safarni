@@ -330,8 +330,8 @@ export default function Destination() {
               <Box
                 key={item.img}
                 sx={{
-                  width: { xs: "163px", md: "185px" },
-                  height: { xs: "127px", md: "185px" },
+                  width: { xs: "163px", md: "180px" },
+                  height: { xs: "127px", md: "180px" },
                 }}
               >
                 <img
@@ -403,7 +403,7 @@ export default function Destination() {
                       />
                       <Typography
                         sx={{
-                          fontSize: { xs: "18px", md: "23px" },
+                          fontSize: { xs: "15px", md: "23px" },
                           fontWeight: "500",
                         }}
                       >
@@ -430,7 +430,7 @@ export default function Destination() {
                   </Typography>
                   <Typography
                     sx={{
-                      fontSize: { xs: "16px", md: "22px" },
+                      fontSize: { xs: "14px", md: "22px" },
                       fontWeight: "400",
                       color: "#2C2C2C",
                     }}
@@ -470,7 +470,7 @@ export default function Destination() {
                       />
                       <Typography
                         sx={{
-                          fontSize: { xs: "18px", md: "23px" },
+                          fontSize: { xs: "15px", md: "23px" },
                           fontWeight: "500",
                         }}
                       >
@@ -497,7 +497,7 @@ export default function Destination() {
                   </Typography>
                   <Typography
                     sx={{
-                      fontSize: { xs: "16px", md: "22px" },
+                      fontSize: { xs: "14px", md: "22px" },
                       fontWeight: "400",
                       color: "#2C2C2C",
                     }}
@@ -537,7 +537,7 @@ export default function Destination() {
                       />
                       <Typography
                         sx={{
-                          fontSize: { xs: "18px", md: "23px" },
+                          fontSize: { xs: "15px", md: "23px" },
                           fontWeight: "500",
                         }}
                       >
@@ -564,7 +564,7 @@ export default function Destination() {
                   </Typography>
                   <Typography
                     sx={{
-                      fontSize: { xs: "16px", md: "22px" },
+                      fontSize: { xs: "14px", md: "22px" },
                       fontWeight: "400",
                       color: "#2C2C2C",
                     }}
@@ -604,7 +604,7 @@ export default function Destination() {
                       />
                       <Typography
                         sx={{
-                          fontSize: { xs: "18px", md: "23px" },
+                          fontSize: { xs: "15px", md: "23px" },
                           fontWeight: "500",
                         }}
                       >
@@ -631,7 +631,7 @@ export default function Destination() {
                   </Typography>
                   <Typography
                     sx={{
-                      fontSize: { xs: "16px", md: "22px" },
+                      fontSize: { xs: "14px", md: "22px" },
                       fontWeight: "400",
                       color: "#2C2C2C",
                     }}
@@ -671,7 +671,7 @@ export default function Destination() {
                       />
                       <Typography
                         sx={{
-                          fontSize: { xs: "18px", md: "23px" },
+                          fontSize: { xs: "15px", md: "23px" },
                           fontWeight: "500",
                         }}
                       >
@@ -698,7 +698,543 @@ export default function Destination() {
                   </Typography>
                   <Typography
                     sx={{
-                      fontSize: { xs: "16px", md: "22px" },
+                      fontSize: { xs: "14px", md: "22px" },
+                      fontWeight: "400",
+                      color: "#2C2C2C",
+                    }}
+                  >
+                    I really enjoyed my stay—the room was clean, the staff were
+                    friendly, and everything I needed was nearby.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Card
+                sx={{
+                  maxWidth: { xs: 343, md: 608 },
+                  margin: "auto",
+                  height: { xs: 183, md: 214 },
+                  border: "1px solid #D1D5DB",
+                  padding: "8px",
+                  borderRadius: "8px",
+                }}
+              >
+                <CardContent sx={{ padding: "0" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    className="justify-between"
+                    alignItems="center"
+                  >
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{ alignItems: "center" }}
+                    >
+                      <img
+                        className="w-12 h-12 object-cover rounded-full"
+                        src="/assets/destination/review/Icon Strategy.png"
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "23px" },
+                          fontWeight: "500",
+                        }}
+                      >
+                        Dale Thiel
+                      </Typography>
+                    </Stack>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "13px", md: "20px" },
+                        fontWeight: "500",
+                        color: "#4B5563",
+                      }}
+                    >
+                      11 months ago
+                    </Typography>
+                  </Stack>
+                  <Typography gutterBottom component="div">
+                    <Rating
+                      name="half-rating"
+                      defaultValue={4.5}
+                      precision={0.5}
+                      size="medium"
+                    />
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "14px", md: "22px" },
+                      fontWeight: "400",
+                      color: "#2C2C2C",
+                    }}
+                  >
+                    I really enjoyed my stay—the room was clean, the staff were
+                    friendly, and everything I needed was nearby.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Card
+                sx={{
+                  maxWidth: { xs: 343, md: 608 },
+                  margin: "auto",
+                  height: { xs: 183, md: 214 },
+                  border: "1px solid #D1D5DB",
+                  padding: "8px",
+                  borderRadius: "8px",
+                }}
+              >
+                <CardContent sx={{ padding: "0" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    className="justify-between"
+                    alignItems="center"
+                  >
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{ alignItems: "center" }}
+                    >
+                      <img
+                        className="w-12 h-12 object-cover rounded-full"
+                        src="/assets/destination/review/Icon Strategy.png"
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "23px" },
+                          fontWeight: "500",
+                        }}
+                      >
+                        Dale Thiel
+                      </Typography>
+                    </Stack>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "13px", md: "20px" },
+                        fontWeight: "500",
+                        color: "#4B5563",
+                      }}
+                    >
+                      11 months ago
+                    </Typography>
+                  </Stack>
+                  <Typography gutterBottom component="div">
+                    <Rating
+                      name="half-rating"
+                      defaultValue={4.5}
+                      precision={0.5}
+                      size="medium"
+                    />
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "14px", md: "22px" },
+                      fontWeight: "400",
+                      color: "#2C2C2C",
+                    }}
+                  >
+                    I really enjoyed my stay—the room was clean, the staff were
+                    friendly, and everything I needed was nearby.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Card
+                sx={{
+                  maxWidth: { xs: 343, md: 608 },
+                  margin: "auto",
+                  height: { xs: 183, md: 214 },
+                  border: "1px solid #D1D5DB",
+                  padding: "8px",
+                  borderRadius: "8px",
+                }}
+              >
+                <CardContent sx={{ padding: "0" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    className="justify-between"
+                    alignItems="center"
+                  >
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{ alignItems: "center" }}
+                    >
+                      <img
+                        className="w-12 h-12 object-cover rounded-full"
+                        src="/assets/destination/review/Icon Strategy.png"
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "23px" },
+                          fontWeight: "500",
+                        }}
+                      >
+                        Dale Thiel
+                      </Typography>
+                    </Stack>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "13px", md: "20px" },
+                        fontWeight: "500",
+                        color: "#4B5563",
+                      }}
+                    >
+                      11 months ago
+                    </Typography>
+                  </Stack>
+                  <Typography gutterBottom component="div">
+                    <Rating
+                      name="half-rating"
+                      defaultValue={4.5}
+                      precision={0.5}
+                      size="medium"
+                    />
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "14px", md: "22px" },
+                      fontWeight: "400",
+                      color: "#2C2C2C",
+                    }}
+                  >
+                    I really enjoyed my stay—the room was clean, the staff were
+                    friendly, and everything I needed was nearby.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Card
+                sx={{
+                  maxWidth: { xs: 343, md: 608 },
+                  margin: "auto",
+                  height: { xs: 183, md: 214 },
+                  border: "1px solid #D1D5DB",
+                  padding: "8px",
+                  borderRadius: "8px",
+                }}
+              >
+                <CardContent sx={{ padding: "0" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    className="justify-between"
+                    alignItems="center"
+                  >
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{ alignItems: "center" }}
+                    >
+                      <img
+                        className="w-12 h-12 object-cover rounded-full"
+                        src="/assets/destination/review/Icon Strategy.png"
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "23px" },
+                          fontWeight: "500",
+                        }}
+                      >
+                        Dale Thiel
+                      </Typography>
+                    </Stack>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "13px", md: "20px" },
+                        fontWeight: "500",
+                        color: "#4B5563",
+                      }}
+                    >
+                      11 months ago
+                    </Typography>
+                  </Stack>
+                  <Typography gutterBottom component="div">
+                    <Rating
+                      name="half-rating"
+                      defaultValue={4.5}
+                      precision={0.5}
+                      size="medium"
+                    />
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "14px", md: "22px" },
+                      fontWeight: "400",
+                      color: "#2C2C2C",
+                    }}
+                  >
+                    I really enjoyed my stay—the room was clean, the staff were
+                    friendly, and everything I needed was nearby.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Card
+                sx={{
+                  maxWidth: { xs: 343, md: 608 },
+                  margin: "auto",
+                  height: { xs: 183, md: 214 },
+                  border: "1px solid #D1D5DB",
+                  padding: "8px",
+                  borderRadius: "8px",
+                }}
+              >
+                <CardContent sx={{ padding: "0" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    className="justify-between"
+                    alignItems="center"
+                  >
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{ alignItems: "center" }}
+                    >
+                      <img
+                        className="w-12 h-12 object-cover rounded-full"
+                        src="/assets/destination/review/Icon Strategy.png"
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "23px" },
+                          fontWeight: "500",
+                        }}
+                      >
+                        Dale Thiel
+                      </Typography>
+                    </Stack>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "13px", md: "20px" },
+                        fontWeight: "500",
+                        color: "#4B5563",
+                      }}
+                    >
+                      11 months ago
+                    </Typography>
+                  </Stack>
+                  <Typography gutterBottom component="div">
+                    <Rating
+                      name="half-rating"
+                      defaultValue={4.5}
+                      precision={0.5}
+                      size="medium"
+                    />
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "14px", md: "22px" },
+                      fontWeight: "400",
+                      color: "#2C2C2C",
+                    }}
+                  >
+                    I really enjoyed my stay—the room was clean, the staff were
+                    friendly, and everything I needed was nearby.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Card
+                sx={{
+                  maxWidth: { xs: 343, md: 608 },
+                  margin: "auto",
+                  height: { xs: 183, md: 214 },
+                  border: "1px solid #D1D5DB",
+                  padding: "8px",
+                  borderRadius: "8px",
+                }}
+              >
+                <CardContent sx={{ padding: "0" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    className="justify-between"
+                    alignItems="center"
+                  >
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{ alignItems: "center" }}
+                    >
+                      <img
+                        className="w-12 h-12 object-cover rounded-full"
+                        src="/assets/destination/review/Icon Strategy.png"
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "23px" },
+                          fontWeight: "500",
+                        }}
+                      >
+                        Dale Thiel
+                      </Typography>
+                    </Stack>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "13px", md: "20px" },
+                        fontWeight: "500",
+                        color: "#4B5563",
+                      }}
+                    >
+                      11 months ago
+                    </Typography>
+                  </Stack>
+                  <Typography gutterBottom component="div">
+                    <Rating
+                      name="half-rating"
+                      defaultValue={4.5}
+                      precision={0.5}
+                      size="medium"
+                    />
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "14px", md: "22px" },
+                      fontWeight: "400",
+                      color: "#2C2C2C",
+                    }}
+                  >
+                    I really enjoyed my stay—the room was clean, the staff were
+                    friendly, and everything I needed was nearby.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Card
+                sx={{
+                  maxWidth: { xs: 343, md: 608 },
+                  margin: "auto",
+                  height: { xs: 183, md: 214 },
+                  border: "1px solid #D1D5DB",
+                  padding: "8px",
+                  borderRadius: "8px",
+                }}
+              >
+                <CardContent sx={{ padding: "0" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    className="justify-between"
+                    alignItems="center"
+                  >
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{ alignItems: "center" }}
+                    >
+                      <img
+                        className="w-12 h-12 object-cover rounded-full"
+                        src="/assets/destination/review/Icon Strategy.png"
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "23px" },
+                          fontWeight: "500",
+                        }}
+                      >
+                        Dale Thiel
+                      </Typography>
+                    </Stack>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "13px", md: "20px" },
+                        fontWeight: "500",
+                        color: "#4B5563",
+                      }}
+                    >
+                      11 months ago
+                    </Typography>
+                  </Stack>
+                  <Typography gutterBottom component="div">
+                    <Rating
+                      name="half-rating"
+                      defaultValue={4.5}
+                      precision={0.5}
+                      size="medium"
+                    />
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "14px", md: "22px" },
+                      fontWeight: "400",
+                      color: "#2C2C2C",
+                    }}
+                  >
+                    I really enjoyed my stay—the room was clean, the staff were
+                    friendly, and everything I needed was nearby.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Card
+                sx={{
+                  maxWidth: { xs: 343, md: 608 },
+                  margin: "auto",
+                  height: { xs: 183, md: 214 },
+                  border: "1px solid #D1D5DB",
+                  padding: "8px",
+                  borderRadius: "8px",
+                }}
+              >
+                <CardContent sx={{ padding: "0" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    className="justify-between"
+                    alignItems="center"
+                  >
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{ alignItems: "center" }}
+                    >
+                      <img
+                        className="w-12 h-12 object-cover rounded-full"
+                        src="/assets/destination/review/Icon Strategy.png"
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "15px", md: "23px" },
+                          fontWeight: "500",
+                        }}
+                      >
+                        Dale Thiel
+                      </Typography>
+                    </Stack>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "13px", md: "20px" },
+                        fontWeight: "500",
+                        color: "#4B5563",
+                      }}
+                    >
+                      11 months ago
+                    </Typography>
+                  </Stack>
+                  <Typography gutterBottom component="div">
+                    <Rating
+                      name="half-rating"
+                      defaultValue={4.5}
+                      precision={0.5}
+                      size="medium"
+                    />
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "14px", md: "22px" },
                       fontWeight: "400",
                       color: "#2C2C2C",
                     }}
@@ -742,6 +1278,7 @@ export default function Destination() {
           backgroundColor: "white",
           padding: "20px",
           margin: "auto",
+          marginBottom: {xs:"90px",md:"0"},
         }}
       >
         <Stack
@@ -749,30 +1286,32 @@ export default function Destination() {
           spacing={2}
           className="justify-between"
           sx={{
-            marginTop: "20px",
-            justifyContent: {
-              xs: "center",
-              md: "space-between",
-              alignItems: "center",
-            },
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
           gap={2}
         >
           <Typography
-            className="text-gray-900 text-[30px] font-semibold "
+            className="text-gray-900 xs:text-[16px] md:text-[30px] font-semibold "
             sx={{ width: { xs: "100%", md: "50%" } }}
           >
             Total price :{" "}
-            <span className="text-indigo-600 text-[24px] font-normal">
+            <span className="text-indigo-600 xs:text-[17px] md:text-[24px] font-normal">
               $150.00
             </span>
-            <span className="text-[20px] font-normal">/night</span>
+            <span className="xs:text-[13px] md:text-[20px] font-normal">
+              /night
+            </span>
           </Typography>
           <Box sx={{ width: { xs: "100%", md: "50%" } }}>
             <Link to="/paymentpage" className="w-full">
               <Button
                 variant="contained"
-                sx={{ width: "100%", textTransform: "none" }}
+                sx={{
+                  width: "100%",
+                  textTransform: "none",
+                  fontSize: { xs: "16px", md: "20px" },
+                }}
               >
                 Book Now
               </Button>
