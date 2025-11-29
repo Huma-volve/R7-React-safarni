@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import { useNavigate } from "react-router-dom";
 export default function Back() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <Box sx={{ paddingTop: "20px", paddingBottom: "20px" }}>
       <div
