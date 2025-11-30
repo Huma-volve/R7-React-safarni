@@ -66,9 +66,6 @@ export default function FlightBooking() {
       await dispatch(
         searchFlights({
           origin: form.location,
-          // destination: form.destination,
-          // date: form.departure,
-          // passengers: passengers,
         })
       ).unwrap();
       navigate("/flightbooking/flightselector");

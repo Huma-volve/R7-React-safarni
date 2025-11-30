@@ -40,7 +40,7 @@ export default function FlightSelector() {
   };
 
   // علشان نتعامل مع الـ response المختلف
-  const displayFlights = flights?.data?.flights?.data || [];
+  const displayFlights = flights || [];
   console.log("displayFlights: ", displayFlights);
 
   return (
@@ -329,8 +329,7 @@ export default function FlightSelector() {
                     boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
                   },
                 }}
-                onClick={() => handleCardClick(flight.id.toString())}
-              >
+                onClick={() => handleCardClick(flight)}              >
                 <CardContent>
                   <Stack
                     direction={"row"}

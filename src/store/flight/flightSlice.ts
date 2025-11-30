@@ -22,17 +22,17 @@ export interface Flight {
   to: string;
   departure_time?: string;
   arrival_time?: string;
-  origin:any;
-  airport_code:any;
-  duration_minutes:number;
-  date:string
+  origin: any;
+  airport_code: any;
+  duration_minutes: number;
+  date: string;
 }
 
 export interface ApiSeat {
   id: number;
-  seat_number: string; // e.g., "A1"
+  seat_number: string;
   status: "available" | "reserved" | "blocked";
-  price: string; // e.g., "1881.00"
+  price: string;
   is_available: boolean;
 }
 
@@ -79,11 +79,13 @@ const initialState: FlightState = {
 // ======================
 
 // 1) Search Flights
-export const searchFlights = createAsyncThunk<Flight[], SearchParams>(
+export const searchFlights = createAsyncThunk<any, SearchParams>(
   "flight/searchFlights",
   async ({ origin }, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`https://round7-safarni-team-one.huma-volve.com/api/v1/search?q=${origin}&types[]=flights`);
+      const res = await axios.get(
+        `https://round7-safarni-team-one.huma-volve.com/api/v1/search?q=${origin}&types[]=flights`
+      );
       console.log("Search Flights Response:", res.data);
       return res.data;
     } catch (error: any) {
@@ -154,7 +156,6 @@ const flightSlice = createSlice({
       state.bookingData = null;
     },
 
-    // ✅ Actions جديدة لدعم bookingData
     setBookingData: (
       state,
       action: PayloadAction<FlightState["bookingData"]>
@@ -191,7 +192,7 @@ const flightSlice = createSlice({
       })
       .addCase(searchFlights.fulfilled, (state, action) => {
         state.loading = false;
-        state.flights = action.payload;
+        state.flights = action.payload.data.flights.data;
       })
       .addCase(searchFlights.rejected, (state, action) => {
         state.loading = false;

@@ -77,7 +77,7 @@ const router = createBrowserRouter([
       { path: "flightbooking", element: <FlightBooking /> },
       { path: "flightbooking/flightselector", element: <FlightSelector /> },
       { path: "flightbooking/flightselector/seatselector/:flightId", element: <SeatSelector /> },
-      { path: "flightbooking/flightselector/seatselector/:id/boardingpass", element: <BoardingPass />, },
+      { path: "flightbooking/flightselector/seatselector/:id/boardingpass", element: <BoardingPass /> },
     ],
   },
   {
