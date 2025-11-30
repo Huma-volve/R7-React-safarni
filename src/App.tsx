@@ -11,7 +11,7 @@ import ForgetPassword from "./page/ForgetPassword/ForgetPassword";
 import OTP from "./page/OTP/OTP";
 import Done from "./page/Done/Done";
 import SeatSelector from "./page/flightBooking/chooseSeat";
-import Internal from "./page/internal.tsx/internal";
+import Internal from "./page/internal/internal";
 import Favorite from "./page/favorite/favorite";
 import Compare from "./page/compare/compare";
 import Destination from "./page/destination/destination";

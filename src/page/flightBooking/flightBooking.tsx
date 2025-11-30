@@ -6,33 +6,40 @@ import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import SouthEastIcon from "@mui/icons-material/SouthEast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { searchFlights } from "../../store/flight/flightSlice";
+import { searchFlights, updateBookingData } from "../../store/flight/flightSlice";
 import type { AppDispatch } from "../../store/store";
-import { updateBookingData } from "../../store/flight/flightSlice";
+import CircularProgress from "@mui/material/CircularProgress";
+
 interface FormState {
   location: string;
   destination: string;
   departure: string;
   returnDate: string;
-  passengers: string; // ← غيرنا لـ string
+  passengers: string;
 }
+
 export default function FlightBooking() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+
   const [tripType, setTripType] = useState("round");
+  const [loading, setLoading] = useState(false);
+
   const [form, setForm] = useState<FormState>({
     location: "",
     destination: "",
     departure: "",
     returnDate: "",
-    passengers: "1", // ← افتراضي كـ string
+    passengers: "1",
   });
+
   const [errors, setErrors] = useState({
     location: false,
     destination: false,
     departure: false,
     returnDate: false,
   });
+
   const handleChange = (field: keyof FormState, value: string) => {
     setForm({ ...form, [field]: value });
     setErrors({ ...errors, [field]: false });
@@ -51,8 +58,10 @@ export default function FlightBooking() {
 
   const handleSubmit = async () => {
     if (!validateForm()) return;
+    setLoading(true);
 
     const passengers = parseInt(form.passengers) || 1;
+
     dispatch(
       updateBookingData({
         origin: form.location,
@@ -68,18 +77,24 @@ export default function FlightBooking() {
           origin: form.location,
         })
       ).unwrap();
+
       navigate("/flightbooking/flightselector");
     } catch (error: any) {
       let message =
         "Failed to search flights. Please check your input and try again.";
+
       if (error.response?.data?.message) {
         message = error.response.data.message;
       } else if (error.message) {
         message = error.message;
       }
+
       alert(`❌ ${message}`);
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <Container>
       <Stack
@@ -139,7 +154,6 @@ export default function FlightBooking() {
 
             {/* Form */}
             <div className="flex flex-col gap-4">
-              {/* Location */}
               <div>
                 <label className="block mb-1 text-[18px] font-medium text-gray-700">
                   Location
@@ -155,7 +169,6 @@ export default function FlightBooking() {
                 />
               </div>
 
-              {/* Destination */}
               <div>
                 <label className="block mb-1 text-[18px] font-medium text-gray-700">
                   Destination
@@ -165,15 +178,12 @@ export default function FlightBooking() {
                   size="small"
                   placeholder="Tokyo, Japan"
                   error={errors.destination}
-                  helperText={
-                    errors.destination ? "This field is required" : ""
-                  }
+                  helperText={errors.destination ? "This field is required" : ""}
                   value={form.destination}
                   onChange={(e) => handleChange("destination", e.target.value)}
                 />
               </div>
 
-              {/* Dates */}
               <Stack sx={{ flexDirection: { xs: "column", md: "row" }, gap: 2 }}>
                 <div className="flex-1">
                   <label className="block mb-1 text-[18px] font-medium text-gray-700">
@@ -182,8 +192,8 @@ export default function FlightBooking() {
                   <TextField
                     fullWidth
                     size="small"
-                    type="date" // ✅ مهم جدًا
-                    InputLabelProps={{ shrink: true }} // علشان الـ label يظهر صح
+                    type="date"
+                    InputLabelProps={{ shrink: true }}
                     error={errors.departure}
                     helperText={errors.departure ? "Required" : ""}
                     value={form.departure}
@@ -198,7 +208,7 @@ export default function FlightBooking() {
                   <TextField
                     fullWidth
                     size="small"
-                    type="date" // ✅
+                    type="date"
                     InputLabelProps={{ shrink: true }}
                     disabled={tripType === "one"}
                     error={errors.returnDate}
@@ -211,15 +221,13 @@ export default function FlightBooking() {
                 </div>
               </Stack>
 
-              {/* Passenger */}
               <div>
                 <label className="block mb-1 text-[18px] font-medium text-gray-700">
                   Passenger
                 </label>
-                {/* ✅ options كـ strings، وvalue كـ string */}
                 <Autocomplete
                   options={["1", "2", "3", "4"]}
-                  value={form.passengers} // ← string
+                  value={form.passengers}
                   onChange={(_, value) =>
                     handleChange("passengers", value || "1")
                   }
@@ -229,7 +237,6 @@ export default function FlightBooking() {
                 />
               </div>
 
-              {/* Button */}
               <Button
                 variant="contained"
                 fullWidth
@@ -243,8 +250,13 @@ export default function FlightBooking() {
                   marginBottom: { md: "0px", xs: "70px" },
                   textTransform: "none",
                 }}
+                disabled={loading}
               >
-                Search Flight
+                {loading ? (
+                  <CircularProgress size={26} sx={{ color: "white" }} />
+                ) : (
+                  "Search Flight"
+                )}
               </Button>
             </div>
           </div>

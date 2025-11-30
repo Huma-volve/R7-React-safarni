@@ -8,26 +8,23 @@ import {
   Stack,
   Typography,
   Divider,
+  CircularProgress,
 } from "@mui/material";
 import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
 import { useNavigate } from "react-router-dom";
 import Back from "../../components/back";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../store/store";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState, AppDispatch } from "../../store/store";
 import { updateBookingData } from "../../store/flight/flightSlice";
-import type { AppDispatch } from "../../store/store";
+
 export default function FlightSelector() {
   const { bookingData } = useSelector((state: RootState) => state.flight);
-  {
-    bookingData?.date || "Select date";
-  }
   const { flights, loading, error } = useSelector(
     (state: RootState) => state.flight
   );
   const dispatch = useDispatch<AppDispatch>();
-  console.log("Flights from store:", flights);
   const navigate = useNavigate();
+
   const handleCardClick = (flight: any) => {
     dispatch(
       updateBookingData({
@@ -39,13 +36,12 @@ export default function FlightSelector() {
     );
   };
 
-  // علشان نتعامل مع الـ response المختلف
   const displayFlights = flights || [];
-  console.log("displayFlights: ", displayFlights);
 
   return (
     <Container>
       <Back />
+
       {/* Top Date Boxes */}
       <Stack
         direction={"row"}
@@ -72,11 +68,10 @@ export default function FlightSelector() {
               fontSize: { xs: "11px", sm: "13px", md: "20px" },
             }}
           />
-          {/* {bookingData?.date || "Select date"} */}
           {displayFlights[0]?.arrival_time
             ? new Date(displayFlights[0].arrival_time).toLocaleDateString(
                 "en-CA"
-              ) // بيرجع "2025-11-27"
+              )
             : "2025-11-27"}
         </Stack>
 
@@ -103,15 +98,24 @@ export default function FlightSelector() {
           {displayFlights[0]?.departure_time
             ? new Date(displayFlights[0].departure_time).toLocaleDateString(
                 "en-CA"
-              ) // بيرجع "2025-11-27"
+              )
             : "2025-11-27"}
         </Stack>
       </Stack>
 
       {/* Loading State */}
       {loading && (
-        <Box sx={{ textAlign: "center", py: 4 }}>
-          <Typography sx={{ fontSize: "20px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "200px",
+            flexDirection: "column",
+          }}
+        >
+          <CircularProgress size={60} thickness={4} color="primary" />
+          <Typography sx={{ fontSize: "18px", marginTop: "16px" }}>
             جاري تحميل الرحلات...
           </Typography>
         </Box>
@@ -159,7 +163,6 @@ export default function FlightSelector() {
                 onClick={() => handleCardClick(flight)}
               >
                 <CardContent>
-                  {/* Times Row */}
                   <Stack
                     direction={"row"}
                     spacing={2}
@@ -168,7 +171,6 @@ export default function FlightSelector() {
                       alignItems: "center",
                     }}
                   >
-                    {/* Departure */}
                     <Box>
                       <Typography
                         sx={{
@@ -197,7 +199,6 @@ export default function FlightSelector() {
                       </Typography>
                     </Box>
 
-                    {/* Airplane Icon */}
                     <Stack
                       sx={{ justifyContent: "center", alignItems: "center" }}
                     >
@@ -214,7 +215,6 @@ export default function FlightSelector() {
                       </Typography>
                     </Stack>
 
-                    {/* Arrival */}
                     <Box sx={{ textAlign: "right" }}>
                       <Typography
                         sx={{
@@ -244,7 +244,6 @@ export default function FlightSelector() {
                     </Box>
                   </Stack>
 
-                  {/* Bottom Row */}
                   <Stack
                     direction={"row"}
                     spacing={2}
@@ -329,7 +328,8 @@ export default function FlightSelector() {
                     boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
                   },
                 }}
-                onClick={() => handleCardClick(flight)}              >
+                onClick={() => handleCardClick(flight)}
+              >
                 <CardContent>
                   <Stack
                     direction={"row"}

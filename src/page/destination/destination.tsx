@@ -9,21 +9,21 @@ import {
   CardContent,
   CardActionArea,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { fetchProductById } from "../../store/destaintaionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../store/store";
 import Rating from "@mui/material/Rating";
 import { CameraAltOutlined } from "@mui/icons-material";
-import { Link } from "react-router-dom";
 import Back from "../../components/back";
+
 export default function Destination() {
   const [showAllReviews, setShowAllReviews] = useState(false);
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
-
   const { product, loading, error } = useSelector(
     (state: RootState) => state.product
   );
@@ -33,10 +33,10 @@ export default function Destination() {
       dispatch(fetchProductById(String(id)));
     }
   }, [id]);
+
   const getFriendlyError = (error: any): string => {
     if (!error) return "Something went wrong";
 
-    // إذا كان الخطأ نص مباشر
     if (typeof error === "string") {
       switch (error) {
         case "Network Error":
@@ -46,11 +46,10 @@ export default function Destination() {
         case "Request failed with status code 500":
           return "Server error. Please try again later.";
         default:
-          return error; // إذا كان نص مفهوم، نعرضه
+          return error;
       }
     }
 
-    // إذا كان الخطأ object من API
     if (typeof error === "object" && error.message) {
       return error.message;
     }
@@ -58,9 +57,6 @@ export default function Destination() {
     return "Something went wrong. Please try again.";
   };
 
-  if (loading) return <h2>Loading...</h2>;
-  if (error) return <h2>{getFriendlyError(error)}</h2>;
-  if (!product) return <h2>No product found</h2>;
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -68,6 +64,30 @@ export default function Destination() {
     const year = date.getFullYear();
     return `${day} ${month} ${year}`;
   };
+
+  // Loader
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "400px",
+        }}
+      >
+        <CircularProgress size={60} thickness={4} color="primary" />
+        <Typography sx={{ mt: 2, fontSize: "18px" }}>
+          Loading product details...
+        </Typography>
+      </Box>
+    );
+  }
+
+  if (error) return <h2>{getFriendlyError(error)}</h2>;
+  if (!product) return <h2>No product found</h2>;
+
   return (
     <>
       <Container sx={{ marginBottom: "30px", overflow: "hidden" }}>
@@ -77,12 +97,12 @@ export default function Destination() {
           <CardMedia
             component="img"
             image={product.main_image}
-            alt="green iguana"
+            alt={product.name}
             className="mb-4"
           />
           <Stack
             direction="row"
-            spacing={2}
+            spacing={{xs: 0, md: 2}}
             className="justify-between mb-4"
             sx={{ flexWrap: "wrap" }}
           >
@@ -160,21 +180,22 @@ export default function Destination() {
             </Typography>
           </Stack>
         </Box>
-        {/*Top Activates */}
+
+        {/* Top Activities */}
         <Box>
           <Typography sx={{ fontSize: "25px", fontWeight: "500" }}>
-            Top Activates
+            Top Activities
           </Typography>
           <Grid container spacing={2} className="mt-4">
             {product.activities.map((item: any) => (
-              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={item.name}>
                 <Card sx={{ boxShadow: "none" }}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
                       height="140px"
                       image="/assets/destination/cardNewActivity/Depth 7, Frame 0.png"
-                      alt="green iguana"
+                      alt={item.name}
                     />
                     <CardContent>
                       <Typography
@@ -194,98 +215,10 @@ export default function Destination() {
                 </Card>
               </Grid>
             ))}
-            {/* <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <Card sx={{ boxShadow: "none" }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image="/assets/destination/cardNewActivity/Depth 7, Frame 0 (1).png"
-                    alt="green iguana"
-                  />
-                  <CardContent>
-                    <Typography
-                      sx={{ fontSize: "17px", fontWeight: "500" }}
-                      component="div"
-                    >
-                      Visit the Grand Plaza
-                    </Typography>
-                    <Typography
-                      className=" text-gray-500"
-                      sx={{ fontSize: "14px", fontWeight: "400" }}
-                    >
-                      The heart of Eldoria, surrounded by historical buildings
-                      and lively cafes.
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <Card sx={{ boxShadow: "none" }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image="/assets/destination/cardNewActivity/Depth 7, Frame 0 (2).png"
-                    alt="green iguana"
-                  />
-                  <CardContent>
-                    <Typography
-                      sx={{
-                        fontSize: "17px",
-                        fontWeight: "500",
-                        color: "#111928",
-                      }}
-                      component="div"
-                    >
-                      Visit the Grand Plaza
-                    </Typography>
-                    <Typography
-                      className=" text-gray-500"
-                      sx={{ fontSize: "14px", fontWeight: "400" }}
-                    >
-                      The heart of Eldoria, surrounded by historical buildings
-                      and lively cafes.
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <Card sx={{ boxShadow: "none" }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image="/assets/destination/cardNewActivity/Depth 7, Frame 0.png"
-                    alt="green iguana"
-                  />
-                  <CardContent>
-                    <Typography
-                      sx={{
-                        fontSize: "17px",
-                        fontWeight: "500",
-                        color: "#111928",
-                      }}
-                      component="div"
-                    >
-                      Visit the Grand Plaza
-                    </Typography>
-                    <Typography
-                      className=" text-gray-500"
-                      sx={{ fontSize: "14px", fontWeight: "400" }}
-                    >
-                      The heart of Eldoria, surrounded by historical buildings
-                      and lively cafes.
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid> */}
           </Grid>
         </Box>
-        {/*Best Time to Visit */}
+
+        {/* Best Time to Visit */}
         <Box>
           <Typography
             className=" text-gray-900 "
@@ -306,7 +239,8 @@ export default function Destination() {
             to visit Paris, with mild weather and fewer tourists.
           </Typography>
         </Box>
-        {/*Gallery */}
+
+        {/* Gallery */}
         <Box>
           <Typography
             className=" text-gray-900 "
@@ -317,7 +251,7 @@ export default function Destination() {
               color: "#111928",
             }}
           >
-            Gallery
+            Gallery{" "}
             <span className="text-indigo-600">{product.gallery.length}</span>
           </Typography>
           <Box
@@ -342,9 +276,7 @@ export default function Destination() {
                   alt={item.title}
                   loading="lazy"
                   className="rounded-[8px] w-full h-full"
-                  style={{
-                    objectFit: "cover",
-                  }}
+                  style={{ objectFit: "cover" }}
                 />
               </Box>
             ))}
@@ -359,11 +291,12 @@ export default function Destination() {
               }}
             >
               <CameraAltOutlined sx={{ marginRight: "5px" }} />
-              add Photo
+              Add Photo
             </Button>
           </div>
         </Box>
-        {/*Reviews */}
+
+        {/* Reviews */}
         <Box>
           <Typography
             className="text-gray-900"
@@ -375,9 +308,9 @@ export default function Destination() {
             <Grid container spacing={2}>
               {(showAllReviews
                 ? product.reviews
-                : product.reviews?.slice(0, 4) || []
+                : product.reviews?.slice(0, 4)
               ).map((item: any, index: number) => (
-                <Grid key={index} size={{ xs: 12, md: 6 }}>
+                <Grid size={{ xs: 12, md: 6 }} sx={{}} key={index}>
                   <Card
                     sx={{
                       maxWidth: { xs: 343, md: 608 },
@@ -450,7 +383,7 @@ export default function Destination() {
             "No review"
           )}
           <div className="text-center mt-[20px]">
-            {product.reviews.length > 4 ? (
+            {product.reviews.length > 4 && (
               <Button
                 variant="outlined"
                 sx={{
@@ -463,13 +396,12 @@ export default function Destination() {
               >
                 {showAllReviews ? "See less" : "See more"}
               </Button>
-            ) : (
-              ""
             )}
           </div>
         </Box>
       </Container>
-      {/* Buying Button  */}
+
+      {/* Buying Button */}
       <Box
         sx={{
           boxShadow: 5,
@@ -482,18 +414,9 @@ export default function Destination() {
           marginBottom: { xs: "90px", md: "0" },
         }}
       >
-        <Stack
-          direction="row"
-          spacing={2}
-          className="justify-between"
-          sx={{
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-          gap={2}
-        >
+        <Stack direction="row" spacing={2} className="justify-between" gap={2}>
           <Typography
-            className="text-gray-900 xs:text-[16px] md:text-[30px] font-semibold "
+            className="text-gray-900 xs:text-[16px] md:text-[30px] font-semibold"
             sx={{ width: { xs: "100%", md: "50%" } }}
           >
             Total price :{" "}

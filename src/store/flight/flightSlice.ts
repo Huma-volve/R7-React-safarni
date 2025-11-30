@@ -51,11 +51,6 @@ interface FlightState {
     passengers?: number;
     selectedFlight?: Flight;
     selectedSeat?: string;
-    passengerInfo?: {
-      name: string;
-      age: number;
-      gender: string;
-    };
   } | null;
 }
 
@@ -105,7 +100,7 @@ export const fetchSeats = createAsyncThunk<ApiSeat[], string>(
       const url = `https://round7-safarni-team-one.huma-volve.com/api/${flightId}/seats`;
       const res = await axios.get(url, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       console.log("Fetch Seats Response:", res.data);
@@ -173,15 +168,6 @@ const flightSlice = createSlice({
       console.log("state.bookingData");
       console.log(state.bookingData);
     },
-    setPassengerInfo: (
-      state,
-      action: PayloadAction<{ name: string; age: number; gender: string }>
-    ) => {
-      if (!state.bookingData) {
-        state.bookingData = {};
-      }
-      state.bookingData.passengerInfo = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -225,7 +211,6 @@ export const {
   resetBooking,
   setBookingData,
   updateBookingData,
-  setPassengerInfo,
 } = flightSlice.actions;
 
 export default flightSlice.reducer;

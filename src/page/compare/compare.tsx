@@ -9,6 +9,7 @@ import {
   Button,
   Box,
   Grid,
+  CircularProgress,
 } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
 import Back from "../../components/back";
@@ -22,7 +23,6 @@ export default function Compare() {
   const [search, setSearch] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [erLo, seterLo] = useState("");
-
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
 
   const navigate = useNavigate();
@@ -34,11 +34,11 @@ export default function Compare() {
     (state: RootState) => state.compare
   );
 
+  // Debounce search
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedQuery(search);
     }, 500);
-
     return () => clearTimeout(timer);
   }, [search]);
 
@@ -48,6 +48,7 @@ export default function Compare() {
     }
   }, [debouncedQuery]);
 
+  // Error / loading / no results
   useEffect(() => {
     if (loading) {
       seterLo("Loading...");
@@ -64,6 +65,7 @@ export default function Compare() {
     }
   }, [loading, error, product, debouncedQuery]);
 
+  // Click outside to deselect card
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -72,7 +74,6 @@ export default function Compare() {
       ) {
         return;
       }
-
       if (
         compareSectionRef.current &&
         !compareSectionRef.current.contains(event.target as Node)
@@ -80,7 +81,6 @@ export default function Compare() {
         setSelectedCard(null);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -90,8 +90,6 @@ export default function Compare() {
       {/* Search Bar */}
       <Stack direction="row" alignItems="center" mb={3}>
         <Back />
-
-        {/* Wrap input + error */}
         <Box sx={{ ml: 2, width: "100%" }}>
           <TextField
             value={search}
@@ -108,8 +106,6 @@ export default function Compare() {
               },
             }}
           />
-
-          {/*  Error message directly under input */}
           {erLo && (
             <Typography
               sx={{
@@ -125,12 +121,31 @@ export default function Compare() {
         </Box>
       </Stack>
 
-      {/*  Results cards */}
+      {/* Loader */}
+      {loading && (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "200px",
+            mb: 3,
+          }}
+        >
+          <CircularProgress size={50} thickness={4} color="primary" />
+          <Typography sx={{ mt: 2, fontSize: "16px" }}>
+            Searching for tours...
+          </Typography>
+        </Box>
+      )}
+
+      {/* Results cards */}
       <Grid container spacing={2}>
         {Array.isArray(product) &&
           product.length > 0 &&
           product.map((item: any) => (
-            <Grid size={{ xs: 12, sm: 6 }} key={item.id}>
+            <Grid size={{xs:12, md:6}} key={item.id}>
               <Card
                 sx={{
                   borderRadius: "20px",
@@ -150,7 +165,6 @@ export default function Compare() {
                 >
                   <Stack
                     direction="row"
-                    alignItems="flex-start"
                     spacing={2}
                     sx={{ justifyContent: "center", alignItems: "center" }}
                   >
@@ -166,7 +180,6 @@ export default function Compare() {
                         mb: 1,
                       }}
                     />
-
                     <Box sx={{ flex: 1, overflow: "hidden" }}>
                       <Typography
                         sx={{
@@ -182,7 +195,6 @@ export default function Compare() {
                       >
                         {item.name}
                       </Typography>
-
                       <Typography
                         sx={{
                           color: "#6B7280",
@@ -193,7 +205,6 @@ export default function Compare() {
                       >
                         {item.time_start} | <span>{item.price_per_person}</span>
                       </Typography>
-
                       <Typography
                         sx={{
                           color: "#6B7280",
@@ -265,7 +276,6 @@ export default function Compare() {
                         >
                           {i.name}
                         </Typography>
-
                         <Typography
                           sx={{
                             fontSize: "20px",
@@ -287,7 +297,6 @@ export default function Compare() {
                           </span>
                           /person
                         </Typography>
-
                         {i.highlights.map((item: any, idx: number) => (
                           <Typography
                             key={idx}
@@ -308,6 +317,7 @@ export default function Compare() {
           </Grid>
         </Box>
 
+        {/* Continue Button */}
         <Box
           sx={{
             display: "flex",
