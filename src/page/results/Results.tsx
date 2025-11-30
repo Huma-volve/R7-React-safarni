@@ -1,179 +1,244 @@
-import { useState } from "react";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Link, useLocation } from "react-router-dom";
+// import StarIcon from "@mui/icons-material/Star";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import StarIcon from "@mui/icons-material/Star";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import Back from "../../components/back";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import {
+    Card,
+    CardMedia,
+    CardContent,
+    Typography,
+    IconButton,
 
-type Tour = {
+    Stack,
+} from "@mui/material";
+import { useState } from "react";
+interface Tour {
     id: number;
-    title: string;
-    image: string;
+    name: string;
+    slug: string;
+    short_description: string;
+    main_image: string;
+    total_reviews?: number;
     rating: number;
-    reviews: number;
-    pickup: string;
-    days: string;
-    price: string;
-};
-
-const toursData: Tour[] = [
-    {
-        id: 1,
-        title: "Eiffel Tower",
-        image:
-            "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg",
-        rating: 4.5,
-        reviews: 650,
-        pickup: "Pickup Available",
-        days: "5 Days",
-        price: "1050$",
-    },
-    {
-        id: 2,
-        title: "Paris City Tour",
-        image:
-            "https://images.pexels.com/photos/1796727/pexels-photo-1796727.jpeg",
-        rating: 4.1,
-        reviews: 650,
-        pickup: "Pickup Available",
-        days: "7 Days",
-        price: "1500$",
-    },
-    {
-        id: 3,
-        title: "River Cruise",
-        image:
-            "https://images.pexels.com/photos/1694351/pexels-photo-1694351.jpeg",
-        rating: 4.0,
-        reviews: 350,
-        pickup: "Pickup Available",
-        days: "6 Hour",
-        price: "100$",
-    },
-    {
-        id: 4,
-        title: "Best of Swiss",
-        image:
-            "https://images.pexels.com/photos/1670187/pexels-photo-1670187.jpeg",
-        rating: 4.7,
-        reviews: 950,
-        pickup: "Pickup Available",
-        days: "10 Days",
-        price: "2200$",
-    },
-    {
-        id: 5,
-        title: "The Tour de France",
-        image:
-            "https://images.pexels.com/photos/248547/pexels-photo-248547.jpeg",
-        rating: 3.1,
-        reviews: 256,
-        pickup: "Pickup Available",
-        days: "6 Hour",
-        price: "155$",
-    },
-    {
-        id: 6,
-        title: "Disneyland Paris",
-        image:
-            "https://images.pexels.com/photos/261327/pexels-photo-261327.jpeg",
-        rating: 4.3,
-        reviews: 950,
-        pickup: "Pickup Available",
-        days: "10 Days",
-        price: "2100$",
-    },
-    {
-        id: 7,
-        title: "Paris City Tour",
-        image:
-            "https://images.pexels.com/photos/1089309/pexels-photo-1089309.jpeg",
-        rating: 4.1,
-        reviews: 650,
-        pickup: "Pickup Available",
-        days: "7 Days",
-        price: "1500$",
-    },
-    {
-        id: 8,
-        title: "Disneyland Paris",
-        image:
-            "https://images.pexels.com/photos/1796797/pexels-photo-1796797.jpeg",
-        rating: 4.5,
-        reviews: 650,
-        pickup: "Pickup Available",
-        days: "5 Days",
-        price: "1050$",
-    },
-];
-
-export default function Results() {
-    const [favorites, setFavorites] = useState<number[]>([]);
-
-    const toggleFav = (id: number) => {
-        setFavorites((prev) =>
-            prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-        );
+    duration_days?: number;
+    pricing?: {
+        adult_price: number;
     };
+}
+interface Hotel {
+    id: number;
+    name: string;
+    slug: string;
+    short_description: string;
+    main_image: string;
+    total_reviews?: number;
+    rating: number;
+    duration_days?: number;
+    pricing?: {
+        adult_price: number;
+    };
+}
+
+
+export default function SearchResults() {
+    const { state } = useLocation();
+    const [favorites, setFavorites] = useState<string[]>([]);
+
+    const toggleFav = (name: string) => {
+        setFavorites((prev) =>
+            prev.includes(name)
+                ? prev.filter((item) => item !== name)
+                : [...prev, name]
+        );
+    }
+
+    const locationName = state?.location || "Search";
+    const tours = Array.isArray(state?.results?.tours)
+        ? state.results.tours
+        : [];
+    const hotels: Hotel[] = state?.results?.hotels || [];
+
 
     return (
-        <>
-            <Back />
+        <div className="p-5">
+            {/* name */}
+            <h1 className="text-3xl font-bold text-[#1F2937] mb-6">
+                {locationName}{" "}
+                <span className="text-gray-500">{tours.length} Result</span>
+            </h1>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
-                {toursData.map((tour) => (
-                    <div
-                        key={tour.id}
-                        className="bg-white rounded-2xl shadow-md p-3 border border-gray-200 hover:shadow-lg transition"
+            {/* NO RESULTS */}
+            {tours.length === 0 && (
+                <p className="text-gray-500 text-lg">No tours found.</p>
+            )}
+
+            {/* GRID RESULTS */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+                {tours.map((tour: Tour) => (
+                    <Card
+                        key={tour.name}
+                        sx={{
+                            borderRadius: "18px",
+                            overflow: "hidden",
+                            boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+                            position: "relative",
+                        }}
                     >
-                        {/* Image section */}
-                        <div className="relative">
-                            <img
-                                src={tour.image}
-                                alt={tour.title}
-                                className="w-full h-52 object-cover rounded-xl"
-                            />
+                        {/* Image */}
+                        <CardMedia
+                            component="img"
+                            image={tour.main_image}
+                            sx={{
+                                height: "200px",
+                                width: "90%",
+                                objectFit: "cover",
+                                margin: " 15px auto 0",
+                                borderRadius: "18px",
+                            }}
+                        />
 
-                            {/* Favorite Button */}
-                            <button
-                                onClick={() => toggleFav(tour.id)}
-                                className="absolute top-3 right-3 bg-white rounded-full p-1 shadow"
-                            >
-                                {favorites.includes(tour.id) ? (
-                                    <FavoriteIcon sx={{ color: "red" }} />
-                                ) : (
-                                    <FavoriteBorderIcon sx={{ color: "#222" }} />
-                                )}
-                            </button>
-                        </div>
+                        {/* Heart icon */}
+                        <IconButton
+                            onClick={() => toggleFav(tour.name)}
+                            sx={{
+                                position: "absolute",
+                                top: 30,
+                                right: 30,
+                                backgroundColor: "white",
+                                "&:hover": { backgroundColor: "white" },
+                            }}
+                        >
+                            {favorites.includes(tour.name) ? (
+                                <FavoriteIcon sx={{ color: "#e53935" }} />
+                            ) : (
+                                <FavoriteBorderIcon sx={{ color: "#333" }} />
+                            )}
+                        </IconButton>
 
-                        {/* Title */}
-                        <h3 className="text-lg font-semibold mt-3">{tour.title}</h3>
+                        {/* Content */}
+                        <Link to={`/destination`}>
+                            <CardContent>
+                                <Stack
+                                    direction={"row"}
+                                    sx={{ justifyContent: "space-between" }}
+                                >
+                                    <Typography
+                                        color="#9CA3AF"
+                                        sx={{ fontSize: "18px", fontWeight: "500" }}
+                                    >
+                                        Full Day Tours
+                                    </Typography>
 
-                        {/* Rating */}
-                        <div className="flex items-center text-sm text-gray-600 mt-1">
-                            <StarIcon sx={{ color: "#fbbf24", fontSize: 20 }} />
-                            <span className="ml-1 font-semibold">{tour.rating}</span>
-                            <span className="ml-1 text-gray-500">({tour.reviews})</span>
-                        </div>
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <div className="text-[18px]">⭐</div>
+                                        <Typography sx={{ fontSize: "16px" }} fontWeight={500}>
+                                            {tour.rating}
+                                        </Typography>
+                                    </div>
+                                </Stack>
 
-                        {/* Pickup + Days */}
-                        <div className="flex items-center text-sm text-gray-600 mt-1">
-                            <span>{tour.pickup}</span>
-                            <FiberManualRecordIcon
-                                sx={{ fontSize: 8, margin: "0 6px", color: "#3354D8" }}
-                            />
-                            <span>{tour.days}</span>
-                        </div>
+                                <Typography
+                                    sx={{ fontSize: "22px", fontWeight: 500, color: "#111928" }}
+                                >
+                                    {tour.name}
+                                </Typography>
 
-                        {/* Price */}
-                        <p className="text-gray-700 text-sm mt-1">
-                            From <span className="text-blue-600 font-semibold">{tour.price}</span> per Person
-                        </p>
-                    </div>
+                                <Typography color="#6B7280">
+                                    From{" "}
+                                    <span className="text-blue-500 font-semibold">
+                                        {tour.pricing?.adult_price}$
+                                    </span>{" "}
+                                    Per Person
+                                </Typography>
+                            </CardContent>
+                        </Link>
+                    </Card>
+
+                ))}
+                <div className="my-5"></div>
+                {hotels.map((hotel: Hotel) => (
+                    <Card
+                        key={hotel.name}
+                        sx={{
+                            borderRadius: "18px",
+                            overflow: "hidden",
+                            boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+                            position: "relative",
+                        }}
+                    >
+                        {/* Image */}
+                        <CardMedia
+                            component="img"
+                            image={hotel.main_image}
+                            sx={{
+                                height: "200px",
+                                width: "90%",
+                                objectFit: "cover",
+                                margin: " 15px auto 0",
+                                borderRadius: "18px",
+                            }}
+                        />
+
+                        {/* Heart icon */}
+                        <IconButton
+                            onClick={() => toggleFav(hotel.name)}
+                            sx={{
+                                position: "absolute",
+                                top: 30,
+                                right: 30,
+                                backgroundColor: "white",
+                                "&:hover": { backgroundColor: "white" },
+                            }}
+                        >
+                            {favorites.includes(hotel.name) ? (
+                                <FavoriteIcon sx={{ color: "#e53935" }} />
+                            ) : (
+                                <FavoriteBorderIcon sx={{ color: "#333" }} />
+                            )}
+                        </IconButton>
+
+                        {/* Content */}
+                        <Link to={`/destination`}>
+                            <CardContent>
+                                <Stack
+                                    direction={"row"}
+                                    sx={{ justifyContent: "space-between" }}
+                                >
+                                    <Typography
+                                        color="#9CA3AF"
+                                        sx={{ fontSize: "18px", fontWeight: "500" }}
+                                    >
+                                        Full Day Tours
+                                    </Typography>
+
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <div className="text-[18px]">⭐</div>
+                                        <Typography sx={{ fontSize: "16px" }} fontWeight={500}>
+                                            {hotel.rating}
+                                        </Typography>
+                                    </div>
+                                </Stack>
+
+                                <Typography
+                                    sx={{ fontSize: "22px", fontWeight: 500, color: "#111928" }}
+                                >
+                                    {hotel.name}
+                                </Typography>
+
+                                <Typography color="#6B7280">
+                                    From{" "}
+                                    <span className="text-blue-500 font-semibold">
+                                        {hotel.pricing?.adult_price}$
+                                    </span>{" "}
+                                    Per Person
+                                </Typography>
+                            </CardContent>
+                        </Link>
+                    </Card>
+
                 ))}
             </div>
-        </>
-
+        </div>
     );
 }
