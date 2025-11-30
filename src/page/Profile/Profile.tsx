@@ -34,10 +34,10 @@ export default function Profile() {
             {/* Top Profile Section */}
             <div className="p-px rounded-xl bg-linear-to-b from-[#3F52B4] to-[#B22459]">
                 <div
-                    className="w-full text-[#111928] bg-white  p-8 flex items-center gap-5 rounded-xl ">
+                    className="w-full text-[#111928] bg-white  p-8 flex flex-wrap items-center gap-5 rounded-xl ">
 
                     {/* Profile Image */}
-                    <div className="relative">
+                    <div className="relative ">
                         <img
                             src="https://i.pravatar.cc/300"
                             alt="user"
