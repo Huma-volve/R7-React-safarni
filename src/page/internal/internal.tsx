@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../store/store";
 import { fetchinternal } from "../../store/internalSlice";
+import { toggleFavorite } from "../../store/internalSlice";
 
 export default function Internal() {
   const [search, setSearch] = useState("");
@@ -29,15 +30,10 @@ export default function Internal() {
   const { product, loading, error } = useSelector(
     (state: RootState) => state.internal
   );
-  const [favorites, setFavorites] = useState<string[]>([]);
-  const toggleFav = (title: string) => {
-    setFavorites((prev) =>
-      prev.includes(title)
-        ? prev.filter((item) => item !== title)
-        : [...prev, title]
-    );
-  };
 
+  const toggleFav = (category: string, id: number) => {
+    dispatch(toggleFavorite({ category, item_id: id }));
+  };
   // Debounce input
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -126,7 +122,7 @@ export default function Internal() {
         {Array.isArray(product) &&
           product.length > 0 &&
           product.map((tour: any) => (
-            <Grid  size={{xs: 12, sm: 6, md: 4, lg: 3}} key={tour.id}>
+            <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={tour.id}>
               <Card
                 sx={{
                   borderRadius: "18px",
@@ -154,7 +150,7 @@ export default function Internal() {
 
                 {/* Heart icon */}
                 <IconButton
-                  onClick={() => toggleFav(tour.id)}
+                  onClick={() => toggleFav(tour.category.name, tour.id)}
                   sx={{
                     position: "absolute",
                     top: 30,
@@ -163,7 +159,7 @@ export default function Internal() {
                     "&:hover": { backgroundColor: "white" },
                   }}
                 >
-                  {favorites.includes(tour.id) ? (
+                  {tour.is_favorited ? (
                     <FavoriteIcon sx={{ color: "#e53935" }} />
                   ) : (
                     <FavoriteBorderIcon sx={{ color: "#333" }} />
@@ -171,9 +167,15 @@ export default function Internal() {
                 </IconButton>
 
                 {/* Content */}
-                <Link to={`/destination/${tour.id}`} style={{ textDecoration: "none" }}>
+                <Link
+                  to={`/destination/${tour.id}`}
+                  style={{ textDecoration: "none" }}
+                >
                   <CardContent>
-                    <Stack direction="row" sx={{ justifyContent: "space-between" }}>
+                    <Stack
+                      direction="row"
+                      sx={{ justifyContent: "space-between" }}
+                    >
                       <Typography
                         color="#9CA3AF"
                         sx={{ fontSize: "18px", fontWeight: "500" }}
