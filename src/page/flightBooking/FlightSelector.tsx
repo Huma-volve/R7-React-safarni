@@ -18,7 +18,6 @@ import type { RootState, AppDispatch } from "../../store/store";
 import { updateBookingData } from "../../store/flight/flightSlice";
 
 export default function FlightSelector() {
-  const { bookingData } = useSelector((state: RootState) => state.flight);
   const { flights, loading, error } = useSelector(
     (state: RootState) => state.flight
   );
