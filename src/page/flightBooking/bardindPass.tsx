@@ -7,6 +7,7 @@ import {
   Container,
   Stack,
   Card,
+  CircularProgress,
 } from "@mui/material";
 import { Flight } from "@mui/icons-material";
 import Back from "../../components/back";
@@ -16,46 +17,53 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 
 export default function BoardingPass() {
-  // ✅ جلب كل بيانات الحجز من Redux (بدون early return)
+  // جلب بيانات الحجز من Redux
   const bookingData = useSelector(
     (state: RootState) => state.flight.bookingData
   );
-  console.log("bookingData");
-  console.log(bookingData);
+
   const selectedFlight = bookingData?.selectedFlight;
   const selectedSeat = bookingData?.selectedSeat;
-  const passengerInfo = bookingData?.passengerInfo;
-  console.log("bookingData: ", bookingData);
-  // ✅ جلب بيانات المستخدم من localStorage (مؤقت حتى ندمج passengerInfo)
+
+  // حالة الركاب والـ user
+  const [passengerInfo, setPassengerInfo] = useState({
+    name: "_",
+    age: "_",
+    gender: "_",
+  });
   const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const userStr = localStorage.getItem("user");
     if (userStr) {
       try {
-        setUser(JSON.parse(userStr));
-      } catch (e) {
-        console.error("Invalid user data in localStorage");
+        const userData = JSON.parse(userStr);
+        setPassengerInfo({
+          name: userData.data?.fullName || "_",
+          age: userData.data?.birthDate
+            ? (
+                new Date().getFullYear() -
+                new Date(userData.data.birthDate).getFullYear()
+              ).toString()
+            : "_",
+          gender: userData.data?.gender || "_",
+        });
+        setUser(userData);
+      } catch {
+        setPassengerInfo({ name: "_", age: "_", gender: "_" });
+        setUser(null);
       }
+    } else {
+      setPassengerInfo({ name: "_", age: "_", gender: "_" });
+      setUser(null);
     }
+
+    const timer = setTimeout(() => setLoading(false), 200);
+    return () => clearTimeout(timer);
   }, []);
 
-  // ✅ حساب العمر من تاريخ الميلاد
-  const getAge = (birthDate: string): number => {
-    if (!birthDate || birthDate.startsWith("0001-01-01")) return 0;
-    const today = new Date();
-    const birth = new Date(birthDate);
-    let age = today.getFullYear() - birth.getFullYear();
-    const monthDiff = today.getMonth() - birth.getMonth();
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birth.getDate())
-    ) {
-      age--;
-    }
-    return age;
-  };
-
-  // ✅ تنسيق الوقت
+  // تنسيق الوقت
   const formatTime = (dateStr: string | undefined): string => {
     if (!dateStr) return "—";
     return new Date(dateStr).toLocaleTimeString([], {
@@ -64,7 +72,7 @@ export default function BoardingPass() {
     });
   };
 
-  // ✅ تنسيق التاريخ
+  // تنسيق التاريخ
   const formatDate = (dateStr: string | undefined): string => {
     if (!dateStr) return "—";
     return new Date(dateStr).toLocaleDateString("en-US", {
@@ -74,15 +82,34 @@ export default function BoardingPass() {
     });
   };
 
-  // ✅ دمج بيانات الراكب من Redux أو localStorage
-  const passengerName = passengerInfo?.name || user?.data?.fullName || "—";
-  const passengerAge = passengerInfo?.age
-    ? `${passengerInfo.age} years, ${passengerInfo.gender || "—"}`
-    : user?.data?.birthDate
-    ? `${getAge(user.data.birthDate)===0?"-":getAge(user.data.birthDate)} years, male`
-    : "—";
+  const passengerName = passengerInfo.name;
+  const passengerAge =
+    passengerInfo.age && passengerInfo.gender
+      ? `${passengerInfo.age} years, ${passengerInfo.gender}`
+      : "_ years, _";
+
   const passengerImage =
     user?.data?.imgUrl || "/assets/barding/Avatar Place holder.png";
+
+  // Loader
+  if (loading || !bookingData) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "400px",
+        }}
+      >
+        <CircularProgress size={60} thickness={4} color="primary" />
+        <Typography sx={{ mt: 2, fontSize: "18px" }}>
+          Loading boarding pass...
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Container maxWidth={false} disableGutters sx={{ overflow: "visible" }}>

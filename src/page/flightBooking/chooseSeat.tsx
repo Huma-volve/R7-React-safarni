@@ -6,20 +6,18 @@ import {
   Container,
   Divider,
   Stack,
+  CircularProgress,
 } from "@mui/material";
 import Back from "../../components/back";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../store/store";
-import { fetchSeats } from "../../store/flight/flightSlice";
-//import type { ApiSeat } from "../../store/flight/flightSlice";
-import { updateBookingData } from "../../store/flight/flightSlice";
+import { fetchSeats, updateBookingData } from "../../store/flight/flightSlice";
 
 type SeatStatus = "available" | "selected" | "unavailable";
 
 export default function SeatSelector() {
   const { flightId } = useParams<{ flightId: string }>();
-  console.log("flightId:", flightId);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { apiSeats, loading, error } = useSelector(
@@ -29,7 +27,7 @@ export default function SeatSelector() {
     null
   );
   const [seatMap, setSeatMap] = useState<Record<string, SeatStatus>>({});
-  console.log(apiSeats);
+
   // طلب المقاعد عند تحميل الصفحة
   useEffect(() => {
     if (flightId) {
@@ -37,7 +35,7 @@ export default function SeatSelector() {
     }
   }, [dispatch, flightId]);
 
-  // بناء خريطة المقاعد من البيانات الجاية من الـ API
+  // بناء خريطة المقاعد من البيانات القادمة من الـ API
   useEffect(() => {
     const map: Record<string, SeatStatus> = {};
     apiSeats.forEach((seat) => {
@@ -63,7 +61,6 @@ export default function SeatSelector() {
     if (seatMap[seatNumber] !== "available") return;
 
     const updatedMap = { ...seatMap };
-    // إلغاء الاختيار السابق
     Object.keys(updatedMap).forEach((key) => {
       if (updatedMap[key] === "selected") {
         updatedMap[key] = "available";
@@ -92,8 +89,8 @@ export default function SeatSelector() {
           bgcolor: isUnavailable
             ? "grey.100"
             : isSelected
-            ? "#03D947"
-            : "#1E429F",
+            ? "success.main"
+            : "primary.main",
           color: isUnavailable ? "black" : isSelected ? "black" : "white",
           borderRadius: 1.5,
           textTransform: "none",
@@ -105,12 +102,10 @@ export default function SeatSelector() {
     );
   };
 
-  // بناء تخطيط المقاعد حسب الصف (A1, B1, C1, D1, E1, F1 ...)
   const renderSeatLayout = () => {
     const allSeats = Object.keys(seatMap);
     if (allSeats.length === 0) return null;
 
-    // استخراج أرقام الصفوف
     const rowsMap: Record<string, string[]> = {};
     allSeats.forEach((seatNum) => {
       const row = seatNum.replace(/\D/g, ""); // "A1" → "1"
@@ -120,10 +115,10 @@ export default function SeatSelector() {
 
     const sortedRows = Object.keys(rowsMap)
       .sort((a, b) => parseInt(a) - parseInt(b))
-      .slice(0, 6); // أول 6 صفوف كمثال
+      .slice(0, 6);
 
     return sortedRows.map((row) => {
-      const seatsInRow = rowsMap[row].sort(); // A1, B1, C1...
+      const seatsInRow = rowsMap[row].sort();
       const left = seatsInRow.filter((s) => ["A", "B"].includes(s[0]));
       const right = seatsInRow.filter((s) =>
         ["C", "D", "E", "F"].includes(s[0])
@@ -154,9 +149,58 @@ export default function SeatSelector() {
   );
   const ticketPrice = selectedSeatData ? parseFloat(selectedSeatData.price) : 0;
 
-  if (loading) return <div className="text-center py-10">Loading seats...</div>;
-  if (error)
-    return <div className="text-center py-10 text-red-500">{error}</div>;
+  // ** Loader و Error و Empty state **
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "200px",
+          flexDirection: "column",
+        }}
+      >
+        <CircularProgress size={60} thickness={4} color="primary" />
+        <Typography sx={{ fontSize: "18px", marginTop: "16px" }}>
+          Loading seats...
+        </Typography>
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "200px",
+          flexDirection: "column",
+          color: "red",
+        }}
+      >
+        <Typography sx={{ fontSize: "18px" }}>{error}</Typography>
+      </Box>
+    );
+  }
+
+  if (!apiSeats || apiSeats.length === 0) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "200px",
+          flexDirection: "column",
+        }}
+      >
+        <Typography sx={{ fontSize: "18px" }}>No seats available.</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Container>
@@ -198,9 +242,7 @@ export default function SeatSelector() {
                   bgcolor: "primary.main",
                 }}
               />
-              <Typography
-                sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}
-              >
+              <Typography sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}>
                 Available
               </Typography>
             </Stack>
@@ -213,9 +255,7 @@ export default function SeatSelector() {
                   bgcolor: "success.main",
                 }}
               />
-              <Typography
-                sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}
-              >
+              <Typography sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}>
                 Selected
               </Typography>
             </Stack>
@@ -228,9 +268,7 @@ export default function SeatSelector() {
                   bgcolor: "grey.300",
                 }}
               />
-              <Typography
-                sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}
-              >
+              <Typography sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}>
                 Unavailable
               </Typography>
             </Stack>
@@ -251,45 +289,21 @@ export default function SeatSelector() {
           {/* Summary */}
           <Divider className="my-6" />
           <Box sx={{ width: "100%" }}>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>
-                Ticket price
-              </Typography>
-              <Typography
-                sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}
-              >
+            <Stack direction="row" justifyContent="space-between" alignItems="center">
+              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>Ticket price</Typography>
+              <Typography sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}>
                 ${ticketPrice.toFixed(2)}
               </Typography>
             </Stack>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>
-                Total Price
-              </Typography>
-              <Typography
-                sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}
-              >
+            <Stack direction="row" justifyContent="space-between" alignItems="center">
+              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>Total Price</Typography>
+              <Typography sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}>
                 ${ticketPrice.toFixed(2)}
               </Typography>
             </Stack>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>
-                Your Seat
-              </Typography>
-              <Typography
-                sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}
-              >
+            <Stack direction="row" justifyContent="space-between" alignItems="center">
+              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>Your Seat</Typography>
+              <Typography sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}>
                 {selectedSeatNumber ?? "-"}
               </Typography>
             </Stack>
