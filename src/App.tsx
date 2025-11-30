@@ -37,11 +37,14 @@ import Room from "./page/hotels/Room";
 import HotelReviewForm from "./page/hotels/HotelReviewForm";
 import Booking from "./page/hotels/Booking";
 import Count from "./page/hotels/Count";
+import { authLoader } from "./loader/authLoader";
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     errorElement: <h1 className="text-red-500 p-8">404 - Page Not Found</h1>,
+    loader: authLoader,
     children: [
       { path: "home", element: <Home /> },
       { path: "profile", element: <Profile /> },

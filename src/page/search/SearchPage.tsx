@@ -7,7 +7,7 @@ export default function SearchPage() {
 
     const [inputValue, setInputValue] = useState<string>("");
 
-    async function search(query: string) {
+    async function search(query: string) { 
         try {
             const res = await axios.get(
                 "https://round7-safarni-team-one.huma-volve.com/api/v1/search/quick",
