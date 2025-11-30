@@ -5,6 +5,7 @@ import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import HotelIcon from "@mui/icons-material/Hotel";
 import StarIcon from "@mui/icons-material/Star";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import Back from "../../components/back";
 
 export default function BookingTabs() {
     const [active, setActive] = useState("flight");
@@ -18,6 +19,7 @@ export default function BookingTabs() {
 
     return (
         <div className="w-full mt-10">
+            <Back />
             <h1 className="text-center text-3xl font-semibold text-[#111928] mb-8">
                 My Booking
             </h1>

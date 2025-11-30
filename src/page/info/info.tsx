@@ -6,6 +6,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
+import Back from "../../components/back";
 
 export default function Info() {
 
@@ -78,95 +79,101 @@ export default function Info() {
     }
 
     return (
-        <div className="p-px rounded-2xl bg-linear-to-r from-[#3F52B4] to-[#B22459]">
-            <div className="text-white bg-white rounded-2xl p-10">
+        <>
+            <Back />
+            <div className="p-px rounded-2xl bg-linear-to-r from-[#3F52B4] to-[#B22459]">
 
-                <h1 className="text-center text-3xl font-semibold text-[#111928] mb-10 capitalize">
-                    personal information
-                </h1>
+                <div className="text-white bg-white rounded-2xl p-10">
 
-                {/* Name */}
-                <div className="mb-6">
-                    <label className="text-gray-800 text-lg font-semibold">Name</label>
-                    <div className="w-full mt-2 p-4 rounded-xl border-gray-300 border bg-white flex items-center gap-3">
-                        <PersonOutlineIcon sx={{ fontSize: 24, color: "#999" }} />
-                        <input
-                            type="text"
-                            value={nameInput}
-                            readOnly={!editMode}
-                            onChange={(e) => setNameInput(e.target.value)}
-                            className="w-full outline-none text-[#111928] text-lg"
-                        />
+                    <h1 className="text-center text-3xl font-semibold text-[#111928] mb-10 capitalize">
+                        personal information
+                    </h1>
+
+                    {/* Name */}
+                    <div className="mb-6">
+                        <label className="text-gray-800 text-lg font-semibold">Name</label>
+                        <div className="w-full mt-2 p-4 rounded-xl border-gray-300 border bg-white flex items-center gap-3">
+                            <PersonOutlineIcon sx={{ fontSize: 24, color: "#999" }} />
+                            <input
+                                type="text"
+                                value={nameInput}
+                                readOnly={!editMode}
+                                onChange={(e) => setNameInput(e.target.value)}
+                                className="w-full outline-none text-[#111928] text-lg"
+                            />
+                        </div>
                     </div>
-                </div>
 
-                {/* Email (from Redux only) */}
-                <div className="mb-6">
-                    <label className="text-gray-800 text-lg font-semibold">Email</label>
-                    <div className="w-full mt-2 p-4 rounded-xl border-gray-300 border bg-white flex items-center gap-3">
-                        <MailOutlineIcon sx={{ fontSize: 24, color: "#999" }} />
-                        <input
-                            type="email"
-                            value={email ?? ""}
-                            readOnly
-                            className="w-full outline-none text-[#111928] text-lg"
-                        />
+                    {/* Email (from Redux only) */}
+                    <div className="mb-6">
+                        <label className="text-gray-800 text-lg font-semibold">Email</label>
+                        <div className="w-full mt-2 p-4 rounded-xl border-gray-300 border bg-white flex items-center gap-3">
+                            <MailOutlineIcon sx={{ fontSize: 24, color: "#999" }} />
+                            <input
+                                type="email"
+                                value={email ?? ""}
+                                readOnly
+                                className="w-full outline-none text-[#111928] text-lg"
+                            />
+                        </div>
                     </div>
-                </div>
 
-                {/* Location */}
-                <div className="mb-6">
-                    <label className="text-gray-800 text-lg font-semibold">Location</label>
-                    <div className="w-full mt-2 p-4 rounded-xl border-gray-300 border bg-white flex items-center gap-3">
-                        <LocationOnIcon sx={{ fontSize: 24, color: "#999" }} />
-                        <input
-                            type="text"
-                            value={locationInput}
-                            readOnly={!editMode}
-                            onChange={(e) => setLocationInput(e.target.value)}
-                            className="w-full outline-none text-[#111928] text-lg"
-                        />
+                    {/* Location */}
+                    <div className="mb-6">
+                        <label className="text-gray-800 text-lg font-semibold">Location</label>
+                        <div className="w-full mt-2 p-4 rounded-xl border-gray-300 border bg-white flex items-center gap-3">
+                            <LocationOnIcon sx={{ fontSize: 24, color: "#999" }} />
+                            <input
+                                type="text"
+                                value={locationInput}
+                                readOnly={!editMode}
+                                onChange={(e) => setLocationInput(e.target.value)}
+                                className="w-full outline-none text-[#111928] text-lg"
+                            />
+                        </div>
                     </div>
-                </div>
 
-                {/* Phone */}
-                <div className="mb-6">
-                    <label className="text-gray-800 text-lg font-semibold">Phone Number</label>
-                    <div className="w-full mt-2 p-4 rounded-xl border-gray-300 border bg-white flex items-center gap-3">
-                        <PhoneIphoneIcon sx={{ fontSize: 24, color: "#999" }} />
-                        <input
-                            type="text"
-                            value={phoneInput}
-                            readOnly={!editMode}
-                            onChange={(e) => setPhoneInput(e.target.value)}
-                            className="w-full outline-none text-[#111928] text-lg"
-                        />
+                    {/* Phone */}
+                    <div className="mb-6">
+                        <label className="text-gray-800 text-lg font-semibold">Phone Number</label>
+                        <div className="w-full mt-2 p-4 rounded-xl border-gray-300 border bg-white flex items-center gap-3">
+                            <PhoneIphoneIcon sx={{ fontSize: 24, color: "#999" }} />
+                            <input
+                                type="text"
+                                value={phoneInput}
+                                readOnly={!editMode}
+                                onChange={(e) => setPhoneInput(e.target.value)}
+                                className="w-full outline-none text-[#111928] text-lg"
+                            />
+                        </div>
                     </div>
-                </div>
 
-                {/* Buttons */}
-                <div className="flex justify-between mt-6">
-                    {!editMode ? (
-                        <button
-                            onClick={() => setEditMode(true)}
-                            className="bg-main-color text-white px-6 py-3 rounded-lg"
-                        >
-                            Edit
-                        </button>
-                    ) : (
-                        <button
-                            onClick={handleSave}
-                            className="bg-green-600 text-white px-6 py-3 rounded-lg"
-                        >
-                            Save
-                        </button>
+                    {/* Buttons */}
+                    <div className="flex justify-between mt-6">
+                        {!editMode ? (
+                            <button
+                                onClick={() => setEditMode(true)}
+                                className="bg-main-color text-white px-6 py-3 rounded-lg"
+                            >
+                                Edit
+                            </button>
+                        ) : (
+                            <button
+                                onClick={handleSave}
+                                className="bg-green-600 text-white px-6 py-3 rounded-lg"
+                            >
+                                Save
+                            </button>
+                        )}
+                    </div>
+
+                    {message && (
+                        <p className="text-center text-green-600 mt-4 font-semibold">{message}</p>
                     )}
                 </div>
-
-                {message && (
-                    <p className="text-center text-green-600 mt-4 font-semibold">{message}</p>
-                )}
             </div>
-        </div>
+
+        </>
+
     );
 }

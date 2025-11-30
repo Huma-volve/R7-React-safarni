@@ -28,7 +28,7 @@ export default function Profile() {
 
 
     return (
-        <div className="w-full min-h-screen text-[#111928]  pb-10">
+        <div className="w-full min-h-screen text-[#111928]  ">
             <Back />
 
             {/* Top Profile Section */}

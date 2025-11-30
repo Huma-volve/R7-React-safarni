@@ -98,7 +98,7 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <div className="p-6">
+    <div className="pb-28">
       <RouterProvider router={router} />
     </div>
   );
