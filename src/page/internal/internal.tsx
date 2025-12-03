@@ -19,17 +19,23 @@ import { Search } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../store/store";
-import { fetchinternal } from "../../store/internalSlice";
-import { toggleFavorite } from "../../store/internalSlice";
+import {
+  toggleFavorite,
+  searchInternal,
+  fetchinternal,
+} from "../../store/internalSlice";
 
 export default function Internal() {
   const [search, setSearch] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [erLo, seterLo] = useState("");
   const dispatch = useDispatch<AppDispatch>();
-  const { product, loading, error } = useSelector(
+  const { product, loading, error, loadingItems } = useSelector(
     (state: RootState) => state.internal
   );
+  useEffect(() => {
+    dispatch(fetchinternal());
+  }, [dispatch]);
 
   const toggleFav = (category: string, id: number) => {
     dispatch(toggleFavorite({ category, item_id: id }));
@@ -45,9 +51,12 @@ export default function Internal() {
   // Fetch products
   useEffect(() => {
     if (debouncedQuery) {
-      dispatch(fetchinternal(debouncedQuery));
+      dispatch(searchInternal(debouncedQuery));
+    } else {
+      // لو البحث اتشال، نرجع للـ list الأصلية
+      dispatch(fetchinternal());
     }
-  }, [debouncedQuery]);
+  }, [debouncedQuery, dispatch]);
 
   // Handle error / no results
   useEffect(() => {
@@ -91,7 +100,7 @@ export default function Internal() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           fullWidth
-          placeholder="Search destinations..."
+          placeholder="Search ..."
           InputProps={{
             startAdornment: <Search sx={{ color: "blue" }} />,
           }}
@@ -150,7 +159,8 @@ export default function Internal() {
 
                 {/* Heart icon */}
                 <IconButton
-                  onClick={() => toggleFav(tour.category.name, tour.id)}
+                  onClick={() => toggleFav("tour", tour.id)}
+                  disabled={loadingItems.includes(tour.id)} // تمنع الضغط أثناء التحميل
                   sx={{
                     position: "absolute",
                     top: 30,
@@ -159,7 +169,9 @@ export default function Internal() {
                     "&:hover": { backgroundColor: "white" },
                   }}
                 >
-                  {tour.is_favorited ? (
+                  {loadingItems.includes(tour.id) ? (
+                    <CircularProgress size={20} /> // Loader صغير على القلب
+                  ) : tour.is_favorited ? (
                     <FavoriteIcon sx={{ color: "#e53935" }} />
                   ) : (
                     <FavoriteBorderIcon sx={{ color: "#333" }} />
