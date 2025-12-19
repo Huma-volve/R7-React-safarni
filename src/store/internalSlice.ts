@@ -1,10 +1,13 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
-
-type Product = any;
+interface Product {
+  id: number;
+  is_favorited?: boolean;
+  [key: string]: unknown;
+}
 
 interface ProductState {
-  product: Product | [];
+  product: Product[];
   loading: boolean;
   error: string | null;
   loadingItems: number[];
@@ -27,13 +30,16 @@ export const fetchinternal = createAsyncThunk(
         `https://round7-safarni-team-one.huma-volve.com/api/v1/tours?page=1&page_size=20`
       );
       return res.data.data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message ||
-          error.response?.data ||
-          error.message ||
-          "Not Found"
-      );
+    } catch (err) {
+      let errorMessage = "Not Found";
+
+      if (axios.isAxiosError(err)) {
+        errorMessage = err.response?.data?.message || err.message;
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      return rejectWithValue(errorMessage);
     }
   }
 );
@@ -47,16 +53,17 @@ export const searchInternal = createAsyncThunk(
         `https://round7-safarni-team-one.huma-volve.com/api/v1/tours/search?q=${search}&page=1&page_size=20&category=tours`
       );
       return res.data.data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message ||
-          error.response?.data ||
-          error.message ||
-          "Not Found"
-      );
+    } catch (err) {
+      let errorMessage = "Not Found";
+      if (axios.isAxiosError(err)) {
+        errorMessage = err.response?.data?.message || err.message;
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+      return rejectWithValue(errorMessage);
     }
   }
-);
+      );
 
 // ---- Toggle Favorite ----
 export const toggleFavorite = createAsyncThunk(
@@ -76,14 +83,17 @@ export const toggleFavorite = createAsyncThunk(
         }
       );
       return res.data.data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message ||
-          error.response?.data ||
-          error.message ||
-          "Not Found"
-      );
+    } catch (err) {
+    let errorMessage = "Not Found";
+
+    if (axios.isAxiosError(err)) {
+      errorMessage = err.response?.data?.message || err.message;
+    } else if (err instanceof Error) {
+      errorMessage = err.message;
     }
+
+    return rejectWithValue(errorMessage);
+  }
   }
 );
 
@@ -93,13 +103,13 @@ const internalSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // FETCH INTERNAL
+      // FETCH
       .addCase(fetchinternal.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchinternal.fulfilled, (state, action) => {
-        state.product = (action.payload || []).map((item: any) => ({
+        state.product = (action.payload || []).map((item: Product) => ({
           ...item,
           is_favorited: item.is_favorited ?? false, 
         }));
@@ -116,7 +126,7 @@ const internalSlice = createSlice({
         state.error = null;
       })
       .addCase(searchInternal.fulfilled, (state, action) => {
-        state.product = (action.payload || []).map((item: any) => ({
+        state.product = (action.payload || []).map((item: Product) => ({
           ...item,
           is_favorited: item.is_favorited ?? false, 
         }));
@@ -135,7 +145,7 @@ const internalSlice = createSlice({
       .addCase(toggleFavorite.fulfilled, (state, action) => {
         const { is_favorited } = action.payload;
         const itemId = action.meta.arg.item_id;
-        state.product = state.product.map((item: any) =>
+        state.product = state.product.map((item: Product) =>
           item.id === itemId ? { ...item, is_favorited } : item
         );
         state.loadingItems = state.loadingItems.filter((id) => id !== itemId);

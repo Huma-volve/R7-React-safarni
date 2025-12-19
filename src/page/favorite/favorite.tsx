@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Card,
   CardMedia,
@@ -8,84 +7,45 @@ import {
   Container,
   Stack,
 } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite"; // نستخدم القلب الممتلئ فقط
+import FavoriteIcon from "@mui/icons-material/Favorite"; 
 import Back from "../../components/back";
 
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFavorites } from "../../store/favoriteSlice";
+import { toggleFavorite } from "../../store/favoriteSlice";
+
+import type { RootState, AppDispatch } from "../../store/store";
 type Tour = {
-  id: string; // 👈 أضفنا id فريد
+  id: string; 
   title: string;
   img: string;
   price: number;
   rating: number;
 };
 
-// نولّد id فريد لكل عنصر (مثلاً باستخدام الوقت أو رقم تسلسلي)
-const initialTours: Tour[] = [
-  {
-    id: "1",
-    title: "Eiffel Tower",
-    img: "public/assets/internal/4396deae0a058c27bfc287f3bc71ed9e16836c69.jpg",
-    price: 200,
-    rating: 4.7,
-  },
-  {
-    id: "2",
-    title: "Notre-Dame Cathedral",
-    img: "public/assets/internal/24704dc51e4507a0e8f43ec3d3bf73b7acdce9d2.jpg",
-    price: 250,
-    rating: 4.2,
-  },
-  {
-    id: "3",
-    title: "Louvre Museum",
-    img: "public/assets/internal/a2ca0f122817946104380e24391c6e1db9530702.jpg",
-    price: 150,
-    rating: 4.5,
-  },
-  {
-    id: "4",
-    title: "Arc de Triomphe",
-    img: "public/assets/internal/bf275389631216a57cf9b8951bfff2629b509e43.jpg",
-    price: 220,
-    rating: 4.1,
-  },
-  {
-    id: "5",
-    title: "Montmartre",
-    img: "public/assets/internal/d1a0007a49da8785b34dea06e9f94165f08e2ea7.jpg",
-    price: 250,
-    rating: 4.2,
-  },
-  {
-    id: "6",
-    title: "Galeries Lafayette",
-    img: "public/assets/internal/d4916a644c1db96fa5c5f8766087965b1d935291.jpg",
-    price: 150,
-    rating: 4.5,
-  },
-  {
-    id: "7",
-    title: "Centre Pompidou",
-    img: "public/assets/internal/e734df0633300509e5ed76301ca871637038fb9b.jpg",
-    price: 220,
-    rating: 4.1,
-  },
-  {
-    id: "8",
-    title: "Bois de Boulogne",
-    img: "public/assets/internal/f2713364a5b9cac838c133b9721d46cfa28188a4.jpg",
-    price: 200,
-    rating: 4.7,
-  },
-];
+
 
 export default function Favorite() {
-  const [tours, setTours] = useState<Tour[]>(initialTours);
+  const dispatch = useDispatch<AppDispatch>();
+   const { list: tours, loading, error } = useSelector(
+    (state: RootState) => state.favorites
+  );
 
-  const handleRemoveFromFavorites = (id: string) => {
-    setTours((prev) => prev.filter((tour) => tour.id !== id));
-  };
-  let index = 0;
+  useEffect(() => {
+    dispatch(fetchFavorites());
+  }, [dispatch]);
+
+const handleRemoveFromFavorites = (id: string) => {
+  dispatch(toggleFavorite({ category: "tour", item_id: id }));
+};
+
+
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
+
+
   return (
     <Container sx={{ marginBottom: "30px" }}>
       {/* Search bar */}
@@ -111,32 +71,29 @@ export default function Favorite() {
         </Typography>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {tours.map((tour) => {
-            index += 1;
-            return (
-              <Card
-                key={tour.id}
+          {tours.map((tour: Tour) => (
+            <Card
+              key={tour.id}
+              sx={{
+                borderRadius: "18px",
+                overflow: "hidden",
+                boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+                position: "relative",
+              }}
+            >
+              {/* Image */}
+              <CardMedia
+                component="img"
+                image={tour.img}
+                alt={tour.title}
                 sx={{
+                  height: "200px",
+                  width: "90%",
+                  objectFit: "cover",
+                  margin: "15px auto 0",
                   borderRadius: "18px",
-                  overflow: "hidden",
-                  boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
-                  position: "relative",
-                  marginBottom: index === tours.length ? "50px" : "0",
                 }}
-              >
-                {/* Image */}
-                <CardMedia
-                  component="img"
-                  image={tour.img}
-                  alt={tour.title}
-                  sx={{
-                    height: "200px",
-                    width: "90%",
-                    objectFit: "cover",
-                    margin: "15px auto 0",
-                    borderRadius: "18px",
-                  }}
-                />
+              />
 
                 {/* Heart icon - always filled (red) */}
                 <IconButton
@@ -189,8 +146,7 @@ export default function Favorite() {
                   </Typography>
                 </CardContent>
               </Card>
-            );
-          })}
+          ))}
         </div>
       )}
     </Container>

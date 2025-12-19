@@ -21,7 +21,7 @@ export default function Count() {
         <Container maxWidth="lg" sx={{ pt: 4, pb: 6 }}>
             {/* Back Button */}
             <div
-                className="bg-gray-100 w-[40px] h-[40px] rounded-full flex items-center justify-center cursor-pointer"
+                className="bg-gray-100 w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
                 onClick={() => navigate(-1)}
             >
                 <span className="text-xl">←</span>
@@ -106,7 +106,7 @@ export default function Count() {
 
                             <div className="flex items-center gap-3">
                                 <button
-                                    className="w-[32px] h-[32px] bg-gray-200 rounded text-black"
+                                    className="w-8 h-8 bg-gray-200 rounded text-black"
                                     onClick={() => decrement(setAdults, adults)}
                                 >
                                     -
@@ -117,7 +117,7 @@ export default function Count() {
                                 </span>
 
                                 <button
-                                    className="w-[32px] h-[32px] bg-blue-800 text-white rounded"
+                                    className="w-8 h-8 bg-blue-800 text-white rounded"
                                     onClick={() => increment(setAdults, adults)}
                                 >
                                     +
@@ -138,7 +138,7 @@ export default function Count() {
 
                             <div className="flex items-center gap-3">
                                 <button
-                                    className="w-[32px] h-[32px] bg-gray-200 rounded text-black"
+                                    className="w-8 h-8 bg-gray-200 rounded text-black"
                                     onClick={() => decrement(setChildren, children)}
                                 >
                                     -
@@ -149,7 +149,7 @@ export default function Count() {
                                 </span>
 
                                 <button
-                                    className="w-[32px] h-[32px] bg-blue-800 text-white rounded"
+                                    className="w-8 h-8 bg-blue-800 text-white rounded"
                                     onClick={() => increment(setChildren, children)}
                                 >
                                     +
@@ -170,7 +170,7 @@ export default function Count() {
 
                             <div className="flex items-center gap-3">
                                 <button
-                                    className="w-[32px] h-[32px] bg-gray-200 rounded text-black"
+                                    className="w-8 h-8 bg-gray-200 rounded text-black"
                                     onClick={() => decrement(setInfants, infants)}
                                 >
                                     -
@@ -181,7 +181,7 @@ export default function Count() {
                                 </span>
 
                                 <button
-                                    className="w-[32px] h-[32px] bg-blue-800 text-white rounded"
+                                    className="w-8 h-8 bg-blue-800 text-white rounded"
                                     onClick={() => increment(setInfants, infants)}
                                 >
                                     +

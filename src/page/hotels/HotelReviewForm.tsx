@@ -52,7 +52,7 @@ const HotelReviewForm: React.FC = () => {
             {/* Back */}
             <Box sx={{ paddingY: "20px" }}>
                 <div
-                    className="bg-gray-100 rounded-full w-[40px] h-[40px] p-2 flex items-center justify-center cursor-pointer"
+                    className="bg-gray-100 rounded-full w-10 h-10 p-2 flex items-center justify-center cursor-pointer"
                     onClick={() => navigate(-1)}
                 >
                     <NavigateBeforeIcon className="text-[24px]" />

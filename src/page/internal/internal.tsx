@@ -15,15 +15,17 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Back from "../../components/back";
-import { Search } from "@mui/icons-material";
+import { Search, Token } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../store/store";
+
 import {
   toggleFavorite,
   searchInternal,
   fetchinternal,
 } from "../../store/internalSlice";
+
 
 export default function Internal() {
   const [search, setSearch] = useState("");
@@ -37,9 +39,23 @@ export default function Internal() {
     dispatch(fetchinternal());
   }, [dispatch]);
 
+  // const toggleFav = (category: string, id: number) => {
+  //   dispatch(toggleFavorite({ category, item_id: id }));
+  //   const token = localStorage.getItem("accessToken");
+  //   console.log(token);
+
+
+  // };
   const toggleFav = (category: string, id: number) => {
-    dispatch(toggleFavorite({ category, item_id: id }));
-  };
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    console.error("No token found. Please login first.");
+    return;
+  }
+
+  console.log("Using token:", token); // لازم يظهر هنا التوكن الجديد بعد login
+  dispatch(toggleFavorite({ category, item_id: id }));
+};
   // Debounce input
   useEffect(() => {
     const timer = setTimeout(() => {
