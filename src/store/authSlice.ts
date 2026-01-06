@@ -1,18 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
 interface AuthState {
     token: string | null;
     email: string | null;
     username: string | null;
 }
-
 const initialState: AuthState = {
     token: localStorage.getItem("token"),
     email: localStorage.getItem("email"),
     username: localStorage.getItem("username"),
 };
-
 const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -29,7 +26,6 @@ const authSlice = createSlice({
             localStorage.setItem("email", action.payload.email);
             localStorage.setItem("username", action.payload.username);
         },
-
         logout: (state) => {
             state.token = null;
             state.email = null;
@@ -41,6 +37,5 @@ const authSlice = createSlice({
         },
     },
 });
-
 export const { loginSuccess, logout } = authSlice.actions;
 export default authSlice.reducer;

@@ -53,7 +53,7 @@ export default function Compare() {
     if (loading) {
       seterLo("Loading...");
     } else if (error) {
-      seterLo(error);
+      alert(error);
     } else if (
       Array.isArray(product) &&
       product.length === 0 &&
@@ -144,88 +144,97 @@ export default function Compare() {
       <Grid container spacing={2}>
         {Array.isArray(product) &&
           product.length > 0 &&
-          product.map((item: any) => (
-            <Grid size={{xs:12, md:6}} key={item.id}>
-              <Card
-                sx={{
-                  borderRadius: "20px",
-                  boxShadow: 20,
-                  backgroundColor: "#FAFAFA",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <CardContent
+          product.map((item: any, index: number) => {
+            return (
+              <Grid size={{ xs: 12, md: 6 }} key={item.id}>
+                <Card
                   sx={{
+                    borderRadius: "20px",
+                    boxShadow: 20,
+                    backgroundColor: "#FAFAFA",
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "space-between",
-                    flexGrow: 1,
                   }}
                 >
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    sx={{ justifyContent: "center", alignItems: "center" }}
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      flexGrow: 1,
+                    }}
                   >
-                    <CardMedia
-                      component="img"
-                      image={item.main_image}
-                      alt={item.name}
-                      sx={{
-                        width: { xs: "103px", md: "170px" },
-                        height: { xs: "103px", md: "170px" },
-                        objectFit: "cover",
-                        flexShrink: 0,
-                        mb: 1,
-                      }}
-                    />
-                    <Box sx={{ flex: 1, overflow: "hidden" }}>
-                      <Typography
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{ justifyContent: "center", alignItems: "center" }}
+                    >
+                      <CardMedia
+                        component="img"
+                        image={
+                          item.main_image.includes("Tour+Image")
+                            ? `public/assets/coompare/Depth 3, Frame 0 (${
+                                index + 1
+                              }).png`
+                            : item.main_image
+                        }
+                        alt={item.name}
                         sx={{
-                          fontSize: { xs: "15px", md: "24px" },
-                          fontWeight: "500",
-                          lineHeight: 1.3,
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          display: "-webkit-box",
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: "vertical",
+                          width: { xs: "103px", md: "170px" },
+                          height: { xs: "103px", md: "170px" },
+                          objectFit: "cover",
+                          flexShrink: 0,
+                          mb: 1,
                         }}
-                      >
-                        {item.name}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          color: "#6B7280",
-                          fontSize: { xs: "13px", md: "22px" },
-                          fontWeight: "400",
-                          mt: 0.5,
-                        }}
-                      >
-                        {item.time_start} | <span>{item.price_per_person}</span>
-                      </Typography>
-                      <Typography
-                        sx={{
-                          color: "#6B7280",
-                          fontSize: { xs: "13px", md: "22px" },
-                          fontWeight: "400",
-                          mt: 0.5,
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          display: "-webkit-box",
-                          WebkitLineClamp: 3,
-                          WebkitBoxOrient: "vertical",
-                        }}
-                      >
-                        {item.short_description}
-                      </Typography>
-                    </Box>
-                  </Stack>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
+                      />
+                      <Box sx={{ flex: 1, overflow: "hidden" }}>
+                        <Typography
+                          sx={{
+                            fontSize: { xs: "15px", md: "24px" },
+                            fontWeight: "500",
+                            lineHeight: 1.3,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            display: "-webkit-box",
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: "vertical",
+                          }}
+                        >
+                          {item.name}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: "#6B7280",
+                            fontSize: { xs: "13px", md: "22px" },
+                            fontWeight: "400",
+                            mt: 0.5,
+                          }}
+                        >
+                          {item.time_start} |{" "}
+                          <span>{item.price_per_person}</span>
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: "#6B7280",
+                            fontSize: { xs: "13px", md: "22px" },
+                            fontWeight: "400",
+                            mt: 0.5,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            display: "-webkit-box",
+                            WebkitLineClamp: 3,
+                            WebkitBoxOrient: "vertical",
+                          }}
+                        >
+                          {item.short_description}
+                        </Typography>
+                      </Box>
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </Grid>
+            );
+          })}
       </Grid>
 
       {/* Compare Section */}

@@ -24,7 +24,7 @@ export const fetchinternal = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await axios.get(
-        `https://round7-safarni-team-one.huma-volve.com/api/v1/tours?page=1&page_size=20`
+        `https://round7-safarni-team-one.huma-volve.com/api/v1/tours?page=1&page_size=20&limit=8`
       );
       return res.data.data;
     } catch (error: any) {
@@ -44,7 +44,7 @@ export const searchInternal = createAsyncThunk(
   async (search: string, { rejectWithValue }) => {
     try {
       const res = await axios.get(
-        `https://round7-safarni-team-one.huma-volve.com/api/v1/tours/search?q=${search}&page=1&page_size=20&category=tours`
+        `https://round7-safarni-team-one.huma-volve.com/api/v1/tours/search?q=${search}&page=1&page_size=20&category=tours&limit=8`
       );
       return res.data.data;
     } catch (error: any) {

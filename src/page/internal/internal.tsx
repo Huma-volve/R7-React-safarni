@@ -63,7 +63,7 @@ export default function Internal() {
     if (loading) {
       seterLo("Loading...");
     } else if (error) {
-      seterLo(error);
+      alert(error);
     } else if (Array.isArray(product) && product.length === 0) {
       seterLo("No results found");
     } else {
@@ -130,7 +130,7 @@ export default function Internal() {
       <Grid container spacing={3} sx={{ marginBottom: { xs: "80px", md: 0 } }}>
         {Array.isArray(product) &&
           product.length > 0 &&
-          product.map((tour: any) => (
+          product.map((tour: any,index:number) => (
             <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={tour.id}>
               <Card
                 sx={{
@@ -146,7 +146,7 @@ export default function Internal() {
                 {/* Image */}
                 <CardMedia
                   component="img"
-                  image={tour.main_image}
+                  image={tour.main_image.includes("Tour+Image") ? `public/assets/internal/internal${index>7?(index + 1) % 8:index}.jpg` : tour.main_image}
                   alt={tour.name}
                   sx={{
                     height: "200px",
