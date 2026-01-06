@@ -93,7 +93,7 @@ export default function AddCard() {
       return;
     }
 
-    navigate("/addcard");
+    navigate("/");
   };
 
   return (

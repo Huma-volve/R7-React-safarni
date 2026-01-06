@@ -1,12 +1,12 @@
 import { Box, Container, Stack, Button } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { Autocomplete, TextField } from "@mui/material";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import SouthEastIcon from "@mui/icons-material/SouthEast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { searchFlights, updateBookingData } from "../../store/flight/flightSlice";
+import { searchFlights, updateBookingData, clearFlightError} from "../../store/flight/flightSlice";
 import type { AppDispatch } from "../../store/store";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -21,10 +21,8 @@ interface FormState {
 export default function FlightBooking() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-
   const [tripType, setTripType] = useState("round");
   const [loading, setLoading] = useState(false);
-
   const [form, setForm] = useState<FormState>({
     location: "",
     destination: "",
@@ -32,19 +30,19 @@ export default function FlightBooking() {
     returnDate: "",
     passengers: "1",
   });
-
   const [errors, setErrors] = useState({
     location: false,
     destination: false,
     departure: false,
     returnDate: false,
   });
-
+  useEffect(() => {
+    dispatch(clearFlightError());
+  }, [dispatch]);  
   const handleChange = (field: keyof FormState, value: string) => {
     setForm({ ...form, [field]: value });
     setErrors({ ...errors, [field]: false });
   };
-
   const validateForm = () => {
     const newErrors = {
       location: form.location.trim() === "",
@@ -55,7 +53,6 @@ export default function FlightBooking() {
     setErrors(newErrors);
     return !Object.values(newErrors).includes(true);
   };
-
   const handleSubmit = async () => {
     if (!validateForm()) return;
     setLoading(true);
@@ -200,7 +197,6 @@ export default function FlightBooking() {
                     onChange={(e) => handleChange("departure", e.target.value)}
                   />
                 </div>
-
                 <div>
                   <label className="block mb-1 text-[18px] font-medium text-gray-700">
                     Return

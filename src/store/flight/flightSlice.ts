@@ -35,7 +35,6 @@ export interface ApiSeat {
   price: string;
   is_available: boolean;
 }
-
 interface FlightState {
   searchParams: SearchParams | null;
   flights: Flight[];
@@ -168,6 +167,10 @@ const flightSlice = createSlice({
       console.log("state.bookingData");
       console.log(state.bookingData);
     },
+    clearFlightError: (state) => {
+      state.error = null;
+    },
+    
   },
   extraReducers: (builder) => {
     builder
@@ -200,7 +203,6 @@ const flightSlice = createSlice({
       });
   },
 });
-
 // ======================
 // Export
 // ======================
@@ -211,6 +213,7 @@ export const {
   resetBooking,
   setBookingData,
   updateBookingData,
+  clearFlightError
 } = flightSlice.actions;
 
 export default flightSlice.reducer;

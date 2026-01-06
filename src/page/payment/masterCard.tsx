@@ -1,4 +1,4 @@
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, InputAdornment } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { Lock, Email as EmailIcon } from "@mui/icons-material";
 import { useState } from "react";
@@ -12,11 +12,6 @@ export default function MasterCard() {
 
   const navigate = useNavigate();
 
-  const fullNamePlaceholder = "kneeDue@untitledui.com";
-  const emailPlaceholder = "kneeDue@untitledui.com";
-  const datePlaceholder = "12-6-2024";
-  const cvvPlaceholder = "522";
-
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   const cvvRegex = /^[0-9]{3,4}$/;
 
@@ -26,18 +21,6 @@ export default function MasterCard() {
       alert("من فضلك املأ كل الحقول قبل المتابعة");
       return;
     }
-
-    // منع كتابة نفس placeholder
-    if (
-      fullName === fullNamePlaceholder ||
-      email === emailPlaceholder ||
-      validDate === datePlaceholder ||
-      cvv === cvvPlaceholder
-    ) {
-      alert("من فضلك أدخل بيانات صحيحة وليست النص الافتراضي");
-      return;
-    }
-
     // تحقق الإيميل
     if (!emailRegex.test(email)) {
       alert("من فضلك أدخل بريد إلكتروني صحيح مثل example@mail.com");
@@ -49,6 +32,32 @@ export default function MasterCard() {
       alert("من فضلك أدخل CVV صحيح (3 أو 4 أرقام فقط)");
       return;
     }
+    // تحقق Valid Date
+    // صيغة MM/YY أو MM/YYYY
+    const dateRegex = /^(0[1-9]|1[0-2])\/(\d{2}|\d{4})$/;
+    if (!dateRegex.test(validDate)) {
+      alert("من فضلك أدخل تاريخ صالح بصيغة MM/YY أو MM/YYYY");
+      return;
+    }
+    // تحقق من أن البطاقة لم تنتهِ صلاحيتها
+    const [monthStr, yearStr] = validDate.split("/");
+    const month = parseInt(monthStr, 10);
+    let year = parseInt(yearStr, 10);
+    if (yearStr.length === 2) {
+      // تحويل YY إلى YYYY
+      const currentYear = new Date().getFullYear();
+      const currentCentury = Math.floor(currentYear / 100) * 100;
+      year += currentCentury;
+    }
+
+    const now = new Date();
+
+    const endOfMonth = new Date(year, month, 0); // آخر يوم في الشهر
+
+    if (endOfMonth < now) {
+      alert("تاريخ صلاحية البطاقة منتهي");
+      return;
+    }
 
     // لو كل شيء تمام
     navigate("/paymentpage/succfullypay");
@@ -57,14 +66,17 @@ export default function MasterCard() {
   return (
     <Box className="p-4">
       <div className="mb-4">
-        <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
+        <label
+          htmlFor="fullName"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
           Full Name
         </label>
         <TextField
           fullWidth
           id="fullName"
           variant="outlined"
-          placeholder={fullNamePlaceholder}
+          placeholder="full name your card"
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
           InputProps={{
@@ -77,14 +89,17 @@ export default function MasterCard() {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
           Your Email
         </label>
         <TextField
           fullWidth
           id="email"
           variant="outlined"
-          placeholder={emailPlaceholder}
+          placeholder="kneeDue@untitledui.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           InputProps={{
@@ -97,35 +112,66 @@ export default function MasterCard() {
       </div>
 
       <div className="flex gap-2 mb-6">
-        <div className="flex-1">
-          <label htmlFor="validDate" className="block text-sm font-medium text-gray-700 mb-1">
+        <div className="flex-1 w-[45%]">
+          <label
+            htmlFor="validDate"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Valid Date
           </label>
           <TextField
             fullWidth
             id="validDate"
             variant="outlined"
-            placeholder={datePlaceholder}
+            placeholder="MM/YY"
             value={validDate}
-            onChange={(e) => setValidDate(e.target.value)}
+            onChange={(e) => {
+              let value = e.target.value;
+              value = value.replace(/[^0-9\/]/g, "");
+              if (value.length === 2 && !value.includes("/")) {
+                value = value + "/";
+              }
+              if (value.length > 5) {
+                value = value.slice(0, 5);
+              }
+              setValidDate(value);
+            }}
+            inputProps={{
+              maxLength: 5,
+            }}
             className="bg-white"
           />
         </div>
 
-        <div className="w-1/4">
-          <label htmlFor="cvv" className="block text-sm font-medium text-gray-700 mb-1">
+        <div className="flex-1 w-[45%]">
+          <label
+            htmlFor="cvv"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Cvv
           </label>
           <TextField
             fullWidth
+            type="number"
             id="cvv"
             variant="outlined"
-            placeholder={cvvPlaceholder}
+            placeholder="522"
             value={cvv}
             onChange={(e) => setCvv(e.target.value)}
             InputProps={{
               endAdornment: (
-                <Lock fontSize="small" className="text-gray-400 ml-1" />
+                <InputAdornment
+                  position="end"
+                  sx={{
+                    width: { xs: "15px", md: "25px" },
+                    justifyContent: "center",
+                  }}
+                >
+                  <Lock
+                    className="text-gray-400"
+                  
+                  />
+                </InputAdornment>
               ),
             }}
             className="bg-white"
@@ -143,7 +189,7 @@ export default function MasterCard() {
           fontWeight: "600",
           padding: "8px 16px",
           textTransform: "none",
-          marginBottom:{xs:"70px",md:"0px"}
+          marginBottom: { xs: "70px", md: "0px" },
         }}
       >
         Confirm Booking
