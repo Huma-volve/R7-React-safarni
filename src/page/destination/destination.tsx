@@ -19,7 +19,6 @@ import type { RootState, AppDispatch } from "../../store/store";
 import Rating from "@mui/material/Rating";
 import { CameraAltOutlined } from "@mui/icons-material";
 import Back from "../../components/back";
-
 export default function Destination() {
   const [showAllReviews, setShowAllReviews] = useState(false);
   const { id } = useParams<{ id: string }>();
@@ -33,7 +32,56 @@ export default function Destination() {
       dispatch(fetchProductById(String(id)));
     }
   }, [id]);
-
+  const gallery = [
+    {
+      id: 1,
+      image: "/assets/destination/gallery/Frame 1464204002 (1).png",
+    },
+    {
+      id: 2,
+      image: "/assets/destination/gallery/Frame 1464204169.png",
+    },
+    {
+      id: 3,
+      image: "/assets/destination/gallery/Frame 1464204002.png",
+    },
+    {
+      id: 4,
+      image: "/assets/destination/gallery/Frame 1464204003 (1).png",
+    },
+    {
+      id: 5,
+      image: "/assets/destination/gallery/Frame 1464204003.png",
+    },
+    {
+      id: 6,
+      image: "/assets/destination/gallery/Frame 1464204164 (2).png",
+    },
+    {
+      id: 7,
+      image: "/assets/destination/gallery/Frame 1464204164.png",
+    },
+    {
+      id: 8,
+      image: "/assets/destination/gallery/Frame 1464204165 (1).png",
+    },
+    {
+      id: 9,
+      image: "/assets/destination/gallery/Frame 1464204165.png",
+    },
+    {
+      id: 10,
+      image: "/assets/destination/gallery/Frame 1464204166.png",
+    },
+    {
+      id: 11,
+      image: "/assets/destination/gallery/Frame 1464204167.png",
+    },
+    {
+      id: 12,
+      image:"/assets/destination/gallery/Frame 1464204168.png",
+    },
+  ];
   const getFriendlyError = (error: any): string => {
     if (!error) return "Something went wrong";
 
@@ -87,7 +135,8 @@ export default function Destination() {
 
   if (error) return <h2>{getFriendlyError(error)}</h2>;
   if (!product) return <h2>No product found</h2>;
-
+  console.log(product.main_image);
+  console.log(product.gallery);
   return (
     <>
       <Container sx={{ marginBottom: "30px", overflow: "hidden" }}>
@@ -96,13 +145,17 @@ export default function Destination() {
         <Box>
           <CardMedia
             component="img"
-            image={product.main_image}
+            image={
+              product.main_image.includes("Tour+Image")
+                ? "/assets/destination/Depth6,Frame0.png"
+                : product.main_image
+            }
             alt={product.name}
             className="mb-4"
           />
           <Stack
             direction="row"
-            spacing={{xs: 0, md: 2}}
+            spacing={{ xs: 0, md: 2 }}
             className="justify-between mb-4"
             sx={{ flexWrap: "wrap" }}
           >
@@ -263,23 +316,41 @@ export default function Destination() {
               overflowY: "auto",
             }}
           >
-            {product.gallery.map((item: any) => (
-              <Box
-                key={item.img}
-                sx={{
-                  width: { xs: "163px", md: "180px" },
-                  height: { xs: "127px", md: "180px" },
-                }}
-              >
-                <img
-                  src={item.url}
-                  alt={item.title}
-                  loading="lazy"
-                  className="rounded-[8px] w-full h-full"
-                  style={{ objectFit: "cover" }}
-                />
-              </Box>
-            ))}
+            {product.gallery[0].url.includes("Tour+Image")
+              ? gallery.map((item: any) => (
+                  <Box
+                    key={item.id}
+                    sx={{
+                      width: { xs: "163px", md: "180px" },
+                      height: { xs: "127px", md: "180px" },
+                    }}
+                  >
+                    <img
+                      src={item.image}
+                      alt={"your browser not support"}
+                      loading="lazy"
+                      className="rounded-[8px] w-full h-full"
+                      style={{ objectFit: "cover" }}
+                    />
+                  </Box>
+                ))
+              : product.gallery.map((item: any) => (
+                  <Box
+                    key={item.img}
+                    sx={{
+                      width: { xs: "163px", md: "180px" },
+                      height: { xs: "127px", md: "180px" },
+                    }}
+                  >
+                    <img
+                      src={item.url}
+                      alt={item.title}
+                      loading="lazy"
+                      className="rounded-[8px] w-full h-full"
+                      style={{ objectFit: "cover" }}
+                    />
+                  </Box>
+                ))}
           </Box>
           <div className=" text-center mt-[10px]">
             <Button

@@ -20,7 +20,7 @@ export const fetchSearchById = createAsyncThunk(
   async (search: string, { rejectWithValue }) => {
     try {
       const res = await axios.get(
-        `https://round7-safarni-team-one.huma-volve.com/api/v1/compare/search?category=tour&q=${search}&limit=8`
+        `https://round7-safarni-team-one.huma-volve.com/api/v1/compare/search?category=tour&q=${search}&limit=5`
       );
       console.log("compare");
       console.log(res.data.data);

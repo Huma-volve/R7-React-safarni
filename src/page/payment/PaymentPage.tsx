@@ -22,13 +22,13 @@ export default function PaymentPage() {
         <Box
           sx={{
             width: { xs: "100%", md: "50%" },
-            height: { xs: "220px", md: "auto" },
+            height: { xs: "220px",sm:"500px", md: "650px" },
           }}
         >
           <img
             src="/assets/destination/paymentPage/Rectangle 20.png"
             alt=""
-            className="xs:w-[343px] md:w-full h-full m-[auto] "
+            className="w-full h-[100%] m-[auto] "
           />
         </Box>
         {/**Right Side */}
@@ -122,9 +122,10 @@ export default function PaymentPage() {
               direction="column"
               spacing={2}
               sx={{
-                position: { xs: "static", md: "absolute" },
+                position: { xs: "static",md: "absolute" },
                 bottom: "20px",
                 width: "100%",
+                marginBottom: { xs: "90px", md: "0" },
               }}
             >
               <Link to="/addcard" className="flex justify-center ">

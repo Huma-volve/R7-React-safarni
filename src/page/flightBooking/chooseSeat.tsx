@@ -12,37 +12,57 @@ import Back from "../../components/back";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../store/store";
-import { fetchSeats, updateBookingData } from "../../store/flight/flightSlice";
+import {
+  fetchSeats,
+  updateBookingData,
+  clearFlightError,
+} from "../../store/flight/flightSlice";
 
 type SeatStatus = "available" | "selected" | "unavailable";
+const DEFAULT_SEATS = Array.from({ length: 30 }, (_, index) => {
+  const row = Math.floor(index / 6) + 1;
+  const seatLetter = ["A", "B", "C", "D", "E", "F"][index % 6];
+
+  return {
+    seat_number: `${seatLetter}${row}`,
+    is_available: true,
+    price: (50 + row * 10).toString(),
+  };
+});
 
 export default function SeatSelector() {
   const { flightId } = useParams<{ flightId: string }>();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(clearFlightError());
+  }, [dispatch]);
+
   const { apiSeats, loading, error } = useSelector(
     (state: RootState) => state.flight
   );
+  const useFallbackSeats = error?.includes("could not be found");
+
+  const seatsToUse = useFallbackSeats ? DEFAULT_SEATS : apiSeats;
+
   const [selectedSeatNumber, setSelectedSeatNumber] = useState<string | null>(
     null
   );
   const [seatMap, setSeatMap] = useState<Record<string, SeatStatus>>({});
 
-  // طلب المقاعد عند تحميل الصفحة
   useEffect(() => {
     if (flightId) {
       dispatch(fetchSeats(flightId));
     }
   }, [dispatch, flightId]);
 
-  // بناء خريطة المقاعد من البيانات القادمة من الـ API
   useEffect(() => {
     const map: Record<string, SeatStatus> = {};
-    apiSeats.forEach((seat) => {
+    seatsToUse.forEach((seat) => {
       map[seat.seat_number] = seat.is_available ? "available" : "unavailable";
     });
     setSeatMap(map);
-  }, [apiSeats]);
+  }, [seatsToUse]);
 
   const handleContinue = () => {
     if (!selectedSeatNumber) {
@@ -144,12 +164,11 @@ export default function SeatSelector() {
     });
   };
 
-  const selectedSeatData = apiSeats.find(
+  const selectedSeatData = seatsToUse.find(
     (s) => s.seat_number === selectedSeatNumber
   );
   const ticketPrice = selectedSeatData ? parseFloat(selectedSeatData.price) : 0;
 
-  // ** Loader و Error و Empty state **
   if (loading) {
     return (
       <Box
@@ -169,7 +188,7 @@ export default function SeatSelector() {
     );
   }
 
-  if (error) {
+  if (!error?.includes("could not be found")) {
     return (
       <Box
         sx={{
@@ -186,7 +205,7 @@ export default function SeatSelector() {
     );
   }
 
-  if (!apiSeats || apiSeats.length === 0) {
+  if (!seatsToUse || seatsToUse.length === 0) {
     return (
       <Box
         sx={{
@@ -242,7 +261,9 @@ export default function SeatSelector() {
                   bgcolor: "primary.main",
                 }}
               />
-              <Typography sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}>
+              <Typography
+                sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}
+              >
                 Available
               </Typography>
             </Stack>
@@ -255,7 +276,9 @@ export default function SeatSelector() {
                   bgcolor: "success.main",
                 }}
               />
-              <Typography sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}>
+              <Typography
+                sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}
+              >
                 Selected
               </Typography>
             </Stack>
@@ -268,7 +291,9 @@ export default function SeatSelector() {
                   bgcolor: "grey.300",
                 }}
               />
-              <Typography sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}>
+              <Typography
+                sx={{ fontSize: { xs: "11px", md: "20px" }, fontWeight: 400 }}
+              >
                 Unavailable
               </Typography>
             </Stack>
@@ -289,21 +314,45 @@ export default function SeatSelector() {
           {/* Summary */}
           <Divider className="my-6" />
           <Box sx={{ width: "100%" }}>
-            <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>Ticket price</Typography>
-              <Typography sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>
+                Ticket price
+              </Typography>
+              <Typography
+                sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}
+              >
                 ${ticketPrice.toFixed(2)}
               </Typography>
             </Stack>
-            <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>Total Price</Typography>
-              <Typography sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>
+                Total Price
+              </Typography>
+              <Typography
+                sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}
+              >
                 ${ticketPrice.toFixed(2)}
               </Typography>
             </Stack>
-            <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>Your Seat</Typography>
-              <Typography sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Typography sx={{ fontWeight: 400, fontSize: "21px" }}>
+                Your Seat
+              </Typography>
+              <Typography
+                sx={{ fontWeight: 600, fontSize: "26px", color: "#1E429F" }}
+              >
                 {selectedSeatNumber ?? "-"}
               </Typography>
             </Stack>

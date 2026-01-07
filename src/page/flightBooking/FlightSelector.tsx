@@ -1,5 +1,6 @@
 import { PersonOutline } from "@mui/icons-material";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import { useEffect } from "react";
 import {
   Box,
   Card,
@@ -15,15 +16,17 @@ import { useNavigate } from "react-router-dom";
 import Back from "../../components/back";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState, AppDispatch } from "../../store/store";
-import { updateBookingData } from "../../store/flight/flightSlice";
-
+import { updateBookingData,clearFlightError } from "../../store/flight/flightSlice";
 export default function FlightSelector() {
   const { flights, loading, error } = useSelector(
     (state: RootState) => state.flight
   );
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-
+  useEffect(() => {
+    dispatch(clearFlightError());
+  }, [dispatch]);
+  
   const handleCardClick = (flight: any) => {
     dispatch(
       updateBookingData({
@@ -101,7 +104,6 @@ export default function FlightSelector() {
             : "2025-11-27"}
         </Stack>
       </Stack>
-
       {/* Loading State */}
       {loading && (
         <Box
