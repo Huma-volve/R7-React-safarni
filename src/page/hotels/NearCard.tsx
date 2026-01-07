@@ -1,9 +1,6 @@
 import type { Hotel } from "./data";
 import StarIcon from "@mui/icons-material/Star";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import hotel1 from "/assets/hotel1.png"
-
-
 interface Props {
     hotel: Hotel;
     type?: "large" | "small";
@@ -16,7 +13,7 @@ const NearCard: React.FC<Props> = ({ hotel,onClick}) => {
 
             {/* IMAGE */}
             <img
-                src={hotel1}
+                src={hotel.image}
                 alt={hotel.name}
                 className="w-28 h-28 rounded-2xl object-cover"
             />

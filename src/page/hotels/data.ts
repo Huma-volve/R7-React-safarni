@@ -1,3 +1,10 @@
+import plase1 from "../../assets/hotel/plase1.png"
+import plase2 from "../../assets/hotel/plase2.png"
+import plase3 from "../../assets/hotel/plase3.png"
+import plase4 from "../../assets/hotel/plase4.png"
+import plase5 from "../../assets/hotel/plase5.png"
+import plase6 from "../../assets/hotel/plase6.png"
+import plase7 from "../../assets/hotel/plase7.png"
 export interface Hotel {
   id: number;
   name: string;
@@ -16,7 +23,7 @@ export const recommendedHotels: Hotel[] = [
     country: "USA",
     rating: 4.2,
     discount: "10% Off",
-    image: "https://i.imgur.com/6Iej2cE.jpeg",
+    image: plase1,
   },
   {
     id: 2,
@@ -25,7 +32,7 @@ export const recommendedHotels: Hotel[] = [
     country: "USA",
     rating: 4.1,
     discount: "20% Off",
-    image: "https://i.imgur.com/xD87Ukk.jpeg",
+    image: plase2,
   },
   {
     id: 3,
@@ -34,7 +41,7 @@ export const recommendedHotels: Hotel[] = [
     country: "USA",
     rating: 4.8,
     discount: "5% Off",
-    image: "https://i.imgur.com/3d1XJ9F.jpeg",
+    image: plase3,
   },
   {
     id: 4,
@@ -43,7 +50,7 @@ export const recommendedHotels: Hotel[] = [
     country: "USA",
     rating: 4.6,
     discount: "7% Off",
-    image: "https://i.imgur.com/3POYh3W.jpeg",
+    image:plase4,
   },
 ];
 
@@ -55,7 +62,7 @@ export const nearbyHotels: Hotel[] = [
     country: "USA",
     rating: 4.3,
     discount: "15% Off",
-    image: "https://i.imgur.com/OXqv2V0.jpeg",
+    image: plase5,
   },
   {
     id: 6,
@@ -64,7 +71,7 @@ export const nearbyHotels: Hotel[] = [
     country: "USA",
     rating: 4.3,
     discount: "10% Off",
-    image: "https://i.imgur.com/5o4Xd4n.jpeg",
+    image: plase6,
   },
   {
     id: 7,
@@ -73,7 +80,7 @@ export const nearbyHotels: Hotel[] = [
     country: "USA",
     rating: 4.3,
     discount: "20% Off",
-    image: "https://i.imgur.com/vqPjYzB.jpeg",
+    image: plase7,
   },
   {
     id: 8,
@@ -82,7 +89,7 @@ export const nearbyHotels: Hotel[] = [
     country: "USA",
     rating: 4.3,
     discount: "15% Off",
-    image: "https://i.imgur.com/Q3jHF2Z.jpeg",
+    image: plase4,
   },
 ];
 

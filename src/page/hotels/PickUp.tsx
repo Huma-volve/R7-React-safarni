@@ -3,6 +3,9 @@ import {useParams, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import type { ChangeEvent } from "react";
 import Typography from "@mui/material/Typography";
+import room1 from "../../assets/hotel/room1.png"
+import room2 from "../../assets/hotel/room2.png"
+import room3 from "../../assets/hotel/room3.png"
 
 interface SearchInputProps {
     value?: string;
@@ -20,15 +23,16 @@ const toursData: Tour[] = [
         id: 1,
         title: "Eiffel Tower",
         image:
-            "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg",
-
+          //  "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg",
+room1,
         price: "1050$",
     },
     {
         id: 2,
         title: "Paris City Tour",
         image:
-            "https://images.pexels.com/photos/1796727/pexels-photo-1796727.jpeg",
+           // "https://images.pexels.com/photos/1796727/pexels-photo-1796727.jpeg",
+         room2  ,
 
         price: "1500$",
     },
@@ -36,48 +40,48 @@ const toursData: Tour[] = [
         id: 3,
         title: "River Cruise",
         image:
-            "https://images.pexels.com/photos/1694351/pexels-photo-1694351.jpeg",
-
+          //  "https://images.pexels.com/photos/1694351/pexels-photo-1694351.jpeg",
+room3,
         price: "100$",
     },
     {
         id: 4,
         title: "Best of Swiss",
         image:
-            "https://images.pexels.com/photos/1670187/pexels-photo-1670187.jpeg",
-
+         //   "https://images.pexels.com/photos/1670187/pexels-photo-1670187.jpeg",
+room1,
         price: "2200$",
     },
     {
         id: 5,
         title: "The Tour de France",
         image:
-            "https://images.pexels.com/photos/248547/pexels-photo-248547.jpeg",
-
+         //   "https://images.pexels.com/photos/248547/pexels-photo-248547.jpeg",
+room2,
         price: "155$",
     },
     {
         id: 6,
         title: "Disneyland Paris",
         image:
-            "https://images.pexels.com/photos/261327/pexels-photo-261327.jpeg",
-
+           // "https://images.pexels.com/photos/261327/pexels-photo-261327.jpeg",
+room3,
         price: "2100$",
     },
     {
         id: 7,
         title: "Paris City Tour",
         image:
-            "https://images.pexels.com/photos/1089309/pexels-photo-1089309.jpeg",
-
+           // "https://images.pexels.com/photos/1089309/pexels-photo-1089309.jpeg",
+room1,
         price: "1500$",
     },
     {
         id: 8,
         title: "Disneyland Paris",
         image:
-            "https://images.pexels.com/photos/1796797/pexels-photo-1796797.jpeg",
-
+           // "https://images.pexels.com/photos/1796797/pexels-photo-1796797.jpeg",
+room3,
         price: "1050$",
     },
 ];

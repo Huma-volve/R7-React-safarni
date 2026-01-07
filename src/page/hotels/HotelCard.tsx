@@ -19,7 +19,7 @@ const HotelCard: React.FC<Props> = ({ hotel,onClick }) => {
         >
             {/* IMAGE */}
             <img
-                src={hotel1}
+                src={hotel.image}
                 alt={hotel.name}
                 className="h-40 w-full object-cover rounded-2xl"
             />
