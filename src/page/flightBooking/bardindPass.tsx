@@ -457,7 +457,7 @@ export default function BoardingPass() {
                 padding: "8px 16px",
                 marginTop: "20px",
                 textTransform: "none",
-                marginBottom: { xs: "70px !important", md: "0" },
+                marginBottom: { xs: "95px !important", md: "0" },
               }}
             >
               Check Out

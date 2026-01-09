@@ -93,7 +93,7 @@ export default function AddCard() {
       return;
     }
 
-    navigate("/");
+    navigate("/paymentpage");
   };
 
   return (
@@ -176,6 +176,7 @@ export default function AddCard() {
               fontWeight: "600",
               padding: "8px 16px",
               textTransform: "none",
+              marginBottom: { xs: "90px", md: "0px" },
             }}
             onClick={handleSubmit}
           >

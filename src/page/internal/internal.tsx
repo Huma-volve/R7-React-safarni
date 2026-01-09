@@ -15,7 +15,7 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Back from "../../components/back";
-import { Search, Token } from "@mui/icons-material";
+import { Search } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../store/store";
@@ -39,15 +39,8 @@ export default function Internal() {
     dispatch(fetchinternal());
   }, [dispatch]);
 
-  // const toggleFav = (category: string, id: number) => {
-  //   dispatch(toggleFavorite({ category, item_id: id }));
-  //   const token = localStorage.getItem("accessToken");
-  //   console.log(token);
-
-
-  // };
   const toggleFav = (category: string, id: number) => {
-  const token = localStorage.getItem("accessToken");
+  const token = localStorage.getItem("token");
   if (!token) {
     console.error("No token found. Please login first.");
     return;
@@ -176,7 +169,7 @@ export default function Internal() {
                 {/* Heart icon */}
                 <IconButton
                   onClick={() => toggleFav("tour", tour.id)}
-                  disabled={loadingItems.includes(tour.id)} // تمنع الضغط أثناء التحميل
+                  disabled={loadingItems.includes(tour.id)} 
                   sx={{
                     position: "absolute",
                     top: 30,

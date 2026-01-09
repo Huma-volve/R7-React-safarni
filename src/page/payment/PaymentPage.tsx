@@ -125,7 +125,7 @@ export default function PaymentPage() {
                 position: { xs: "static",md: "absolute" },
                 bottom: "20px",
                 width: "100%",
-                marginBottom: { xs: "90px", md: "0" },
+                marginBottom: { xs: "95px", md: "0" },
               }}
             >
               <Link to="/addcard" className="flex justify-center ">

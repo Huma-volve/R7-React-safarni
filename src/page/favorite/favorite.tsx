@@ -17,7 +17,7 @@ import { toggleFavorite } from "../../store/favoriteSlice";
 
 import type { RootState, AppDispatch } from "../../store/store";
 type Tour = {
-  id: string; 
+  id: number; 
   title: string;
   img: string;
   price: number;
@@ -36,16 +36,11 @@ export default function Favorite() {
     dispatch(fetchFavorites());
   }, [dispatch]);
 
-const handleRemoveFromFavorites = (id: string) => {
+const handleRemoveFromFavorites = (id: number) => {
   dispatch(toggleFavorite({ category: "tour", item_id: id }));
 };
-
-
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
-
-
   return (
     <Container sx={{ marginBottom: "30px" }}>
       {/* Search bar */}
@@ -71,7 +66,7 @@ const handleRemoveFromFavorites = (id: string) => {
         </Typography>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {tours.map((tour: Tour) => (
+          {tours.map((tour) => (
             <Card
               key={tour.id}
               sx={{

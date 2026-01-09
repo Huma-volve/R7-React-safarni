@@ -353,6 +353,7 @@ export default function Compare() {
               padding: "8px 16px",
               width: { xs: "100%", md: "605px" },
               textTransform: "none",
+              marginBottom: { xs: "90px", md: "0px" },
             }}
           >
             Check Out

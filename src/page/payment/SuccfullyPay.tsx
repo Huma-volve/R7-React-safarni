@@ -66,6 +66,7 @@ export default function SuccfullyPay() {
                 marginTop: "20px",
                 textTransform: "none",
                 color: "white",
+                marginBottom: { xs: "95px", md: "0px" },
               }}
             >
               Back To Home
