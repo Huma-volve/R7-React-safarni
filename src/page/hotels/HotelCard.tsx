@@ -2,7 +2,6 @@ import React from "react";
 import type { Hotel } from "./data";
 import StarIcon from "@mui/icons-material/Star";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import hotel1 from "/assets/hotel1.png"
 interface Props {
     hotel: Hotel;
     type?: "large" | "small";
