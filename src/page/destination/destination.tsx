@@ -321,7 +321,7 @@ export default function Destination() {
                   <Box
                     key={item.id}
                     sx={{
-                      width: { xs: "163px", md: "180px" },
+                      width: { xs: "152px", md: "180px" },
                       height: { xs: "127px", md: "180px" },
                     }}
                   >
@@ -338,7 +338,7 @@ export default function Destination() {
                   <Box
                     key={item.img}
                     sx={{
-                      width: { xs: "163px", md: "180px" },
+                      width: { xs: "152px", md: "180px" },
                       height: { xs: "127px", md: "180px" },
                     }}
                   >

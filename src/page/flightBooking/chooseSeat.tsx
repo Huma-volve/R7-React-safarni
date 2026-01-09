@@ -368,7 +368,7 @@ export default function SeatSelector() {
               fontWeight: "600",
               padding: "8px 16px",
               marginTop: "20px",
-              marginBottom: { xs: "80px !important", md: "0px" },
+              marginBottom: { xs: "90px !important", md: "0px" },
               textTransform: "none",
             }}
           >

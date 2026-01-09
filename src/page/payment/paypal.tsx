@@ -10,7 +10,7 @@ export default function PayPal() {
 
   const navigate = useNavigate();
 
-  const fullNamePlaceholder = "kneeDue@untitledui.com";
+  const fullNamePlaceholder = "full name your card";
   const emailPlaceholder = "kneeDue@untitledui.com";
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -94,7 +94,7 @@ export default function PayPal() {
           fontWeight: "600",
           padding: "8px 16px",
           textTransform: "none",
-          marginBottom:{xs:"70px",md:"0px"},
+          marginBottom:{xs:"95px",md:"0px"},
         }}
       >
         Confirm Booking

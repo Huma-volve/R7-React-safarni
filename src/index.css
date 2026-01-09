@@ -45,6 +45,9 @@
 body {
   font-family: var(--font-poppins);
 }
+.pb-28 {
+  padding-bottom: 0% !important;
+}
 .css-1h9mz9o-MuiStack-root > :not(style):not(style) {
   margin-top: -7px !important;
 }
@@ -52,6 +55,6 @@ body {
   padding-bottom: 0 !important;
   padding: 8px !important;
 }
-.css-1fgz15k-MuiStack-root>:not(style)~:not(style){
+.css-1fgz15k-MuiStack-root > :not(style) ~ :not(style) {
   margin-left: 0px !important;
 }
