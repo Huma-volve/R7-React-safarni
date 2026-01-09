@@ -1,46 +1,53 @@
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-// import image1 from "../../../assets/recommend1.jpg"
-// import image2 from "../../../assets/recommend2.jpg"
-// import image3 from "../../../assets/recommend3.jpg"
-// import image4 from "../../../assets/recommend4.jpg"
-import { useEffect, useState } from "react";
-import axios from "axios";
+import Pyramids from "../../../assets/image10.jpg";
+import Luxor from "../../../assets/image11.jpg";
+import Aswan from "../../../assets/image12.jpg";
+import Alexandria from "../../../assets/image13.jpg";
 import { Link } from "react-router-dom";
 
+interface Tour {
+    id: number;
+    name: string;
+    rating: number;
+    location: string;
+    image: string;
+}
 
 export default function Recommendation() {
-    interface Tour {
-        id: number;
-        name: string;
-        rating: number;
-        main_image_thumb: string;
-        category: {
-            id: number;
-            name: string;
-        };
-    }
-    const [tours, setTours] = useState<Tour[]>([]);
-    const [loading, setLoading] = useState(true);
+    const tours: Tour[] = [
+        {
+            id: 1,
+            name: "Pyramids Tour",
+            rating: 4.8,
+            location: "Giza, Egypt",
+            image: Pyramids,
 
-    useEffect(() => {
-        async function fetchTours() {
-            try {
-                const res = await axios.get(
-                    "https://round7-safarni-team-one.huma-volve.com/api/v1/tours/recommendations"
-                );
-                setTours(res.data.data);
-            } catch (error) {
-                console.log("Failed to load tours", error);
-            }
-            setLoading(false);
-        }
+        },
+        {
+            id: 2,
+            name: "Luxor Temples",
+            rating: 4.7,
+            location: "Luxor, Egypt",
+            image: Luxor,
 
-        fetchTours();
-        console.log(tours)
-    }, []);
+        },
+        {
+            id: 3,
+            name: "Aswan Nile Trip",
+            rating: 4.9,
+            location: "Aswan, Egypt",
+            image: Aswan,
+        },
+        {
+            id: 4,
+            name: "Alexandria City",
+            rating: 4.6,
+            location: "Alexandria, Egypt",
+            image: Alexandria,
 
-    if (loading) return <p className="px-4">Loading Recommendations...</p>;
+        },
+    ];
 
     return (
         <div className="w-full px-4 mb-8">
@@ -49,28 +56,32 @@ export default function Recommendation() {
                 <h2 className="text-2xl font-semibold text-[#111827]">
                     Recommendation
                 </h2>
-                <Link to={"/internal"} className="text-blue-600 font-semibold text-lg">
+                <Link
+                    to="/internal"
+                    className="text-blue-600 font-semibold text-lg"
+                >
                     View all
                 </Link>
             </div>
 
-            {/* Cards Scroll */}
+            {/* Cards */}
             <div className="flex space-x-6 overflow-x-auto pb-3">
-                {tours.map((tour, index) => (
-                    <Link to={`/destination/${tour.id}`}
-                        key={index}
+                {tours.map((tour) => (
+                    <Link
+                        to={`/destination/${tour.id}`}
+                        key={tour.id}
                         className="min-w-[260px] bg-white rounded-[30px] shadow-[0_4px_25px_rgba(0,0,0,0.15)] p-4"
                     >
                         {/* Image */}
                         <div className="w-full h-48 rounded-[20px] overflow-hidden mb-3">
                             <img
-                                src={tour.main_image_thumb}
+                                src={tour.image}
                                 alt={tour.name}
                                 className="w-full h-full object-cover"
                             />
                         </div>
 
-                        {/* name + Rating */}
+                        {/* Name + Rating */}
                         <div className="flex items-center justify-between">
                             <p className="text-lg font-semibold text-gray-800">
                                 {tour.name}
@@ -87,7 +98,7 @@ export default function Recommendation() {
                         {/* Location */}
                         <div className="flex items-center gap-2 mt-2 text-gray-600">
                             <LocationOnIcon />
-                            <span className="text-lg">{tour.name}</span>
+                            <span className="text-lg">{tour.location}</span>
                         </div>
                     </Link>
                 ))}

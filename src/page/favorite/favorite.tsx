@@ -16,13 +16,6 @@ import { fetchFavorites } from "../../store/favoriteSlice";
 import { toggleFavorite } from "../../store/favoriteSlice";
 
 import type { RootState, AppDispatch } from "../../store/store";
-type Tour = {
-  id: number; 
-  title: string;
-  img: string;
-  price: number;
-  rating: number;
-};
 
 
 
