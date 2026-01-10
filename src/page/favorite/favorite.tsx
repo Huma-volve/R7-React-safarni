@@ -16,9 +16,6 @@ import { fetchFavorites } from "../../store/favoriteSlice";
 import { toggleFavorite } from "../../store/favoriteSlice";
 
 import type { RootState, AppDispatch } from "../../store/store";
-
-
-
 export default function Favorite() {
   const dispatch = useDispatch<AppDispatch>();
    const { list: tours, loading, error } = useSelector(
@@ -59,7 +56,9 @@ const handleRemoveFromFavorites = (id: number) => {
         </Typography>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {tours.map((tour) => (
+         {tours.map((tour,index:number) => {
+  console.log(tour);
+  return (
             <Card
               key={tour.id}
               sx={{
@@ -72,7 +71,7 @@ const handleRemoveFromFavorites = (id: number) => {
               {/* Image */}
               <CardMedia
                 component="img"
-                image={tour.img}
+                  image={tour.main_image.includes("Tour+Image") ? `public/assets/internal/internal${index>7?(index + 1) % 8:index}.jpg` : tour.main_image}
                 alt={tour.title}
                 sx={{
                   height: "200px",
@@ -134,7 +133,8 @@ const handleRemoveFromFavorites = (id: number) => {
                   </Typography>
                 </CardContent>
               </Card>
-          ))}
+               )
+})}
         </div>
       )}
     </Container>

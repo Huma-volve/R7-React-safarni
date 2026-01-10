@@ -103,130 +103,192 @@ const handlePrev = () => {
             <div className="min-h- flex items-center justify-center">
                 <Typography variant="h6">Car not found</Typography>
             </div>
-
         );
     }
-
     return (
-        <div className="min-h-screen  px-8 py-10 font-[--font-poppins]">
-            <img src={backIcon} onClick={() => navigate(-1)} />
-            {/* Left: big image area */}
-            <Card className="p-6 border-none shadow-none ">
-                <div className=" flex flex-col lg:flex-row gap-6 items-start">
+       <div className="min-h-screen px-3 pb-20 py-10 font-[--font-poppins] lg:px-8">
+    <img src={backIcon} onClick={() => navigate(-1)} />
 
-                    <div className="relative w-[608px] h-[650px] bg-gray-100 rounded-[30px] flex items-center justify-center">
+    <Card className="p-6 border-none shadow-none">
+        <div className="flex flex-col lg:flex-row gap-6 items-start">
+            {/* Left: Image Section */}
+            <div
+                className="
+                    relative
+                    w-full
+                    h-[420px]
+                    sm:h-[500px]
+                    lg:w-[608px]
+                    lg:h-[650px]
+                    bg-gray-100
+                    rounded-[30px]
+                    flex
+                    items-center
+                    justify-center
+                "
+            >
+                <img
+                    src={images[currentIndex]}
+                    alt={car.name}
+                    className="
+                        w-[280px]
+                        h-[220px]
+                        sm:w-[400px]
+                        sm:h-[300px]
+                        lg:w-[550px]
+                        lg:h-[450px]
+                        p-6
+                        lg:p-10
+                        object-contain
+                    "
+                />
 
-                        {/* Car Image */}
-                        <img
-                            src={images[currentIndex]}
-                            alt={car.name}
-                            className="w-[550px] h-[450px] p-10 object-contain"
+                <img
+                    src={Ellipse}
+                    alt="ellipse"
+                    className="absolute hidden sm:block lg:bottom-40"
+                />
+
+                {/* Slider Buttons */}
+                <div
+                    className="
+                        absolute
+                        bottom-6
+                        sm:bottom-16
+                        lg:bottom-[140px]
+                        left-1/2
+                        w-[50px]
+                        h-[50px]
+                        -translate-x-1/2
+                    "
+                >
+                    <div className="relative w-[60px] h-[60px] bg-white rounded-full shadow-md flex items-center justify-center">
+                        <ArrowForwardIosIcon
+                            onClick={handleNext}
+                            className="absolute right-1.5 top-1/2 -translate-y-1/2"
                         />
-
-                        <img
-                            src={Ellipse}
-                            alt="ellipse"
-                            className="absolute bottom-40 "
+                        <ArrowBackIosNewIcon
+                            onClick={handlePrev}
+                            className="absolute left-1.5 top-1/2 -translate-y-1/2"
                         />
-                        {/* Slider Button */}
-                        <div className="absolute bottom-[140px] left-1/2 w-[50px] h-[50px] -translate-x-1/2">
-
-                            <div className="relative w-[60px] h-[60px] bg-white rounded-full shadow-md flex items-center justify-center">
-                                <ArrowForwardIosIcon onClick={handleNext}  className="absolute right-1.5 top-1/2 -translate-y-1/2"/>
-                                <ArrowBackIosNewIcon onClick={handlePrev}  className="absolute left-1.5 top-1/2 -translate-y-1/2"/>
-                            </div>
-
-                            {/* <img
-                                src={sliderIcon}
-                                alt="slider"
-                                className="absolute bottom-19"
-                            /> */}
-                        </div>
-                    </div>
-                    <div className="w-full lg:w-1/2">
-                        <Typography variant="h4" className="pb-4 font-semibold text-[--color-dark-blue] mb-2">
-                            Popular
-                        </Typography>
-
-                        {/* stats */}
-                        <div className="grid grid-cols-3 gap-3 mb-4 ">
-                            <div className="p-2 h-[90px] w-40 bg-white rounded-lg border border-gray-100 text-center">
-                                <Typography variant="caption" className="block text-[--color-gray-100] ">
-                                    Power
-                                </Typography>
-                                <Typography variant="subtitle2" className="font-semibold text-gray-500">
-                                    {car.power ?? "—"}
-                                </Typography>
-                            </div>
-                            {/* problem2 */}
-                            <div className="p-2 h-[90px] w-40 bg-white rounded-lg border border-gray-100 text-center">
-
-                                <Typography variant="caption" className="block text-[--color-gray-100]">
-                                    Max Speed
-                                </Typography>
-                                <Typography variant="subtitle2" className="font-semibold text-gray-500">
-                                    {car.maxSpeed ?? "—"}
-                                </Typography>
-                            </div>
-                            <div className="p-2 h-[90px] w-40 bg-white rounded-lg border border-gray-100 text-center">
-                                <Typography variant="caption" className="block text-[--color-gray-100]">
-                                    Acceleration
-                                </Typography>
-                                <Typography variant="subtitle2" className="font-semibold text-gray-500">
-                                    {car.acceleration ?? "—"}
-                                </Typography>
-                            </div>
-                        </div>
-
-                        <Typography variant="h4" className="py-4 font-semibold">
-                            Plan
-                        </Typography>
-
-                        <div className="space-y-5 mb-4">
-                            <PlanCard
-
-                                title="Hourly Rent"
-                                price="$10"
-                                selected={selectedPlan === 0}
-                                onClick={() => setSelectedPlan(0)}
-                            />
-                            <PlanCard
-                                title="Daily Rent"
-                                price="$80"
-                                selected={selectedPlan === 1}
-                                onClick={() => setSelectedPlan(1)}
-                            />
-                        </div>
-
-                        <div className="mb-4">
-                            <Typography variant="h6" className="block text-[--color-gray-500] mb-1">
-                                Location
-                            </Typography>
-                            <TextField
-                                fullWidth
-                                size="medium"
-                                value={location}
-                                onChange={(e) => setLocation(e.target.value)}
-                                placeholder="200-298 Clipper St San Francisco"
-                            />
-                        </div>
-
-                        <div className="flex items-center gap-3 mt-4">
-                            <Button
-                            onClick={() => {navigate("/paymentpage")}}
-
-                                variant="contained"
-                                className="w-full"
-                                sx={{ textTransform: "none", backgroundColor: "var(--color-blue-600)", "&:hover": { backgroundColor: "var(--color-blue-900)" } }}
-                            >
-                                Pick Up
-                            </Button>
-
-                        </div>
                     </div>
                 </div>
-            </Card>
+            </div>
+
+            {/* Right Section */}
+            <div className="w-full lg:w-1/2">
+                <Typography
+                    variant="h4"
+                    className="pb-4 font-semibold text-[--color-dark-blue] mb-2"
+                >
+                    Popular
+                </Typography>
+
+                {/* Stats */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
+                    <div className="p-2 h-[90px] w-full sm:w-40 bg-white rounded-lg border border-gray-100 text-center">
+                        <Typography
+                            variant="caption"
+                            className="block text-[--color-gray-100]"
+                        >
+                            Power
+                        </Typography>
+                        <Typography
+                            variant="subtitle2"
+                            className="font-semibold text-gray-500"
+                        >
+                            {car.power ?? "—"}
+                        </Typography>
+                    </div>
+
+                    <div className="p-2 h-[90px] w-full sm:w-40 bg-white rounded-lg border border-gray-100 text-center">
+                        <Typography
+                            variant="caption"
+                            className="block text-[--color-gray-100]"
+                        >
+                            Max Speed
+                        </Typography>
+                        <Typography
+                            variant="subtitle2"
+                            className="font-semibold text-gray-500"
+                        >
+                            {car.maxSpeed ?? "—"}
+                        </Typography>
+                    </div>
+
+                    <div className="p-2 h-[90px] w-full sm:w-40 bg-white rounded-lg border border-gray-100 text-center">
+                        <Typography
+                            variant="caption"
+                            className="block text-[--color-gray-100]"
+                        >
+                            Acceleration
+                        </Typography>
+                        <Typography
+                            variant="subtitle2"
+                            className="font-semibold text-gray-500"
+                        >
+                            {car.acceleration ?? "—"}
+                        </Typography>
+                    </div>
+                </div>
+
+                <Typography variant="h4" className="py-4 font-semibold">
+                    Plan
+                </Typography>
+
+                <div className="space-y-5 mb-4">
+                    <PlanCard
+                        title="Hourly Rent"
+                        price="$10"
+                        selected={selectedPlan === 0}
+                        onClick={() => setSelectedPlan(0)}
+                    />
+                    <PlanCard
+                        title="Daily Rent"
+                        price="$80"
+                        selected={selectedPlan === 1}
+                        onClick={() => setSelectedPlan(1)}
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <Typography
+                        variant="h6"
+                        className="block text-[--color-gray-500] mb-1"
+                    >
+                        Location
+                    </Typography>
+                    <TextField
+                        fullWidth
+                        size="medium"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        placeholder="200-298 Clipper St San Francisco"
+                    />
+                </div>
+
+                <div className="flex items-center gap-3 mt-4">
+                    <Button
+                        onClick={() => {
+                            navigate("/paymentpage");
+                        }}
+                        variant="contained"
+                        className="w-full"
+                        sx={{
+                            textTransform: "none",
+                            backgroundColor: "var(--color-blue-600)",
+                            "&:hover": {
+                                backgroundColor: "var(--color-blue-900)",
+                            },
+                        }}
+                    >
+                        Pick Up
+                    </Button>
+                </div>
+            </div>
         </div>
+    </Card>
+</div>
     );
 };
 

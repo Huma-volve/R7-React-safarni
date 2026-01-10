@@ -5,7 +5,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export interface FavoriteItem {
   id: number;
   title: string;
-  img: string;
+  main_image: string;
   price: number;
   rating: number;
 }

@@ -22,7 +22,7 @@ export default function Home({ value, onChange }: SearchInputProps) {
     );
 
     return (
-        <div className="min-h-screen bg-[--color-gray-300] px-10 pb-8 font-[--font-poppins]">
+        <div className="min-h-screen bg-[--color-gray-300] px-6 pb-16 font-[--font-poppins]">
             {/* Search */}
             <div className="flex gap-3 items-center">
                 <div className="relative -top-2.5">
@@ -49,23 +49,24 @@ export default function Home({ value, onChange }: SearchInputProps) {
                 Brands
             </Typography>
 
-            <div className="mb-10 flex gap-4 justify-center">
-                {brands.map((brand) => (
-                    <Card
-                        key={brand.id}
-                        className="min-w-[150px]  flex flex-col items-center py-6 px-4 rounded-2xl shadow-md hover:shadow-lg "
-                    >
-                        <img
-                            src={brand.image}
-                            alt={brand.name}
-                            className="w-14 h-14 object-contain"
-                        />
-                        <Typography className="mt-2 font-semibold">
-                            {brand.name}
-                        </Typography>
-                    </Card>
-                ))}
-            </div>
+      <div className="mb-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 justify-items-center">
+    {brands.map((brand) => (
+        <Card
+            key={brand.id}
+            className="w-full max-w-[160px] flex flex-col items-center py-6 px-4 rounded-2xl shadow-md hover:shadow-lg transition"
+        >
+            <img
+                src={brand.image}
+                alt={brand.name}
+                className="w-14 h-14 object-contain"
+            />
+            <Typography className="mt-2 font-semibold text-center">
+                {brand.name}
+            </Typography>
+        </Card>
+    ))}
+</div>
+
 
             {/* Cars */}
             <Typography variant="h6" className="mb-4 font-semibold">
